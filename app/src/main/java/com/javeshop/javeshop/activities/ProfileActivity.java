@@ -255,6 +255,8 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             changeState(STATE_EDITING);
         }
 
+        //TODO: que pasa si el response no es successful? se deben reset los campos a lo valores iniciales del usuario
+
         firstName.setError(response.getPropertyError("firstName"));
         lastName.setError(response.getPropertyError("lastName"));
         emailText.setError(response.getPropertyError("email"));

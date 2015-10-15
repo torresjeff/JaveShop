@@ -114,6 +114,7 @@ public class InMemoryAccountService extends BaseInMemoryService
                 User user = application.getAuth().getUser();
                 user.setFirstName(request.firstName);
                 user.setLastName(request.lastName);
+                user.setPhoneNumber(request.phoneNumber);
 
                 bus.post(response);
                 bus.post(new Account.UserDetailsUpdatedEvent(user));
