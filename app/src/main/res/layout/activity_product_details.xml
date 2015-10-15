@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/include_toolbar" />
+
+    <android.support.v4.widget.DrawerLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/drawer_layout">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:id="@+id/activity_product_details_currentImage"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/activity_product_details_currentImage"
+                    android:layout_alignTop="@id/activity_product_details_currentImage"
+                    android:layout_marginBottom="8dp"
+                    android:text="Nombre"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="#de000000"
+                    android:id="@+id/activity_product_details_name"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/activity_product_details_name"
+                    android:layout_alignStart="@id/activity_product_details_name"
+                    android:layout_marginBottom="8dp"
+                    android:text="Nuevo"
+                    android:id="@+id/activity_product_details_state"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/activity_product_details_state"
+                    android:layout_alignStart="@id/activity_product_details_name"
+                    android:layout_marginBottom="16dp"
+                    android:text="$ 10.000"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="#4CAF50"
+                    android:id="@+id/activity_product_details_price"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/activity_product_details_price"
+                    android:layout_alignBottom="@id/activity_product_details_currentImage"
+                    android:layout_alignParentEnd="true"
+                    android:background="#0D47A1"
+                    android:text="Comprar"
+                    android:textColor="#fff"
+                    android:id="@+id/activity_product_details_buy"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descripción"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#de000000"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Description"
+                android:id="@+id/activity_product_details_description"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#0D47A1"
+                android:text="Ver comentarios"
+                android:textColor="#fff"
+                android:id="@+id/activity_product_details_seeComments"/>
+
+        </LinearLayout>
+
+        <include layout="@layout/include_main_nav_drawer" />
+
+    </android.support.v4.widget.DrawerLayout>
+
+
+</LinearLayout>

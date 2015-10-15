@@ -13,5 +13,6 @@ public class Module
     {
         Log.e("MODULE", "In memory register method called");
         new InMemoryAccountService(application);
+        new InMemoryProductService(application);
     }
 }
