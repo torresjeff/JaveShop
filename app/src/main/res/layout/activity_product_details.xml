@@ -56,16 +56,28 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/activity_product_details_state"
                     android:layout_alignStart="@id/activity_product_details_name"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="4dp"
                     android:text="$ 10.000"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:textColor="#4CAF50"
                     android:id="@+id/activity_product_details_price"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_below="@id/activity_product_details_price"
+                    android:layout_alignStart="@id/activity_product_details_price"
+                    android:text="Vendedor"
+                    android:textColor="#03A9F4"
+                    android:textSize="16sp"
+                    android:id="@+id/activity_product_details_vendor"/>
+
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/activity_product_details_vendor"
                     android:layout_alignStart="@id/activity_product_details_price"
                     android:layout_alignBottom="@id/activity_product_details_currentImage"
                     android:layout_alignParentEnd="true"

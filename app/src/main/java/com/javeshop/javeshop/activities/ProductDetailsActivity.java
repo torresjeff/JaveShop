@@ -29,6 +29,7 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
     private TextView name;
     private TextView state;
     private TextView price;
+    private TextView vendor;
     private TextView description;
     private ImageView currentImage;
 
@@ -51,6 +52,7 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         name = (TextView) findViewById(R.id.activity_product_details_name);
         state = (TextView) findViewById(R.id.activity_product_details_state);
         price = (TextView) findViewById(R.id.activity_product_details_price);
+        vendor = (TextView) findViewById(R.id.activity_product_details_vendor);
         description = (TextView) findViewById(R.id.activity_product_details_description);
         currentImage = (ImageView) findViewById(R.id.activity_product_details_currentImage);
 
@@ -71,6 +73,8 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
 
         price.setText("$" + productDetails.getPrice());
         description.setText(productDetails.getDescription());
+
+        //TODO: poner el nombre del vendedor del producto. Traer el id del vendedor cuando se selecciona un producto?
 
         Picasso.with(this).load(productDetails.getMainImageUrl()).into(currentImage);
 
