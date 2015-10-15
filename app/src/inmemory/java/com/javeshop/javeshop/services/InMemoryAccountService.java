@@ -55,6 +55,9 @@ public class InMemoryAccountService extends BaseInMemoryService
 
         user.setFirstName("Jeffrey");
         user.setLastName("Torres");
+        user.setPhoneNumber("1234567");
+        user.setBalance(100000);
+        user.setReputation(5);
         user.setEmail("torres.jeffrey@javeriana.edu.co");
         user.setAvatarUrl("http://www.gravatar.com/avatar/1?d=identicon");
         user.setId(123);
@@ -66,6 +69,9 @@ public class InMemoryAccountService extends BaseInMemoryService
 
         response.firstName = user.getFirstName();
         response.lastName = user.getLastName();
+        response.phoneNumber = user.getPhoneNumber();
+        response.balance = user.getBalance();
+        response.reputation = user.getReputation();
         response.email = user.getEmail();
         response.avatarUrl = user.getAvatarUrl();
         response.id = user.getId();

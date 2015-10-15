@@ -48,9 +48,11 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
     private int currentState;
     private EditText firstName;
     private EditText lastName;
+    private EditText phoneNumber;
     private EditText emailText;
     private View changeAvatarButton;
     //TODO: agregar EditText para saldo, poner inputType de numbers
+    //TODO: agregar EditText para phoneNumber
 
     private ActionMode editProfileActionMode;
 
@@ -85,6 +87,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
         firstName = (EditText) findViewById(R.id.activity_profile_firstName);
         lastName = (EditText) findViewById(R.id.activity_profile_lastName);
+        phoneNumber = (EditText) findViewById(R.id.activity_profile_phoneNumber);
         emailText = (EditText) findViewById(R.id.activity_profile_email);
         emailText.setEnabled(false);
 
@@ -103,6 +106,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         {
             firstName.setText(user.getFirstName());
             lastName.setText(user.getLastName());
+            phoneNumber.setText(user.getPhoneNumber());
             emailText.setText(user.getEmail());
 
             changeState(STATE_VIEWING); //default state
@@ -131,6 +135,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         {
             firstName.setEnabled(false);
             lastName.setEnabled(false);
+            phoneNumber.setEnabled(false);
             changeAvatarButton.setVisibility(View.VISIBLE);
 
             if (editProfileActionMode != null)
@@ -144,6 +149,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         {
             firstName.setEnabled(true);
             lastName.setEnabled(true);
+            phoneNumber.setEnabled(true);
             changeAvatarButton.setVisibility(View.GONE);
 
             editProfileActionMode = toolbar.startActionMode(new EditProfileActionCallback());
@@ -309,7 +315,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
                     setProgressBarVisible(true);
                     changeState(STATE_VIEWING);
                     bus.post(new Account.UpdateProfileRequest(firstName.getText().toString(),
-                            lastName.getText().toString()));
+                            lastName.getText().toString(), phoneNumber.getText().toString()));
                     return true;
                 default:
                     return false;
@@ -323,6 +329,11 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             if (currentState != STATE_VIEWING)
             {
                 changeState(STATE_VIEWING);
+                //Mantenemos la informacion original del usuario
+                User user = application.getAuth().getUser();
+                firstName.setText(user.getFirstName());
+                lastName.setText(user.getLastName());
+                phoneNumber.setText(user.getPhoneNumber());
             }
         }
     }

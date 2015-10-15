@@ -10,6 +10,8 @@ public class User
     private String lastName;
     private String avatarUrl;
     private String email;
+    private String phoneNumber;
+
     private boolean isLoggedIn;
     private float balance;
     private float reputation;
@@ -42,6 +44,16 @@ public class User
     public void setLastName(String lastName)
     {
         this.lastName = lastName;
+    }
+
+    public String getPhoneNumber()
+    {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber)
+    {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAvatarUrl()

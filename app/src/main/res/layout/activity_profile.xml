@@ -90,6 +90,14 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="Teléfono"
+                        android:layout_marginBottom="8dp"
+                        android:singleLine="true"
+                        android:id="@+id/activity_profile_phoneNumber"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:hint="E-mail"
                         android:layout_marginBottom="8dp"
                         android:singleLine="true"

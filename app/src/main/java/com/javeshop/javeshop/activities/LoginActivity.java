@@ -48,10 +48,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 return;
             case R.id.activity_login_registerButton:
                 startActivity(new Intent(this, RegisterActivity.class));
-                //TODO: implement register button
+                //TODO: implementar register button
                 return;
             case R.id.activity_login_forgotPasswordButton:
-                //TODO: implement forgot password button
+                //TODO: implementar forgot password button
                 return;
         }
     }

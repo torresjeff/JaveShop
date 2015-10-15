@@ -22,6 +22,9 @@ public class Account
         public String avatarUrl;
         public String firstName;
         public String lastName;
+        public String phoneNumber;
+        public float balance;
+        public float reputation;
         public String email;
         public String authToken;
     }
@@ -38,20 +41,18 @@ public class Account
         }
     }
 
-    public static class LoginWithUsernameResponse extends ServiceResponse
+    public static class LoginWithUsernameResponse extends UserResponse
     {
     }
 
-    //El token previene que el usuario tenga que loggearse cada vez que se sale de la aplication.
+    //El token previene que el usuario tenga que loggearse cada vez que se sale de la application.
     public static class LoginWithLocalTokenRequest
     {
         public String authToken;
-        public String clientId;
 
         public LoginWithLocalTokenRequest(String authToken)
         {
             this.authToken = authToken;
-            clientId = "android";
         }
     }
 
@@ -75,7 +76,7 @@ public class Account
 
     }
 
-    public static class RegisterResponse extends UserResponse
+    public static class RegisterResponse extends ServiceResponse
     {
     }
 
@@ -99,11 +100,13 @@ public class Account
     {
         public String firstName;
         public String lastName;
+        public String phoneNumber;
 
-        public UpdateProfileRequest(String firstName, String lastName)
+        public UpdateProfileRequest(String firstName, String lastName, String phoneNumber)
         {
             this.firstName = firstName;
             this.lastName = lastName;
+            this.phoneNumber = phoneNumber;
         }
     }
 
@@ -111,6 +114,7 @@ public class Account
     {
         public String firstName;
         public String lastName;
+        public String phoneNumber;
     }
 
     public static class ChangePasswordRequest
@@ -129,6 +133,21 @@ public class Account
 
     public static class ChangePasswordResponse extends ServiceResponse
     {
+    }
+
+    public static class AddMoneyRequest
+    {
+        public float amount;
+
+        public AddMoneyRequest(float amount)
+        {
+            this.amount = amount;
+        }
+    }
+
+    public static class AddMoneyResponse extends ServiceResponse
+    {
+        public float newBalance;
     }
 
     public static class UserDetailsUpdatedEvent

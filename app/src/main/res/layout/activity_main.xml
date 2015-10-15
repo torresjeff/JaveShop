@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:background="#e0f7fa"
-            android:text="You have no contacts"
+            android:text="Empieza por buscar un producto"
             android:textSize="18sp"
             android:textColor="#000"
             android:visibility="gone"
