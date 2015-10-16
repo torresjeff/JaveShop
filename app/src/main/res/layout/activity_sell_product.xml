@@ -1,102 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-    <LinearLayout
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-        android:orientation="vertical"
+    <include layout="@layout/include_toolbar" />
+
+    <android.support.v4.widget.DrawerLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp">
+        android:id="@+id/drawer_layout">
 
-        <EditText
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:singleLine="true"
-            android:hint="Nombre del producto"
-            android:id="@+id/activity_sell_product_name"/>
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
+            <LinearLayout
 
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Precio"
-                android:singleLine="true"
-                android:inputType="number"
-                android:layout_marginEnd="8dp"
-                android:id="@+id/activity_sell_product_price"/>
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
 
-            <Spinner
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="right"
-                android:id="@+id/activity_sell_product_stateSpinner"/>
-        </LinearLayout>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:singleLine="true"
+                    android:hint="Nombre del producto"
+                    android:id="@+id/activity_sell_product_name"/>
 
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Precio"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:layout_marginEnd="8dp"
+                        android:id="@+id/activity_sell_product_price"/>
 
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginBottom="8dp"
-                android:hint="Cantidad"
-                android:singleLine="true"
-                android:inputType="number"
-                android:id="@+id/activity_sell_product_quantity"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"/>
-
-        </LinearLayout>
+                    <Spinner
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="right"
+                        android:id="@+id/activity_sell_product_stateSpinner"/>
+                </LinearLayout>
 
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/activity_sell_product_imageListView"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Agrega imágenes para tu producto"
-            android:textSize="18sp"
-            android:textColor="#000"
-            android:visibility="gone"
-            android:id="@+id/activity_sell_product_emptyView"/>
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="8dp"
+                        android:hint="Cantidad"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:id="@+id/activity_sell_product_quantity"/>
 
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_camera_alt_white_48dp"
-            android:id="@+id/activity_sell_product_takePictureButton"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-/>
+                </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="Paso 1 de 2"
-            android:id="@+id/activity_sell_product_next"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-    </LinearLayout>
-</ScrollView>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_navigate_before_black_48dp"
+                        android:id="@+id/activity_sell_product_previousButton"/>
+
+                    <android.support.v4.view.ViewPager
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:layout_weight="1"
+                        android:id="@+id/activity_sell_product_pager"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_navigate_next_black_48dp"
+                        android:id="@+id/activity_sell_product_nextButton"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Agrega imágenes para tu producto"
+                    android:textSize="18sp"
+                    android:textColor="#000"
+                    android:visibility="gone"
+                    android:id="@+id/activity_sell_product_emptyView"/>
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_camera_alt_white_48dp"
+                    android:id="@+id/activity_sell_product_takePictureButton"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="Paso 1 de 2"
+                    android:id="@+id/activity_sell_product_next"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <include layout="@layout/include_main_nav_drawer" />
+
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>

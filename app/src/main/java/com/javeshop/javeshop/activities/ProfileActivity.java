@@ -83,7 +83,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         avatarView = (ImageView) findViewById(R.id.activity_profile_avatar);
         avatarProgressFrame = findViewById(R.id.activity_profile_avatarProgressFrame);
         changeAvatarButton = findViewById(R.id.activity_profile_changeAvatar);
-        tempOutputFile = new File(getExternalCacheDir(), "javeshop_temp_image.jpg");
+        tempOutputFile = new File(getExternalCacheDir(), "javeshop_profile_picture.jpg");
 
         firstName = (EditText) findViewById(R.id.activity_profile_firstName);
         lastName = (EditText) findViewById(R.id.activity_profile_lastName);

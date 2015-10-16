@@ -56,6 +56,8 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         description = (TextView) findViewById(R.id.activity_product_details_description);
         currentImage = (ImageView) findViewById(R.id.activity_product_details_currentImage);
 
+        //TODO: poner un view pager para ver las imagenes del producto
+
         name.setText(productDetails.getName());
 
         if (productDetails.getState() == 0)
@@ -131,7 +133,7 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
                             public void onClick(DialogInterface dialogInterface, int i)
                             {
                                 User user = application.getAuth().getUser();
-                                bus.post(new Product.BuyProductRequest(user.getId(), user.getBalance(), productDetails.getId()));
+                                bus.post(new Product.BuyProductRequest(user.getId(), productDetails.getId()));
                                 setProgressBarVisible(true);
                             }
                         })

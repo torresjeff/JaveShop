@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -51,6 +52,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
         searchView.setIconified(false); //El SearchView empieza expandido. Cuando setIconified es false, se muestra un icono en vez de la barra de texto.
         searchView.setQueryHint("Búsqueda JaveShop");
         searchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
+        searchView.setLayoutParams(new Toolbar.LayoutParams(Gravity.RIGHT));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
         {
             @Override
@@ -83,8 +85,6 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
     {
-        //Log.e("MainActivity", "Item clicked");
-
         ProductDetails productDetails = adapter.getItem(position);
 
         Intent intent = new Intent(this, ProductDetailsActivity.class);

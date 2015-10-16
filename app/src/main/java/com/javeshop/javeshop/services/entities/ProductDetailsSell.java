@@ -16,7 +16,6 @@ public class ProductDetailsSell implements Parcelable
     private int ownerId;
     private String name;
     private String description;
-    private Uri mainImageUrl;
     private List<Uri> productImagesUrls;
     private float price;
     private int quantity;
@@ -28,13 +27,12 @@ public class ProductDetailsSell implements Parcelable
         productImagesUrls = new ArrayList<>();
     }
 
-    public ProductDetailsSell(int id, int ownerId, String name, String description, Uri mainImageUrl, List<Uri> productImagesUrls, float price, int quantity, int state)
+    public ProductDetailsSell(int id, int ownerId, String name, String description, List<Uri> productImagesUrls, float price, int quantity, int state)
     {
         this.id = id;
         this.ownerId = ownerId;
         this.name = name;
         this.description = description;
-        this.mainImageUrl = mainImageUrl;
         this.productImagesUrls = productImagesUrls;
         this.price = price;
         this.quantity = quantity;
@@ -47,7 +45,6 @@ public class ProductDetailsSell implements Parcelable
         ownerId = in.readInt();
         name = in.readString();
         description = in.readString();
-        mainImageUrl = in.readParcelable(Uri.class.getClassLoader());
         productImagesUrls = in.createTypedArrayList(Uri.CREATOR);
         price = in.readFloat();
         quantity = in.readInt();
@@ -84,10 +81,6 @@ public class ProductDetailsSell implements Parcelable
         return description;
     }
 
-    public Uri getMainImageUrl()
-    {
-        return mainImageUrl;
-    }
 
     public List<Uri> getProductImagesUris()
     {
@@ -128,7 +121,6 @@ public class ProductDetailsSell implements Parcelable
         parcel.writeInt(ownerId);
         parcel.writeString(name);
         parcel.writeString(description);
-        parcel.writeParcelable(mainImageUrl, i);
         parcel.writeTypedList(productImagesUrls);
         parcel.writeFloat(price);
         parcel.writeInt(quantity);

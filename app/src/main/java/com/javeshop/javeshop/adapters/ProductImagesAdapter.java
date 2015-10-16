@@ -28,6 +28,7 @@ public class ProductImagesAdapter extends ArrayAdapter<Uri>
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
+        //TODO: cambiar de Uri a link (String) cuando se utilice el servidor
         Uri image = getItem(position);
         ViewHolder view;
 
@@ -43,6 +44,7 @@ public class ProductImagesAdapter extends ArrayAdapter<Uri>
             view = (ViewHolder) convertView.getTag();
         }
 
+        //TODO: cambiar de Uri a link (String) cuando se utilice el servidor
         Picasso.with(getContext()).load(image).into(view.image);
 
         return convertView;

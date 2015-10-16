@@ -4,20 +4,18 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.javeshop.javeshop.R;
-import com.javeshop.javeshop.adapters.ProductImagesAdapter;
-import com.javeshop.javeshop.services.entities.ProductDetails;
+import com.javeshop.javeshop.adapters.ImagePagerAdapter;
 import com.javeshop.javeshop.services.entities.ProductDetailsSell;
+import com.javeshop.javeshop.views.MainNavDrawer;
 
 import java.io.File;
 import java.io.Serializable;
@@ -28,19 +26,18 @@ import java.util.List;
 /**
  * Created by Jeffrey Torres on 15/10/2015.
  */
-public class SellProductActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener
+public class SellProductActivity extends BaseActivity implements View.OnClickListener
 {
     private static final int REQUEST_SELECT_IMAGE = 100;
 
-    private static final String BUNDLE_DETAILS_EXTRA = "BUNDLE_DETAILS_EXTRA";
     private static final String BUNDLE_OUTPUT_FILE_EXTRA = "BUNDLE_OUTPUT_FILE_EXTRA";
-    private static final String BUNDLE_URI_EXTRA = "BUNDLE_URI_EXTRA";
+    private static final String BUNDLE_IMAGES_EXTRA = "BUNDLE_IMAGES_EXTRA";
 
     private Spinner spinner;
-    private ProductImagesAdapter adapter;
     private ProductDetailsSell productDetails;
     private List<File> tempOutputFiles;
-    private List<Uri> outputFiles;
+    private ArrayList<String> outputFiles;
+    private ImagePagerAdapter adapter;
 
 
 
@@ -51,30 +48,34 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell_product);
 
+        setNavDrawer(new MainNavDrawer(this));
+        getSupportActionBar().setTitle("Vender");
+
         tempOutputFiles = new ArrayList<>();
         outputFiles = new ArrayList<>();
 
-
-
         findViewById(R.id.activity_sell_product_takePictureButton).setOnClickListener(this);
         findViewById(R.id.activity_sell_product_next).setOnClickListener(this);
-        spinner = (Spinner) findViewById(R.id.activity_sell_product_stateSpinner);
 
+        //TODO: set click listeners a previous y next button. Usar viewPager.setCurrentItem.
+
+        spinner = (Spinner) findViewById(R.id.activity_sell_product_stateSpinner);
         spinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"Nuevo", "Usado"}));
 
-        adapter = new ProductImagesAdapter(this);
-        ListView listView = (ListView) findViewById(R.id.activity_sell_product_imageListView);
-        listView.setEmptyView(findViewById(R.id.activity_sell_product_emptyView));
-        listView.setOnItemClickListener(this);
-        listView.setAdapter(adapter);
+        adapter = new ImagePagerAdapter(this);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.activity_sell_product_pager);
+        viewPager.setAdapter(adapter);
+        viewPager.setOnClickListener(this);
 
         if (savedInstanceState != null)
         {
             tempOutputFiles = (List<File>)savedInstanceState.getSerializable(BUNDLE_OUTPUT_FILE_EXTRA);
-            outputFiles = savedInstanceState.getParcelableArrayList(BUNDLE_URI_EXTRA);
+            outputFiles = savedInstanceState.getStringArrayList(BUNDLE_IMAGES_EXTRA);
             adapter.addAll(outputFiles);
             adapter.notifyDataSetChanged();
         }
+
     }
 
     @Override
@@ -149,10 +150,11 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
                 outputFile = tempFileUri;
             }
 
-            adapter.add(outputFile);
+            adapter.add(outputFile.toString());
             adapter.notifyDataSetChanged();
 
-            outputFiles.add(outputFile);
+
+            outputFiles.add(outputFile.toString());
 
             Log.e("SellProductActivity", "Added new image to ListView: " + outputFile.toString());
         }
@@ -164,14 +166,15 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         super.onSaveInstanceState(outState);
 
         outState.putSerializable(BUNDLE_OUTPUT_FILE_EXTRA, (Serializable) tempOutputFiles);
-        outState.putParcelableArrayList(BUNDLE_URI_EXTRA, (ArrayList<?extends Parcelable>)outputFiles);
+        outState.putStringArrayList(BUNDLE_IMAGES_EXTRA, outputFiles);
     }
 
-    @Override
+    /*@Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
     {
+        //TODO:
         Intent intent = new Intent(this, ProductImageActivity.class);
         intent.putExtra(ProductImageActivity.EXTRA_IMAGE, adapter.getItem(position).toString());
         startActivity(intent);
-    }
+    }*/
 }
