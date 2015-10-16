@@ -8,6 +8,7 @@ import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.activities.BaseActivity;
 import com.javeshop.javeshop.activities.MainActivity;
 import com.javeshop.javeshop.activities.ProfileActivity;
+import com.javeshop.javeshop.activities.SellProductActivity;
 import com.javeshop.javeshop.infrastructure.User;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
@@ -30,9 +31,9 @@ public class MainNavDrawer extends NavDrawer
         //Agregamos aqui los items que queramos que aparezcan en el NavDrawer
 
         addItem(new ActivityNavDrawerItem(MainActivity.class, "Búsqueda", 0, R.drawable.ic_search_black_24dp, R.id.include_main_nav_drawer_topItemsContainer));
+        addItem(new ActivityNavDrawerItem(SellProductActivity.class, "Vender", 0, R.drawable.ic_attach_money_black_24dp, R.id.include_main_nav_drawer_topItemsContainer));
         addItem(new ActivityNavDrawerItem(ProfileActivity.class, "Mi cuenta", 0, R.drawable.ic_person_black_24dp, R.id.include_main_nav_drawer_topItemsContainer));
 
-        //TODO: replace null with actual badge text, replace R.drawable.abc_btn_check_to_on_mtrl_015 with actual icon to be used, replace 0 with container to be used.
         //Items that don't start Activities should override onClick() so that they don't stay selected eternally.
         addItem(new BasicNavDrawerItem("Cerrar sesión", 0, R.drawable.ic_close_black_24dp, R.id.include_main_nav_drawer_bottomItemsContainer)
         {

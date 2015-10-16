@@ -25,8 +25,10 @@ public class InMemoryProductService extends BaseInMemoryService
         for (int i = 0; i < request.query.length(); ++i)
         {
             response.products.add(
-                    new ProductDetails(i,
-                            request.query + " " + i,
+                    new ProductDetails(
+                            i,
+                            i,
+                            request.query + " " + (i+1),
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
                                     "Phasellus fermentum odio mauris, ac lacinia quam elementum quis. " +
                                     "Vestibulum feugiat arcu.",

@@ -72,6 +72,7 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         }
 
         price.setText("$" + productDetails.getPrice());
+        vendor.setText("Vendedor " + productDetails.getOwnerId());
         description.setText(productDetails.getDescription());
 
         //TODO: poner el nombre del vendedor del producto. Traer el id del vendedor cuando se selecciona un producto?
