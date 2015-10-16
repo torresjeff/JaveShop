@@ -30,13 +30,11 @@ public class Product
     public static class BuyProductRequest
     {
         public int buyerId;
-        public float balance;
         public float productId;
 
-        public BuyProductRequest(int buyerId, float balance, float productId)
+        public BuyProductRequest(int buyerId, float productId)
         {
             this.buyerId = buyerId;
-            this.balance = balance;
             this.productId = productId;
         }
     }

@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="300dp"
+    android:minWidth="280dp"
     android:id="@+id/nav_drawer"
     android:background="#ffffff"
     android:layout_gravity="start">

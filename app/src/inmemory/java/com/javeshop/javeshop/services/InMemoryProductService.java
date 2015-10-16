@@ -24,14 +24,21 @@ public class InMemoryProductService extends BaseInMemoryService
 
         for (int i = 0; i < request.query.length(); ++i)
         {
+            ArrayList<String> images = new ArrayList<>();
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=64");
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+1) + "?d=identicon&s=64");
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+2) + "?d=identicon&s=64");
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+3) + "?d=identicon&s=64");
             response.products.add(
-                    new ProductDetails(i,
-                            request.query + " " + i,
+                    new ProductDetails(
+                            i,
+                            i,
+                            request.query + " " + (i+1),
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
                                     "Phasellus fermentum odio mauris, ac lacinia quam elementum quis. " +
                                     "Vestibulum feugiat arcu.",
                             "http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=64",
-                            null, 10000*(i+1), i, i%2));
+                            images, 10000*(i+1), i, i%2));
         }
 
         postDelayed(response, 1000, 2000);

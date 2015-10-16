@@ -1,8 +1,8 @@
 package com.javeshop.javeshop.services.entities;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,62 +10,59 @@ import java.util.List;
 /**
  * Created by Jeffrey Torres on 14/10/2015.
  */
-public class ProductDetails implements Parcelable
+public class ProductDetailsSell implements Parcelable
 {
     private int id;
     private int ownerId;
     private String name;
     private String description;
-    private String mainImageUrl;
-    private ArrayList<String> productImagesUrls;
+    private List<Uri> productImagesUrls;
     private float price;
     private int quantity;
     private int state;
 
     //TODO: verificar que el constructor vacio no altere los responses del servidor
-    public ProductDetails()
+    public ProductDetailsSell()
     {
         productImagesUrls = new ArrayList<>();
     }
 
-    public ProductDetails(int id, int ownerId, String name, String description, String mainImageUrl, ArrayList<String> productImagesUrls, float price, int quantity, int state)
+    public ProductDetailsSell(int id, int ownerId, String name, String description, List<Uri> productImagesUrls, float price, int quantity, int state)
     {
         this.id = id;
         this.ownerId = ownerId;
         this.name = name;
         this.description = description;
-        this.mainImageUrl = mainImageUrl;
         this.productImagesUrls = productImagesUrls;
         this.price = price;
         this.quantity = quantity;
         this.state = state;
     }
 
-    protected ProductDetails(Parcel in)
+    protected ProductDetailsSell(Parcel in)
     {
         id = in.readInt();
         ownerId = in.readInt();
         name = in.readString();
         description = in.readString();
-        mainImageUrl = in.readString();
-        productImagesUrls = in.createStringArrayList();
+        productImagesUrls = in.createTypedArrayList(Uri.CREATOR);
         price = in.readFloat();
         quantity = in.readInt();
         state = in.readInt();
     }
 
-    public static final Creator<ProductDetails> CREATOR = new Creator<ProductDetails>()
+    public static final Creator<ProductDetailsSell> CREATOR = new Creator<ProductDetailsSell>()
     {
         @Override
-        public ProductDetails createFromParcel(Parcel in)
+        public ProductDetailsSell createFromParcel(Parcel in)
         {
-            return new ProductDetails(in);
+            return new ProductDetailsSell(in);
         }
 
         @Override
-        public ProductDetails[] newArray(int size)
+        public ProductDetailsSell[] newArray(int size)
         {
-            return new ProductDetails[size];
+            return new ProductDetailsSell[size];
         }
     };
 
@@ -84,12 +81,8 @@ public class ProductDetails implements Parcelable
         return description;
     }
 
-    public String getMainImageUrl()
-    {
-        return mainImageUrl;
-    }
 
-    public ArrayList<String> getProductImagesUrls()
+    public List<Uri> getProductImagesUris()
     {
         return productImagesUrls;
     }
@@ -123,12 +116,12 @@ public class ProductDetails implements Parcelable
     @Override
     public void writeToParcel(Parcel parcel, int i)
     {
+
         parcel.writeInt(id);
         parcel.writeInt(ownerId);
         parcel.writeString(name);
         parcel.writeString(description);
-        parcel.writeString(mainImageUrl);
-        parcel.writeStringList(productImagesUrls);
+        parcel.writeTypedList(productImagesUrls);
         parcel.writeFloat(price);
         parcel.writeInt(quantity);
         parcel.writeInt(state);

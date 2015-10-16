@@ -32,6 +32,12 @@
 
         <activity android:name=".activities.ProductDetailsActivity" />
 
+        <activity android:name=".activities.SellProductActivity" />
+
+        <activity android:name=".activities.SellProductPartTwoActivity" />
+
+        <activity android:name=".activities.ProductImageActivity" />
+
     </application>
 
 </manifest>
