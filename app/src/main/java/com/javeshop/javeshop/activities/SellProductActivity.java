@@ -56,8 +56,7 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
 
         findViewById(R.id.activity_sell_product_takePictureButton).setOnClickListener(this);
         findViewById(R.id.activity_sell_product_next).setOnClickListener(this);
-
-        //TODO: set click listeners a previous y next button. Usar viewPager.setCurrentItem.
+        //TODO: agregar campo de categoria
 
         spinner = (Spinner) findViewById(R.id.activity_sell_product_stateSpinner);
         spinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"Nuevo", "Usado"}));
@@ -66,7 +65,7 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.activity_sell_product_pager);
         viewPager.setAdapter(adapter);
-        viewPager.setOnClickListener(this);
+        //TODO: set click listeners a previous y next button. Usar viewPager.setCurrentItem.
 
         if (savedInstanceState != null)
         {

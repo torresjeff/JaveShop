@@ -5,17 +5,22 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.javeshop.javeshop.R;
+import com.javeshop.javeshop.adapters.ImagePagerAdapter;
 import com.javeshop.javeshop.infrastructure.User;
 import com.javeshop.javeshop.services.Product;
 import com.javeshop.javeshop.services.entities.ProductDetails;
 import com.javeshop.javeshop.views.MainNavDrawer;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * Created by Jeffrey Torres on 14/10/2015.
@@ -31,7 +36,8 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
     private TextView price;
     private TextView vendor;
     private TextView description;
-    private ImageView currentImage;
+
+    private ImagePagerAdapter adapter;
 
     private Dialog progressDialog;
     private boolean progressBarVisible;
@@ -54,7 +60,16 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         price = (TextView) findViewById(R.id.activity_product_details_price);
         vendor = (TextView) findViewById(R.id.activity_product_details_vendor);
         description = (TextView) findViewById(R.id.activity_product_details_description);
-        currentImage = (ImageView) findViewById(R.id.activity_product_details_currentImage);
+
+        adapter = new ImagePagerAdapter(this);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.activity_product_details_pager);
+        viewPager.setAdapter(adapter);
+        adapter.addAll(productDetails.getProductImagesUrls());
+        adapter.notifyDataSetChanged();
+
+        //TODO: set click listeners a previous y next button. Usar viewPager.setCurrentItem.
+        //TODO: poner el pager n el centro, no compartir espacio con las partes de comprar, etc
 
         //TODO: poner un view pager para ver las imagenes del producto
 
@@ -79,7 +94,7 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
 
         //TODO: poner el nombre del vendedor del producto. Traer el id del vendedor cuando se selecciona un producto?
 
-        Picasso.with(this).load(productDetails.getMainImageUrl()).into(currentImage);
+        //Picasso.with(this).load(productDetails.getMainImageUrl()).into(currentImage);
 
         if (progressBarVisible)
         {

@@ -17,7 +17,7 @@ public class ProductDetails implements Parcelable
     private String name;
     private String description;
     private String mainImageUrl;
-    private List<String> productImagesUrls;
+    private ArrayList<String> productImagesUrls;
     private float price;
     private int quantity;
     private int state;
@@ -28,7 +28,7 @@ public class ProductDetails implements Parcelable
         productImagesUrls = new ArrayList<>();
     }
 
-    public ProductDetails(int id, int ownerId, String name, String description, String mainImageUrl, List<String> productImagesUrls, float price, int quantity, int state)
+    public ProductDetails(int id, int ownerId, String name, String description, String mainImageUrl, ArrayList<String> productImagesUrls, float price, int quantity, int state)
     {
         this.id = id;
         this.ownerId = ownerId;
@@ -89,7 +89,7 @@ public class ProductDetails implements Parcelable
         return mainImageUrl;
     }
 
-    public List<String> getProductImagesUrls()
+    public ArrayList<String> getProductImagesUrls()
     {
         return productImagesUrls;
     }

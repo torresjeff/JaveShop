@@ -23,18 +23,39 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp">
 
-                <ImageView
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_marginEnd="8dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:id="@+id/activity_product_details_currentImage"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="210dp"
+                    android:layout_height="200dp"
+                    android:id="@+id/activity_product_details_pagerContainer">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_navigate_before_black_48dp"
+                        android:id="@+id/activity_product_details_previousButton"/>
+
+                    <android.support.v4.view.ViewPager
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:layout_weight="1"
+                        android:id="@+id/activity_product_details_pager"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_navigate_next_black_48dp"
+                        android:id="@+id/activity_product_details_nextButton"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/activity_product_details_currentImage"
-                    android:layout_alignTop="@id/activity_product_details_currentImage"
+                    android:layout_toEndOf="@id/activity_product_details_pagerContainer"
+                    android:layout_alignTop="@id/activity_product_details_pagerContainer"
                     android:layout_marginBottom="8dp"
                     android:text="Nombre"
                     android:textSize="22sp"
@@ -79,7 +100,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/activity_product_details_vendor"
                     android:layout_alignStart="@id/activity_product_details_price"
-                    android:layout_alignBottom="@id/activity_product_details_currentImage"
                     android:layout_alignParentEnd="true"
                     android:background="#0D47A1"
                     android:text="Comprar"

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.activities.BaseActivity;
@@ -91,5 +92,11 @@ public class ImagePagerAdapter extends PagerAdapter
     public void addAll(ArrayList<String> resources)
     {
         imageResources.addAll(resources);
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object)
+    {
+        container.removeView((LinearLayout) object);
     }
 }
