@@ -83,7 +83,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="200dp"
+                    android:id="@+id/activity_sell_product_pagerContainer">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -94,7 +95,7 @@
 
                     <android.support.v4.view.ViewPager
                         android:layout_width="0dp"
-                        android:layout_height="200dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:id="@+id/activity_sell_product_pager"/>
 
@@ -127,8 +128,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:text="Paso 1 de 2"
-                    android:id="@+id/activity_sell_product_next"/>
+                    android:text="Publicar"
+                    android:id="@+id/activity_sell_product_post"/>
 
             </LinearLayout>
         </ScrollView>
