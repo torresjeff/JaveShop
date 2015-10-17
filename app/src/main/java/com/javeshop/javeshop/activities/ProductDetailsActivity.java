@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
 
     private Dialog progressDialog;
     private boolean progressBarVisible;
+    private ViewPager viewPager;
 
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
@@ -54,6 +56,8 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
 
         findViewById(R.id.activity_product_details_buy).setOnClickListener(this);
         findViewById(R.id.activity_product_details_seeComments).setOnClickListener(this);
+        findViewById(R.id.activity_product_details_previousButton).setOnClickListener(this);
+        findViewById(R.id.activity_product_details_nextButton).setOnClickListener(this);
 
         name = (TextView) findViewById(R.id.activity_product_details_name);
         state = (TextView) findViewById(R.id.activity_product_details_state);
@@ -63,7 +67,7 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
 
         adapter = new ImagePagerAdapter(this);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.activity_product_details_pager);
+        viewPager = (ViewPager) findViewById(R.id.activity_product_details_pager);
         viewPager.setAdapter(adapter);
         adapter.addAll(productDetails.getProductImagesUrls());
         adapter.notifyDataSetChanged();
@@ -139,6 +143,12 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         int id = view.getId();
         switch (id)
         {
+            case R.id.activity_product_details_previousButton:
+                previousPage();
+                return;
+            case R.id.activity_product_details_nextButton:
+                nextPage();
+                return;
             case R.id.activity_product_details_buy:
                 AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("¿Estás seguro que deseas comprar este producto?")
@@ -160,6 +170,44 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
             case R.id.activity_product_details_seeComments:
                 //TODO: start ProductCommentsActivity, pasar el id del producto
                 return;
+        }
+    }
+
+    private void nextPage()
+    {
+        if (adapter.getCount() == 0)
+        {
+            return;
+        }
+
+        int lastIndex = viewPager.getCurrentItem();
+
+        if (lastIndex >= adapter.getCount() - 1)
+        {
+            viewPager.setCurrentItem(0, false);
+        }
+        else
+        {
+            viewPager.setCurrentItem(lastIndex + 1);
+        }
+    }
+
+    private void previousPage()
+    {
+        if (adapter.getCount() == 0)
+        {
+            return;
+        }
+
+        int firstIndex = viewPager.getCurrentItem();
+
+        if (firstIndex <= 0)
+        {
+            viewPager.setCurrentItem(adapter.getCount() - 1, false);
+        }
+        else
+        {
+            viewPager.setCurrentItem(firstIndex - 1);
         }
     }
 }

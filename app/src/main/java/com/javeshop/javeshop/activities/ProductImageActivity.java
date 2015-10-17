@@ -23,5 +23,6 @@ public class ProductImageActivity extends BaseActivity
 
         //TODO: cuando venga del servidor se debe quitar el Uri.parse, para que cargue directamente desde el link de la imagen
         Picasso.with(this).load(Uri.parse(getIntent().getStringExtra(EXTRA_IMAGE))).into((ImageView) findViewById(R.id.activity_product_image_image));
+        //Picasso.with(this).load(getIntent().getStringExtra(EXTRA_IMAGE)).into((ImageView) findViewById(R.id.activity_product_image_image));
     }
 }

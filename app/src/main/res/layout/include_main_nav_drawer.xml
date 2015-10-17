@@ -7,7 +7,8 @@
     android:minWidth="280dp"
     android:id="@+id/nav_drawer"
     android:background="#ffffff"
-    android:layout_gravity="start">
+    android:layout_gravity="start"
+    android:clickable="true">
 
     <RelativeLayout
         android:layout_width="match_parent"

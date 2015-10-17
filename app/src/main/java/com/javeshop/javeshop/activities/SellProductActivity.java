@@ -16,6 +16,7 @@ import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.adapters.ImagePagerAdapter;
 import com.javeshop.javeshop.services.entities.ProductDetailsSell;
 import com.javeshop.javeshop.views.MainNavDrawer;
+import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
 import java.io.Serializable;
@@ -35,10 +36,11 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
 
     private Spinner spinner;
     private ProductDetailsSell productDetails;
-    private List<File> tempOutputFiles;
+    private ArrayList<File> tempOutputFiles;
     private ArrayList<String> outputFiles;
     private ImagePagerAdapter adapter;
-
+    private ViewPager viewPager;
+    //private boolean isFileCreated;
 
 
     @Override
@@ -55,27 +57,32 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         outputFiles = new ArrayList<>();
 
         findViewById(R.id.activity_sell_product_takePictureButton).setOnClickListener(this);
-        findViewById(R.id.activity_sell_product_next).setOnClickListener(this);
+        findViewById(R.id.activity_sell_product_post).setOnClickListener(this);
+        findViewById(R.id.activity_sell_product_nextButton).setOnClickListener(this);
+        findViewById(R.id.activity_sell_product_previousButton).setOnClickListener(this);
+
         //TODO: agregar campo de categoria
+        //TODO: agregar campo de descripción, borrar SellProductPartTwoActivity, ya estamos usando scrollview.
 
         spinner = (Spinner) findViewById(R.id.activity_sell_product_stateSpinner);
         spinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"Nuevo", "Usado"}));
 
         adapter = new ImagePagerAdapter(this);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.activity_sell_product_pager);
+        viewPager = (ViewPager) findViewById(R.id.activity_sell_product_pager);
         viewPager.setAdapter(adapter);
-        //TODO: set click listeners a previous y next button. Usar viewPager.setCurrentItem.
+
 
         if (savedInstanceState != null)
         {
-            tempOutputFiles = (List<File>)savedInstanceState.getSerializable(BUNDLE_OUTPUT_FILE_EXTRA);
+            tempOutputFiles = (ArrayList<File>)savedInstanceState.getSerializable(BUNDLE_OUTPUT_FILE_EXTRA);
             outputFiles = savedInstanceState.getStringArrayList(BUNDLE_IMAGES_EXTRA);
             adapter.addAll(outputFiles);
             adapter.notifyDataSetChanged();
         }
 
     }
+
 
     @Override
     public void onClick(View view)
@@ -84,12 +91,22 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
 
         switch (id)
         {
+            case R.id.activity_sell_product_previousButton:
+                Log.e("SellProduct", "currentItem = " + viewPager.getCurrentItem());
+                previousPage();
+
+                return;
+            case R.id.activity_sell_product_nextButton:
+                Log.e("SellProduct", "currentItem = " + viewPager.getCurrentItem());
+                nextPage();
+
+                return;
             case R.id.activity_sell_product_takePictureButton:
                 addPicture();
                 return;
-            case R.id.activity_sell_product_next:
-                //TODO: pasar los detalles que se han llenado hasta ahora
-                //addPicture();
+
+            case R.id.activity_sell_product_post:
+                //TODO: mandar request de post product
                 return;
         }
     }
@@ -101,6 +118,7 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
 
         tempOutputFiles.add(new File(getExternalCacheDir(), "javeshop_product_image_" + tempOutputFiles.size() + ".jpg"));
         Log.e("SellProductActivity", "Added new tempOutputFile, tempOutputFiles.size() = " + tempOutputFiles.size());
+        Log.e("SellProductActivity", "tempOutputFile name = " + Uri.fromFile(tempOutputFiles.get(tempOutputFiles.size() - 1)));
 
         for (ResolveInfo info : otherImageCaptureActivities)
         {
@@ -126,7 +144,9 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         {
             tempOutputFiles.get(tempOutputFiles.size() - 1).delete();
             tempOutputFiles.remove(tempOutputFiles.size() - 1);
+            //outputFiles.remove(outputFiles.size() - 1);
             Log.e("SellProductActivity", "resultCode != RESULT_OK, tempOutputFiles.size() = " + tempOutputFiles.size());
+            Log.e("SellProductActivity", "resultCode != RESULT_OK, outputFiles.size() = " + outputFiles.size());
             return;
         }
 
@@ -149,13 +169,57 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
                 outputFile = tempFileUri;
             }
 
-            adapter.add(outputFile.toString());
+            new Crop(outputFile)
+                    .asSquare()
+                    .output(tempFileUri)
+                    .start(this);
+        }
+
+        else if (requestCode == Crop.REQUEST_CROP)
+        {
+            outputFiles.add(Uri.fromFile(tempOutputFiles.get(tempOutputFiles.size() - 1)).toString());
+            //outputFiles.add(tempOutputFiles.get(tempOutputFiles.size() - 1).toString());
+            Log.e("SellProductActivity", "Added new image to adapter: " + outputFiles.get(outputFiles.size() - 1));
+            adapter.add(outputFiles.get(outputFiles.size() - 1));
             adapter.notifyDataSetChanged();
+        }
+    }
 
+    private void nextPage()
+    {
+        if (adapter.getCount() == 0)
+        {
+            return;
+        }
 
-            outputFiles.add(outputFile.toString());
+        int lastIndex = viewPager.getCurrentItem();
 
-            Log.e("SellProductActivity", "Added new image to ListView: " + outputFile.toString());
+        if (lastIndex >= adapter.getCount() - 1)
+        {
+            viewPager.setCurrentItem(0, false);
+        }
+        else
+        {
+            viewPager.setCurrentItem(lastIndex + 1);
+        }
+    }
+
+    private void previousPage()
+    {
+        if (adapter.getCount() == 0)
+        {
+            return;
+        }
+
+        int firstIndex = viewPager.getCurrentItem();
+
+        if (firstIndex <= 0)
+        {
+            viewPager.setCurrentItem(adapter.getCount() - 1, false);
+        }
+        else
+        {
+            viewPager.setCurrentItem(firstIndex - 1);
         }
     }
 
@@ -167,13 +231,4 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         outState.putSerializable(BUNDLE_OUTPUT_FILE_EXTRA, (Serializable) tempOutputFiles);
         outState.putStringArrayList(BUNDLE_IMAGES_EXTRA, outputFiles);
     }
-
-    /*@Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
-    {
-        //TODO:
-        Intent intent = new Intent(this, ProductImageActivity.class);
-        intent.putExtra(ProductImageActivity.EXTRA_IMAGE, adapter.getItem(position).toString());
-        startActivity(intent);
-    }*/
 }

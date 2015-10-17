@@ -2,8 +2,13 @@ package com.javeshop.javeshop.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapRegionDecoder;
+import android.graphics.Rect;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +20,7 @@ import com.javeshop.javeshop.activities.BaseActivity;
 import com.javeshop.javeshop.activities.ProductImageActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +28,7 @@ import java.util.ArrayList;
  */
 public class ImagePagerAdapter extends PagerAdapter
 {
+    private static final String TAG = "ImagePagerAdapter";
     private LayoutInflater inflater;
     private Context context;
     private ArrayList<String> imageResources;
@@ -64,8 +71,10 @@ public class ImagePagerAdapter extends PagerAdapter
 
         String[] stringArray = imageResources.toArray(new String[]{});
 
-        //TODO: quitar Uri.parse cuando se utilice el servidor
-        Picasso.with(context).load(Uri.parse(stringArray[position])).into(imageView);
+
+        Log.e(TAG, "Attempting to load " + stringArray[position]);
+        //TODO: picasso no sirve con local images cuando se utiliza resize. No muestra la imagen en el viewpager
+        Picasso.with(context).load(Uri.parse(stringArray[position]))/*.resize(200, 200).centerCrop()*/.into(imageView);
 
         container.addView(itemView);
 

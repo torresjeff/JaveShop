@@ -12,20 +12,18 @@
         android:layout_height="match_parent"
         android:id="@+id/drawer_layout">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp">
-
-            <RelativeLayout
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
+                android:layout_height="match_parent"
+                android:padding="8dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="210dp"
+                    android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:id="@+id/activity_product_details_pagerContainer">
 
@@ -38,7 +36,7 @@
 
                     <android.support.v4.view.ViewPager
                         android:layout_width="0dp"
-                        android:layout_height="200dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:id="@+id/activity_product_details_pager"/>
 
@@ -51,87 +49,92 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/activity_product_details_pagerContainer"
-                    android:layout_alignTop="@id/activity_product_details_pagerContainer"
-                    android:layout_marginBottom="8dp"
-                    android:text="Nombre"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="#de000000"
-                    android:id="@+id/activity_product_details_name"/>
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Nombre"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#de000000"
+                        android:id="@+id/activity_product_details_name"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/activity_product_details_name"
+                        android:layout_alignStart="@id/activity_product_details_name"
+                        android:layout_marginBottom="8dp"
+                        android:text="Nuevo"
+                        android:id="@+id/activity_product_details_state"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/activity_product_details_state"
+                        android:layout_alignStart="@id/activity_product_details_name"
+                        android:layout_marginBottom="4dp"
+                        android:text="$ 10.000"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:textColor="#4CAF50"
+                        android:id="@+id/activity_product_details_price"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@id/activity_product_details_price"
+                        android:layout_alignStart="@id/activity_product_details_price"
+                        android:text="Vendedor"
+                        android:textColor="#03A9F4"
+                        android:textSize="16sp"
+                        android:id="@+id/activity_product_details_vendor"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/activity_product_details_vendor"
+                        android:layout_alignStart="@id/activity_product_details_price"
+                        android:layout_alignParentEnd="true"
+                        android:background="#0D47A1"
+                        android:text="Comprar"
+                        android:textColor="#fff"
+                        android:id="@+id/activity_product_details_buy"/>
+
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/activity_product_details_name"
-                    android:layout_alignStart="@id/activity_product_details_name"
+                    android:text="Descripción"
                     android:layout_marginBottom="8dp"
-                    android:text="Nuevo"
-                    android:id="@+id/activity_product_details_state"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/activity_product_details_state"
-                    android:layout_alignStart="@id/activity_product_details_name"
-                    android:layout_marginBottom="4dp"
-                    android:text="$ 10.000"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:textColor="#4CAF50"
-                    android:id="@+id/activity_product_details_price"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_below="@id/activity_product_details_price"
-                    android:layout_alignStart="@id/activity_product_details_price"
-                    android:text="Vendedor"
-                    android:textColor="#03A9F4"
                     android:textSize="16sp"
-                    android:id="@+id/activity_product_details_vendor"/>
+                    android:textStyle="bold"
+                    android:textColor="#de000000"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:text="Description"
+                    android:id="@+id/activity_product_details_description"/>
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/activity_product_details_vendor"
-                    android:layout_alignStart="@id/activity_product_details_price"
-                    android:layout_alignParentEnd="true"
                     android:background="#0D47A1"
-                    android:text="Comprar"
+                    android:text="Ver comentarios"
                     android:textColor="#fff"
-                    android:id="@+id/activity_product_details_buy"/>
+                    android:id="@+id/activity_product_details_seeComments"/>
 
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descripción"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#de000000"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Description"
-                android:id="@+id/activity_product_details_description"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#0D47A1"
-                android:text="Ver comentarios"
-                android:textColor="#fff"
-                android:id="@+id/activity_product_details_seeComments"/>
-
-        </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <include layout="@layout/include_main_nav_drawer" />
 
