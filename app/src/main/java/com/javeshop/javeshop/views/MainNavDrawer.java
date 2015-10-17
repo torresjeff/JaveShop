@@ -1,5 +1,6 @@
 package com.javeshop.javeshop.views;
 
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import com.javeshop.javeshop.activities.MainActivity;
 import com.javeshop.javeshop.activities.ProfileActivity;
 import com.javeshop.javeshop.activities.SellProductActivity;
 import com.javeshop.javeshop.infrastructure.User;
+import com.javeshop.javeshop.services.Account;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
@@ -53,6 +55,14 @@ public class MainNavDrawer extends NavDrawer
         displayName.setText(loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
 
         Picasso.with(activity).load(loggedInUser.getAvatarUrl()).into(avatar);
+    }
+
+    @Subscribe
+    public void onUserDetailsUpdated(Account.UserDetailsUpdatedEvent event)
+    {
+        //TODO: cargar la imagen con el url de la imagen en el servidor
+        Picasso.with(activity).load(event.user.getAvatarUrl()).into(avatar);
+        displayName.setText(event.user.getFirstName() + " " + event.user.getLastName());
     }
 
 }
