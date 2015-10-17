@@ -13,7 +13,7 @@
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity" android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,9 +32,7 @@
 
         <activity android:name=".activities.ProductDetailsActivity" />
 
-        <activity android:name=".activities.SellProductActivity" />
-
-        <activity android:name=".activities.SellProductPartTwoActivity" />
+        <activity android:name=".activities.SellProductActivity" android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".activities.ProductImageActivity" />
 

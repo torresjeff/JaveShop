@@ -239,10 +239,10 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         }
 
         //TODO: eliminar esta parte cuando estemos conectados al servidor
-        /*avatarView.setImageResource(0);
-        avatarView.setImageURI(Uri.parse(response.avatarUrl));*/
+        avatarView.setImageResource(0);
+        avatarView.setImageURI(Uri.parse(response.avatarUrl));
         //TODO: cargar la imagen con el url de la imagen en el servidor
-        Picasso.with(this).load(response.avatarUrl).into(avatarView);
+        //Picasso.with(this).load(response.avatarUrl).into(avatarView);
     }
 
     @Subscribe

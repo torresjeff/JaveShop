@@ -27,14 +27,15 @@ import java.util.List;
 /**
  * Created by Jeffrey Torres on 15/10/2015.
  */
-public class SellProductActivity extends BaseActivity implements View.OnClickListener
+public class SellProductActivity extends BaseAuthenticatedActivity implements View.OnClickListener
 {
     private static final int REQUEST_SELECT_IMAGE = 100;
 
     private static final String BUNDLE_OUTPUT_FILE_EXTRA = "BUNDLE_OUTPUT_FILE_EXTRA";
     private static final String BUNDLE_IMAGES_EXTRA = "BUNDLE_IMAGES_EXTRA";
 
-    private Spinner spinner;
+    private Spinner stateSpinner;
+    private Spinner categorySpinner;
     private ProductDetailsSell productDetails;
     private ArrayList<File> tempOutputFiles;
     private ArrayList<String> outputFiles;
@@ -44,10 +45,10 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
 
 
     @Override
-    //protected void onJaveShopCreate(Bundle savedInstanceState)
-    protected void onCreate(Bundle savedInstanceState)
+    protected void onJaveShopCreate(Bundle savedInstanceState)
+    //protected void onCreate(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
+        //super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell_product);
 
         setNavDrawer(new MainNavDrawer(this));
@@ -64,14 +65,27 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         //TODO: agregar campo de categoria
         //TODO: agregar campo de descripción, borrar SellProductPartTwoActivity, ya estamos usando scrollview.
 
-        spinner = (Spinner) findViewById(R.id.activity_sell_product_stateSpinner);
-        spinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"Nuevo", "Usado"}));
+        stateSpinner = (Spinner) findViewById(R.id.activity_sell_product_stateSpinner);
+        stateSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"Nuevo", "Usado"}));
+        categorySpinner = (Spinner) findViewById(R.id.activity_sell_product_categorySpinner);
+        categorySpinner.setAdapter(
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_list_item_1,
+                        new String[]{"Categoría", "Carros, motos", "Inmuebles", "Servicios", "Accesorios para vehículos", "Bebés", "Cámaras y accesorios",
+                        "Celulares y teléfonos", "Coleccionables y hobbies", "Computación", "Consolas y videojuegos", "Deportes y fitness", "Electrodomésticos",
+                        "Electrónica, audio y video", "Hogar y muebles", "Industrias y oficinas", "Instrumentos musicales", "Juegos y juguetes", "Libros, revistas y comics",
+                        "Música, películas y series", "Relojes y joyas", "Ropa y accesorios", "Salud y belleza", "Otra categoría"}));
+
+        /*NumberPicker numberPicker = (NumberPicker) findViewById(R.id.activity_sell_product_numberPicker);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(30);
+        numberPicker.setWrapSelectorWheel(true);*/
 
         adapter = new ImagePagerAdapter(this);
 
         viewPager = (ViewPager) findViewById(R.id.activity_sell_product_pager);
         viewPager.setAdapter(adapter);
-
 
         if (savedInstanceState != null)
         {
@@ -80,6 +94,26 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
             adapter.addAll(outputFiles);
             adapter.notifyDataSetChanged();
         }
+
+        if (adapter.getCount() == 0)
+        {
+            findViewById(R.id.activity_sell_product_pagerContainer).setVisibility(View.GONE);
+        }
+        else
+        {
+            findViewById(R.id.activity_sell_product_pagerContainer).setVisibility(View.VISIBLE);
+        }
+
+        Log.e("SellProductActivity", "onCreate called");
+
+        /*if (outputFiles.size() == 0)
+        {
+            findViewById(R.id.activity_sell_product_pagerContainer).setVisibility(View.GONE);
+        }
+        else
+        {
+            findViewById(R.id.activity_sell_product_pagerContainer).setVisibility(View.VISIBLE);
+        }*/
 
     }
 
@@ -107,6 +141,7 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
 
             case R.id.activity_sell_product_post:
                 //TODO: mandar request de post product
+                //Verificar que la persona no haya dejado "Categoría" seleccionada en el spinner
                 return;
         }
     }
@@ -178,10 +213,15 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         else if (requestCode == Crop.REQUEST_CROP)
         {
             outputFiles.add(Uri.fromFile(tempOutputFiles.get(tempOutputFiles.size() - 1)).toString());
-            //outputFiles.add(tempOutputFiles.get(tempOutputFiles.size() - 1).toString());
             Log.e("SellProductActivity", "Added new image to adapter: " + outputFiles.get(outputFiles.size() - 1));
             adapter.add(outputFiles.get(outputFiles.size() - 1));
             adapter.notifyDataSetChanged();
+            findViewById(R.id.activity_sell_product_pagerContainer).setVisibility(View.VISIBLE);
+
+            if (adapter.getCount() > 0)
+            {
+                viewPager.setCurrentItem(adapter.getCount() - 1);
+            }
         }
     }
 

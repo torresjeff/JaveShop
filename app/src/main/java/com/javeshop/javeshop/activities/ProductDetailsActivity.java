@@ -7,9 +7,12 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.adapters.ImagePagerAdapter;
@@ -55,7 +58,6 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         productDetails = getIntent().getParcelableExtra(EXTRA_PRODUCT_DETAILS);
 
         findViewById(R.id.activity_product_details_buy).setOnClickListener(this);
-        findViewById(R.id.activity_product_details_seeComments).setOnClickListener(this);
         findViewById(R.id.activity_product_details_previousButton).setOnClickListener(this);
         findViewById(R.id.activity_product_details_nextButton).setOnClickListener(this);
 
@@ -72,10 +74,7 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         adapter.addAll(productDetails.getProductImagesUrls());
         adapter.notifyDataSetChanged();
 
-        //TODO: set click listeners a previous y next button. Usar viewPager.setCurrentItem.
-        //TODO: poner el pager n el centro, no compartir espacio con las partes de comprar, etc
 
-        //TODO: poner un view pager para ver las imagenes del producto
 
         name.setText(productDetails.getName());
 
@@ -167,10 +166,35 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
 
                 dialog.show();
                 return;
-            case R.id.activity_product_details_seeComments:
-                //TODO: start ProductCommentsActivity, pasar el id del producto
-                return;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.activity_product_details, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        switch (id)
+        {
+            case R.id.activity_product_details_menu_favorite:
+                //TODO: post MarkAsFavoriteRequest
+                Toast.makeText(this, "Marcado como favorito", Toast.LENGTH_SHORT).show();
+                //bus.post(new Product.MarkAsFavoriteRequest(...));
+                return true;
+            case R.id.activity_product_details_menu_comments:
+                //TODO: start ProductCommentsActivity, post GetProductCommentsRequest desde esa Activity
+                Toast.makeText(this, "Mostrar comentarios", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void nextPage()
