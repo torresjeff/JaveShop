@@ -161,14 +161,27 @@
                     android:inputType="textMultiLine|textCapSentences"
                     android:id="@+id/activity_sell_product_description"/>
 
-                <Button
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:background="#0D47A1"
-                    android:text="Publicar"
-                    android:textColor="#fff"
-                    android:id="@+id/activity_sell_product_post"/>
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:background="#0D47A1"
+                        android:text="Publicar"
+                        android:textColor="#fff"
+                        android:id="@+id/activity_sell_product_post"/>
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:visibility="gone"
+                        android:id="@+id/activity_sell_product_progressBar"/>
+
+                </FrameLayout>
 
             </LinearLayout>
         </ScrollView>

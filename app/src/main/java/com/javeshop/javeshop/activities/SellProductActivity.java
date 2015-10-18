@@ -13,16 +13,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.adapters.ImagePagerAdapter;
-import com.javeshop.javeshop.dialogs.ChangePasswordDialog;
 import com.javeshop.javeshop.dialogs.QuantityDialog;
 import com.javeshop.javeshop.services.Product;
 import com.javeshop.javeshop.services.entities.ProductDetails;
-import com.javeshop.javeshop.services.entities.ProductDetailsSell;
 import com.javeshop.javeshop.views.MainNavDrawer;
 import com.soundcloud.android.crop.Crop;
 import com.squareup.otto.Subscribe;
@@ -54,6 +53,7 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
     private ArrayList<String> outputFiles;
     private ImagePagerAdapter adapter;
     private ViewPager viewPager;
+    private ProgressBar progressBar;
 
     private int quantity;
     //private boolean isFileCreated;
@@ -81,6 +81,7 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         price = (EditText) findViewById(R.id.activity_sell_product_price);
         description = (EditText) findViewById(R.id.activity_sell_product_description);
 
+        progressBar = (ProgressBar) findViewById(R.id.activity_sell_product_progressBar);
         //TODO: agregar campo de categoria
         //TODO: agregar campo de descripción, borrar SellProductPartTwoActivity, ya estamos usando scrollview.
 
@@ -135,6 +136,7 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
     @Subscribe
     public void onProductPosted(Product.PostProductResponse response)
     {
+        progressBar.setVisibility(View.GONE);
         if (!response.succeeded())
         {
             response.showErrorToast(this);
@@ -161,22 +163,16 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         switch (id)
         {
             case R.id.activity_sell_product_previousButton:
-                Log.e("SellProduct", "currentItem = " + viewPager.getCurrentItem());
                 previousPage();
-
                 return;
             case R.id.activity_sell_product_nextButton:
-                Log.e("SellProduct", "currentItem = " + viewPager.getCurrentItem());
                 nextPage();
-
                 return;
             case R.id.activity_sell_product_takePictureButton:
                 addPicture();
                 return;
 
             case R.id.activity_sell_product_post:
-                //TODO: mandar request de post product
-                //Verificar que la persona no haya dejado "Categoría" seleccionada en el spinner
                 if (name.getText().toString().isEmpty())
                 {
                     name.setError("Ingresa el nombre del producto");
@@ -209,6 +205,8 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
                         Float.parseFloat(price.getText().toString()),
                         quantity,
                         stateSpinner.getSelectedItemPosition());
+
+                progressBar.setVisibility(View.VISIBLE);
 
                 bus.post(new Product.PostProductRequest(productDetails));
                 return;

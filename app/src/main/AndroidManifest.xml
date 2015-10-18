@@ -38,6 +38,8 @@
         
         <activity android:name=".activities.PostProductSuccessActivity" />
 
+        <activity android:name=".activities.ProductCommentsActivity" />
+
     </application>
 
 </manifest>

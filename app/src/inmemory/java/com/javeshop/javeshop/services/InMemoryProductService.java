@@ -1,6 +1,7 @@
 package com.javeshop.javeshop.services;
 
 import com.javeshop.javeshop.infrastructure.JaveShopApplication;
+import com.javeshop.javeshop.services.entities.ProductComment;
 import com.javeshop.javeshop.services.entities.ProductDetails;
 import com.squareup.otto.Subscribe;
 
@@ -26,10 +27,10 @@ public class InMemoryProductService extends BaseInMemoryService
         for (int i = 0; i < request.query.length(); ++i)
         {
             ArrayList<String> images = new ArrayList<>();
-            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=200");
-            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+1) + "?d=identicon&s=200");
-            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+2) + "?d=identicon&s=200");
-            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+3) + "?d=identicon&s=200");
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=600");
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+1) + "?d=identicon&s=600");
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+2) + "?d=identicon&s=600");
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+3) + "?d=identicon&s=600");
             response.products.add(
                     new ProductDetails(
                             i,
@@ -38,7 +39,7 @@ public class InMemoryProductService extends BaseInMemoryService
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
                                     "Phasellus fermentum odio mauris, ac lacinia quam elementum quis. " +
                                     "Vestibulum feugiat arcu.",
-                            "http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=200",
+                            "http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=600",
                             images, 10000*(i+1), i, i%2));
         }
 
@@ -55,5 +56,33 @@ public class InMemoryProductService extends BaseInMemoryService
     public void postProduct(Product.PostProductRequest request)
     {
         postDelayed(new Product.PostProductResponse(), 1000, 2000);
+    }
+
+    @Subscribe
+    public void markAsFavorite(Product.MarkAsFavoriteRequest request)
+    {
+        postDelayed(new Product.MarkAsFavoriteResponse(), 200, 300);
+    }
+
+    @Subscribe
+    public void getComments(Product.GetProductCommentsRequest request)
+    {
+        Product.GetProductCommentsResponse response = new Product.GetProductCommentsResponse();
+        response.comments = new ArrayList<>();
+
+        for (int i = 0; i < 5; ++i)
+        {
+            response.comments.add(new ProductComment(request.productId, i, 0, "Pregunta " + i, 1, i %2 == 0 ? "Respuesta " + i : null));
+        }
+
+        postDelayed(response);
+    }
+
+    @Subscribe
+    public void postComment(Product.SendCommentRequest request)
+    {
+        Product.SendCommentResponse response = new Product.SendCommentResponse();
+        response.comment = request.comment;
+        postDelayed(response);
     }
 }

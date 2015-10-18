@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -136,6 +137,19 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         }
     }
 
+    @Subscribe
+    public void onMarkedAsFavorite(Product.MarkAsFavoriteResponse response)
+    {
+        if (!response.succeeded())
+        {
+            response.showErrorToast(this);
+            return;
+        }
+
+        //TODO: cuando este marcado como favorito y se vuelva a press el boton, se debe eliminar de los favoritos.
+        Toast.makeText(this, "Agregado a tus favoritos", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onClick(View view)
     {
@@ -185,12 +199,14 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         {
             case R.id.activity_product_details_menu_favorite:
                 //TODO: post MarkAsFavoriteRequest
-                Toast.makeText(this, "Marcado como favorito", Toast.LENGTH_SHORT).show();
-                //bus.post(new Product.MarkAsFavoriteRequest(...));
+                //Toast.makeText(this, "Marcado como favorito", Toast.LENGTH_SHORT).show();
+                bus.post(new Product.MarkAsFavoriteRequest(application.getAuth().getUser().getId(), productDetails.getId()));
                 return true;
             case R.id.activity_product_details_menu_comments:
                 //TODO: start ProductCommentsActivity, post GetProductCommentsRequest desde esa Activity
-                Toast.makeText(this, "Mostrar comentarios", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, ProductCommentsActivity.class);
+                intent.putExtra(EXTRA_PRODUCT_DETAILS, productDetails);
+                startActivity(intent);
                 return true;
         }
 
