@@ -12,6 +12,20 @@ public class Product
     private Product()
     {}
 
+    public static class PostProductRequest
+    {
+        public ProductDetails productDetails;
+
+        public PostProductRequest(ProductDetails productDetails)
+        {
+            this.productDetails = productDetails;
+        }
+    }
+
+    public static class PostProductResponse extends ServiceResponse
+    {
+    }
+
     public static class SearchProductRequest
     {
         public String query;
@@ -24,6 +38,7 @@ public class Product
 
     public static class SearchProductResponse extends ServiceResponse
     {
+        public String query;
         public List<ProductDetails> products;
     }
 
@@ -41,6 +56,16 @@ public class Product
 
     public static class BuyProductResponse extends ServiceResponse
     {
+    }
+
+    public static class QuantityChanged
+    {
+        public int value;
+
+        public QuantityChanged(int value)
+        {
+            this.value = value;
+        }
     }
 
 }
