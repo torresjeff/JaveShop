@@ -20,6 +20,7 @@ public class InMemoryProductService extends BaseInMemoryService
     public void searchProduct(Product.SearchProductRequest request)
     {
         Product.SearchProductResponse response = new Product.SearchProductResponse();
+        response.query = request.query;
         response.products = new ArrayList<>();
 
         for (int i = 0; i < request.query.length(); ++i)
@@ -48,5 +49,11 @@ public class InMemoryProductService extends BaseInMemoryService
     public void buyProduct(Product.BuyProductRequest request)
     {
         postDelayed(new Product.BuyProductResponse(), 1000, 2000);
+    }
+
+    @Subscribe
+    public void postProduct(Product.PostProductRequest request)
+    {
+        postDelayed(new Product.PostProductResponse(), 1000, 2000);
     }
 }

@@ -28,6 +28,17 @@ public class ProductDetails implements Parcelable
         productImagesUrls = new ArrayList<>();
     }
 
+    public ProductDetails(int ownerId, String name, String description, ArrayList<String> productImagesUrls, float price, int quantity, int state)
+    {
+        this.ownerId = ownerId;
+        this.name = name;
+        this.description = description;
+        this.productImagesUrls = productImagesUrls;
+        this.price = price;
+        this.quantity = quantity;
+        this.state = state;
+    }
+
     public ProductDetails(int id, int ownerId, String name, String description, String mainImageUrl, ArrayList<String> productImagesUrls, float price, int quantity, int state)
     {
         this.id = id;

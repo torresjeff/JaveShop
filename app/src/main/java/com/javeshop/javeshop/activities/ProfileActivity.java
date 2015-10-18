@@ -24,6 +24,7 @@ import com.javeshop.javeshop.infrastructure.User;
 import com.javeshop.javeshop.services.Account;
 import com.javeshop.javeshop.views.MainNavDrawer;
 import com.soundcloud.android.crop.Crop;
+import com.soundcloud.android.crop.CropImageActivity;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
@@ -213,11 +214,12 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
             else
                 outputFile = tempFileUri;
-
-            new Crop(outputFile)
+            Crop.pickImage(this);
+            Crop.of(outputFile, tempFileUri).asSquare().start(this);
+            /*new Crop(outputFile)
                     .asSquare()
                     .output(tempFileUri)
-                    .start(this);
+                    .start(this);*/
         }
 
         else if (requestCode == Crop.REQUEST_CROP)

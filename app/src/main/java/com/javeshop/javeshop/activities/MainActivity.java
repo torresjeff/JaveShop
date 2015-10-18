@@ -32,6 +32,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
     private View progressFrame;
     private SearchView searchView;
     private ProductDetailsAdapter adapter;
+    private String lastQuery;
 
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
@@ -60,6 +61,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
             {
                 //TODO: mandar SearchProductRequest al server
                 progressFrame.setVisibility(View.VISIBLE);
+                lastQuery = query;
                 bus.post(new Product.SearchProductRequest(query));
                 return true;
             }
@@ -95,6 +97,11 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
     @Subscribe
     public void onProductSearched(Product.SearchProductResponse response)
     {
+        if (!response.query.equals(lastQuery))
+        {
+            return;
+        }
+
         progressFrame.setVisibility(View.GONE);
 
         if (!response.succeeded())
