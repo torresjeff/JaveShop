@@ -74,6 +74,7 @@ public class ImagePagerAdapter extends PagerAdapter
 
         Log.e(TAG, "Attempting to load " + stringArray[position]);
         //TODO: picasso no sirve con local images cuando se utiliza resize. No muestra la imagen en el viewpager
+        imageView.setImageResource(0);
         Picasso.with(context).load(Uri.parse(stringArray[position]))/*.resize(200, 200).centerCrop()*/.into(imageView);
 
         container.addView(itemView);

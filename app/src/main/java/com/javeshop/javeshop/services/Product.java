@@ -1,5 +1,6 @@
 package com.javeshop.javeshop.services;
 
+import com.javeshop.javeshop.services.entities.ProductComment;
 import com.javeshop.javeshop.services.entities.ProductDetails;
 
 import java.util.List;
@@ -58,6 +59,23 @@ public class Product
     {
     }
 
+    public static class MarkAsFavoriteRequest
+    {
+        public int userId;
+        public int productId;
+
+        public MarkAsFavoriteRequest(int userId, int productId)
+        {
+            this.userId = userId;
+            this.productId = productId;
+        }
+    }
+
+    public static class MarkAsFavoriteResponse extends ServiceResponse
+    {
+        //TODO: este response debe responder con un id diciendo si fue agregado o eliminado
+    }
+
     public static class QuantityChanged
     {
         public int value;
@@ -68,4 +86,31 @@ public class Product
         }
     }
 
+    public static class GetProductCommentsRequest
+    {
+        public int productId;
+        public GetProductCommentsRequest(int productId)
+        {
+            this.productId = productId;
+        }
+    }
+
+    public static class GetProductCommentsResponse extends ServiceResponse
+    {
+        public List<ProductComment> comments;
+    }
+
+    public static class SendCommentRequest
+    {
+        public ProductComment comment;
+        public SendCommentRequest(ProductComment comment)
+        {
+            this.comment = comment;
+        }
+    }
+
+    public static class SendCommentResponse extends ServiceResponse
+    {
+        public ProductComment comment;
+    }
 }
