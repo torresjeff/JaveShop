@@ -47,11 +47,13 @@ public class Product
     {
         public int buyerId;
         public float productId;
+        public int quantity;
 
-        public BuyProductRequest(int buyerId, float productId)
+        public BuyProductRequest(int buyerId, float productId, int quantity)
         {
             this.buyerId = buyerId;
             this.productId = productId;
+            this.quantity = quantity;
         }
     }
 

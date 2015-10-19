@@ -40,7 +40,7 @@ public class InMemoryProductService extends BaseInMemoryService
                                     "Phasellus fermentum odio mauris, ac lacinia quam elementum quis. " +
                                     "Vestibulum feugiat arcu.",
                             "http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=600",
-                            images, 10000*(i+1), i, i%2));
+                            images, 10000*(i+1), i+1, i%2));
         }
 
         postDelayed(response, 1000, 2000);

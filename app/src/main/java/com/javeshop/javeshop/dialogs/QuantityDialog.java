@@ -15,7 +15,10 @@ import com.javeshop.javeshop.services.Product;
  */
 public class QuantityDialog extends BaseDialogFragment
 {
+    public static final String MAX_QUANTITY = "MAX_QUANTITY";
     private NumberPicker numberPicker;
+    private int maxQuantity;
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -26,6 +29,13 @@ public class QuantityDialog extends BaseDialogFragment
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(30);
         numberPicker.setWrapSelectorWheel(true);
+
+        Bundle args = getArguments();
+
+        if (args != null)
+        {
+            numberPicker.setMaxValue(args.getInt(MAX_QUANTITY, 1));
+        }
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setView(dialogView)
@@ -39,7 +49,7 @@ public class QuantityDialog extends BaseDialogFragment
                     }
                 })
                 .setNegativeButton("Cancelar", null)
-                .setTitle("Unidades disponibles")
+                .setTitle("Unidades")
                 .show();
 
         return dialog;

@@ -16,7 +16,7 @@ import com.squareup.otto.Subscribe;
 /**
  * Created by Jeffrey Torres on 12/10/2015.
  */
-public class ChangePasswordDialog extends BaseDialogFragment
+public class ChangePasswordDialog extends BaseDialogFragment implements View.OnClickListener
 {
     private EditText currentPassword;
     private EditText newPassword;
@@ -36,23 +36,12 @@ public class ChangePasswordDialog extends BaseDialogFragment
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setView(dialogView)
-                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
-                {
-                    //TODO: no funciona correctamente el click
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i)
-                    {
-                        /*progressDialog = new ProgressDialog.Builder(getActivity())
-                                .setTitle("Cambiando contraseña")
-                                .setCancelable(false)
-                                .show();*/
-
-                        bus.post(new Account.ChangePasswordRequest(currentPassword.getText().toString(), newPassword.getText().toString(), confirmNewPassword.getText().toString()));
-                    }
-                })
+                .setPositiveButton("Aceptar",null)
                 .setNegativeButton("Cancelar", null)
                 .setTitle("Cambiar contraseña")
                 .show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(this);
 
         return dialog;
     }
@@ -61,8 +50,8 @@ public class ChangePasswordDialog extends BaseDialogFragment
     @Subscribe
     public void onPasswordUpdated(Account.ChangePasswordResponse response)
     {
-        //progressDialog.dismiss();
-        //progressDialog = null;
+        progressDialog.dismiss();
+        progressDialog = null;
 
         if (response.succeeded())
         {
@@ -76,5 +65,16 @@ public class ChangePasswordDialog extends BaseDialogFragment
         confirmNewPassword.setError(response.getPropertyError("confirmNewPassword"));
 
         response.showErrorToast(getActivity());
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+       progressDialog = new ProgressDialog.Builder(getActivity())
+                                .setTitle("Cambiando contraseña")
+                                .setCancelable(false)
+                                .show();
+
+        bus.post(new Account.ChangePasswordRequest(currentPassword.getText().toString(), newPassword.getText().toString(), confirmNewPassword.getText().toString()));
     }
 }

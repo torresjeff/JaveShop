@@ -2,6 +2,7 @@ package com.javeshop.javeshop.activities;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.adapters.ImagePagerAdapter;
+import com.javeshop.javeshop.dialogs.QuantityDialog;
 import com.javeshop.javeshop.infrastructure.User;
 import com.javeshop.javeshop.services.Product;
 import com.javeshop.javeshop.services.entities.ProductDetails;
@@ -109,7 +111,7 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         }
     }
 
-    public void setProgressBarVisible(boolean newVisible)
+    private void setProgressBarVisible(boolean newVisible)
     {
         if (newVisible)
         {
@@ -166,30 +168,32 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
                 nextPage();
                 return;
             case R.id.activity_product_details_buy:
-                AlertDialog dialog = new AlertDialog.Builder(this)
-                        .setTitle("¿Estás seguro que deseas comprar este producto?")
-                        .setPositiveButton("Si", new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i)
-                            {
-                                User user = application.getAuth().getUser();
-                                bus.post(new Product.BuyProductRequest(user.getId(), productDetails.getId()));
-                                setProgressBarVisible(true);
-                            }
-                        })
-                        .setNegativeButton("No", null)
-                        .create();
-
-                dialog.show();
+                buy();
                 return;
             case R.id.activity_product_details_vendor:
                 Intent intent = new Intent(this, UserDetailsActivity.class);
                 intent.putExtra(UserDetailsActivity.EXTRA_USER_ID, productDetails.getOwnerId());
-
                 startActivity(intent);
                 return;
         }
+    }
+
+    private void buy()
+    {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(null);
+        QuantityDialog dialog = new QuantityDialog();
+        Bundle bundle = new Bundle();
+        bundle.putInt(QuantityDialog.MAX_QUANTITY, productDetails.getQuantity());
+        dialog.setArguments(bundle);
+        dialog.show(transaction, null);
+    }
+
+    @Subscribe
+    public void onQuantitySelected(Product.QuantityChanged quantity)
+    {
+        User user = application.getAuth().getUser();
+        bus.post(new Product.BuyProductRequest(user.getId(), productDetails.getId(), quantity.value));
+        setProgressBarVisible(true);
     }
 
     @Override
