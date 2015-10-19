@@ -139,6 +139,8 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
     public void onProductPosted(Product.PostProductResponse response)
     {
         progressBar.setVisibility(View.GONE);
+        postButton.setEnabled(true);
+
         if (!response.succeeded())
         {
             response.showErrorToast(this);
@@ -208,9 +210,11 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
                         quantity,
                         stateSpinner.getSelectedItemPosition());
 
-                progressBar.setVisibility(View.VISIBLE);
 
                 bus.post(new Product.PostProductRequest(productDetails));
+
+                progressBar.setVisibility(View.VISIBLE);
+                postButton.setEnabled(false);
                 return;
             case R.id.activity_sell_product_quantityButton:
                 FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(null);
