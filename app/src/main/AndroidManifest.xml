@@ -40,6 +40,8 @@
 
         <activity android:name=".activities.ProductCommentsActivity" />
 
+        <activity android:name=".activities.FavoritesActivity" />
+
     </application>
 
 </manifest>

@@ -54,6 +54,7 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
     private ImagePagerAdapter adapter;
     private ViewPager viewPager;
     private ProgressBar progressBar;
+    private Button postButton;
 
     private int quantity;
     //private boolean isFileCreated;
@@ -73,7 +74,8 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         outputFiles = new ArrayList<>();
 
         findViewById(R.id.activity_sell_product_takePictureButton).setOnClickListener(this);
-        findViewById(R.id.activity_sell_product_post).setOnClickListener(this);
+        postButton = (Button) findViewById(R.id.activity_sell_product_post);
+        postButton.setOnClickListener(this);
         findViewById(R.id.activity_sell_product_nextButton).setOnClickListener(this);
         findViewById(R.id.activity_sell_product_previousButton).setOnClickListener(this);
 

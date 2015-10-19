@@ -113,4 +113,19 @@ public class Product
     {
         public ProductComment comment;
     }
+
+    public static class GetFavoritesRequest
+    {
+        public int userId;
+
+        public GetFavoritesRequest(int userId)
+        {
+            this.userId = userId;
+        }
+    }
+
+    public static class GetFavoritesResponse extends ServiceResponse
+    {
+        public List<ProductDetails> products;
+    }
 }

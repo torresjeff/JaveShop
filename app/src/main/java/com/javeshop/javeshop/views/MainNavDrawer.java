@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.activities.BaseActivity;
+import com.javeshop.javeshop.activities.FavoritesActivity;
 import com.javeshop.javeshop.activities.MainActivity;
 import com.javeshop.javeshop.activities.ProfileActivity;
 import com.javeshop.javeshop.activities.SellProductActivity;
@@ -33,6 +34,7 @@ public class MainNavDrawer extends NavDrawer
         //Agregamos aqui los items que queramos que aparezcan en el NavDrawer
 
         addItem(new ActivityNavDrawerItem(MainActivity.class, "Búsqueda", 0, R.drawable.ic_search_black_24dp, R.id.include_main_nav_drawer_topItemsContainer));
+        addItem(new ActivityNavDrawerItem(FavoritesActivity.class, "Mis favoritos", 0, R.drawable.ic_favorite_black_24dp, R.id.include_main_nav_drawer_topItemsContainer));
         addItem(new ActivityNavDrawerItem(SellProductActivity.class, "Vender", 0, R.drawable.ic_attach_money_black_24dp, R.id.include_main_nav_drawer_topItemsContainer));
         addItem(new ActivityNavDrawerItem(ProfileActivity.class, "Mi cuenta", 0, R.drawable.ic_person_black_24dp, R.id.include_main_nav_drawer_topItemsContainer));
 
