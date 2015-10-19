@@ -36,7 +36,7 @@ public class ChangePasswordDialog extends BaseDialogFragment
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setView(dialogView)
-                .setPositiveButton("Cambiar", new DialogInterface.OnClickListener()
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
                 {
                     //TODO: no funciona correctamente el click
                     @Override
