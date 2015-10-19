@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -65,8 +66,10 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         name = (TextView) findViewById(R.id.activity_product_details_name);
         state = (TextView) findViewById(R.id.activity_product_details_state);
         price = (TextView) findViewById(R.id.activity_product_details_price);
-        vendor = (TextView) findViewById(R.id.activity_product_details_vendor);
         description = (TextView) findViewById(R.id.activity_product_details_description);
+        vendor = (TextView) findViewById(R.id.activity_product_details_vendor);
+        vendor.setPaintFlags(vendor.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        vendor.setOnClickListener(this);
 
         adapter = new ImagePagerAdapter(this);
 
@@ -179,6 +182,12 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
                         .create();
 
                 dialog.show();
+                return;
+            case R.id.activity_product_details_vendor:
+                Intent intent = new Intent(this, UserDetailsActivity.class);
+                intent.putExtra(UserDetailsActivity.EXTRA_USER_ID, productDetails.getOwnerId());
+
+                startActivity(intent);
                 return;
         }
     }
