@@ -14,7 +14,7 @@ import com.javeshop.javeshop.views.MainNavDrawer;
 import com.squareup.otto.Subscribe;
 
 /**
- * Created by Jeffrey Torres on 18/10/2015.
+ * Esta Actividad se encarga de mostrarle a un usuario todos los productos que ha marcado como favoritos.
  */
 public class FavoritesActivity extends BaseAuthenticatedActivity implements AdapterView.OnItemClickListener
 {
@@ -22,6 +22,10 @@ public class FavoritesActivity extends BaseAuthenticatedActivity implements Adap
     private View progressBar;
     ListView listView;
 
+    /**
+     * Infla la interfaz de la Actividad.
+     * @param savedInstanceState
+     */
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
     {
@@ -41,6 +45,10 @@ public class FavoritesActivity extends BaseAuthenticatedActivity implements Adap
         bus.post(new Product.GetFavoritesRequest(application.getAuth().getUser().getId()));
     }
 
+    /**
+     * Callback. Esta funcion es llamada automaticamente cuando el servidor ha respondido con los favoritos del usuario.
+     * @param response
+     */
     @Subscribe
     public void onFavoritesLoaded(Product.GetFavoritesResponse response)
     {
@@ -62,6 +70,13 @@ public class FavoritesActivity extends BaseAuthenticatedActivity implements Adap
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Responde a eventos clicks/touch en la lista de productos.
+     * @param parent el contenedor de la lista.
+     * @param view el View que fue clicked.
+     * @param position la posicion en la lista del elemento que fue clicked.
+     * @param id id del elemento que fue clicked.
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {

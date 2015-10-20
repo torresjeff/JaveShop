@@ -14,7 +14,7 @@ import com.javeshop.javeshop.services.entities.ProductDetails;
 import com.squareup.otto.Subscribe;
 
 /**
- * Created by Jeffrey Torres on 18/10/2015.
+ * Esta Actividad muestra los comentarios de un producto en especifico.
  */
 public class ProductCommentsActivity extends BaseAuthenticatedActivity implements View.OnClickListener
 {
@@ -24,6 +24,11 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
     private Button postButton;
 
     private ProductCommentsAdapter adapter;
+
+    /**
+     * Infla la interfaz de la Actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
     {
@@ -49,6 +54,10 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
         progressBar.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Callback. Esta funcion se llama automaticamente cuando el servidor ha respondido con todos los comentarios del producto.
+     * @param response
+     */
     @Subscribe
     public void onCommentsLoaded(Product.GetProductCommentsResponse response)
     {
@@ -63,6 +72,10 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Callback. Esta funcion se llama automaticamente cuando el servidor ha respondido, luego de que el usuario ha hecho un comentario. Se llama para reflejar el cambio en la interfaz, agregando el nuevo comentario a la lista.
+     * @param response
+     */
     @Subscribe
     public void onCommentPosted(Product.SendCommentResponse response)
     {

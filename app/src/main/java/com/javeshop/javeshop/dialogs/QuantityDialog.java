@@ -11,7 +11,7 @@ import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.services.Product;
 
 /**
- * Created by Jeffrey Torres on 17/10/2015.
+ * Dialogo que permite al usuario ingresar cuantas unidades de un producto hay disponibles o cuantas quiere comprar.
  */
 public class QuantityDialog extends BaseDialogFragment
 {
@@ -19,7 +19,11 @@ public class QuantityDialog extends BaseDialogFragment
     private NumberPicker numberPicker;
     private int maxQuantity;
 
-
+    /**
+     * Infla la itnerfaz del Dialog.
+     * @param savedInstanceState
+     * @return instancia del Dialog.
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {

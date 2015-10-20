@@ -8,13 +8,14 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
- * Created by Jeffrey Torres on 12/10/2015.
+ * Clase base para todas las respuestas del servidor.
+ * Esta clase contiene la informacion minima con la que el servidor debe responder (descripcion de errores, si el error fue critico, etc)
  */
 public class ServiceResponse
 {
     private static final String TAG = "ServiceResponse";
 
-    private String operationError; //Error que ocurre a escal de operacion. Por ejemplo, una imagen no se puede subir al servidor, no hay internet, etc.
+    private String operationError; //Error que ocurre a escals de operacion. Por ejemplo, una imagen no se puede subir al servidor, no hay internet, etc.
     private HashMap<String, String> propertyErrors;  //Errores de validacion. Por ejemplo, el nombre es muy largo, el email no tenia un formato correcto
     private boolean isCritical; //El error es critico. Por ejemplo, no hay internet.
 
@@ -75,6 +76,10 @@ public class ServiceResponse
         return (operationError == null || operationError.isEmpty()) && (propertyErrors.size() == 0);
     }
 
+    /**
+     * Muestra una notificacion al usuario en caso de que el request que haya hecho no haya sido satisfactorio.
+     * @param context
+     */
     public void showErrorToast(Context context)
     {
         if (context == null || operationError == null || operationError.isEmpty())

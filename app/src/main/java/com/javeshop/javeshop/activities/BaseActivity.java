@@ -12,7 +12,9 @@ import com.javeshop.javeshop.views.NavDrawer;
 import com.squareup.otto.Bus;
 
 /**
- * Created by Jeffrey Torres on 11/10/2015.
+ * La Actividad Base para toda la aplicación. Todas las Actividades que componen JaveShop extienden de BaseActivity de manera directa o indirecta.
+ * Esta Actividad se encarga de que todas las demas Actividades tengan la unica instancia de la aplicacion {@link com.javeshop.javeshop.infrastructure.JaveShopApplication}, que tengan acceso al bus de eventos, y que tengan la opcion de agregar un Toolbar.
+ * Las Actividades que extienden a BaseActivity de manera directa no requieren que el usuario tenga una sesion inciada o que este registrado para poder interactuar con ellas.
  */
 public abstract class BaseActivity extends AppCompatActivity
 {
@@ -22,7 +24,10 @@ public abstract class BaseActivity extends AppCompatActivity
     protected NavDrawer navDrawer;
     protected Bus bus;
 
-
+    /**
+     * Al momento que se crea esta Actividad, se encarga de guardar una referencia a JaveShopApplication, instanciar el bus de eventos y registrarse al mismo.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -35,6 +40,10 @@ public abstract class BaseActivity extends AppCompatActivity
         isRegisteredWithBus = true;
     }
 
+
+    /**
+     * Cuando termina esta Actividad, se elimina del bus de eventos para no seguir recibiendo eventos.
+     */
     @Override
     public void finish()
     {
@@ -47,18 +56,9 @@ public abstract class BaseActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-    }
-
+    /**
+     * Cuando se destruye esta Actividad, se elimina del bus de eventos para no seguir recibiendo eventos y ademas destruye el NavDrawer si existe.
+     */
     @Override
     protected void onDestroy()
     {
@@ -77,6 +77,10 @@ public abstract class BaseActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Infla la interfaz de la Actividad. Además se encarga de fijar el Toolbar en caso de que exista.
+     * @param layoutResId el identificador unico de la interfaz.
+     */
     @Override
     public void setContentView(@LayoutRes int layoutResId)
     {
@@ -84,7 +88,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
         toolbar = (Toolbar)findViewById(R.id.include_toolbar);
 
-        //If we defined a toolbar, then set it as our action bar
+        //Si definimos un toolbar, lo usamos como ActionBar
         if (toolbar != null)
         {
             setSupportActionBar(toolbar);

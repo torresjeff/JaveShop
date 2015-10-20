@@ -8,12 +8,16 @@ import com.javeshop.javeshop.R;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by Jeffrey Torres on 15/10/2015.
+ * Esta Actividad muestra en pantalla completa la imagen de un producto.
  */
 public class ProductImageActivity extends BaseActivity
 {
     public static final String EXTRA_IMAGE = "EXTRA_IMAGE";
 
+    /**
+     * Infla la interfaz de la Actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

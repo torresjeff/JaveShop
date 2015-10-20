@@ -16,7 +16,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
- * Created by Jeffrey Torres on 14/10/2015.
+ * Adapter que permite mostrar los detalles de un producto en un ListView.
  */
 public class ProductDetailsAdapter extends ArrayAdapter<ProductDetails>
 {
@@ -28,7 +28,13 @@ public class ProductDetailsAdapter extends ArrayAdapter<ProductDetails>
         inflater = activity.getLayoutInflater();
     }
 
-    //Returns an instantiated view that will be used for each individual row in the listView
+    /**
+     * Se encarga de instanciar los elementos de una fila para un ListView.
+     * @param position posicion dentro de la lista.
+     * @param convertView para reciclar una fila que esta fuera del rango.
+     * @param parent el contenedor del elemento.
+     * @return instancia un view para ser usado en cada fila individual del ListView.
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
@@ -71,6 +77,9 @@ public class ProductDetailsAdapter extends ArrayAdapter<ProductDetails>
         return convertView;
     }
 
+    /**
+     * Contiene los elementos graficos que componen cada fila.
+     */
     private class ViewHolder
     {
         public TextView name;

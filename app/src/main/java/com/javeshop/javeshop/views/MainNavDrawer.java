@@ -18,13 +18,13 @@ import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by Jeffrey Torres on 12/10/2015.
+ * El NavDrawer que utilizaran algunas Actividades de JaveShop.
  */
 public class MainNavDrawer extends NavDrawer
 {
-    //The name of the user inside the nav drawer
+    //El nombre del usuario
     private final TextView displayName;
-    //Avatar que se mustra en la parte de arriba del NavDrawer
+    //Avatar que se muestra en la parte de arriba del NavDrawer
     private final ImageView avatar;
 
     //Add all items (NavDrawerItems) of the NavDrawer here
@@ -61,6 +61,10 @@ public class MainNavDrawer extends NavDrawer
         Picasso.with(activity).load(loggedInUser.getAvatarUrl()).into(avatar);
     }
 
+    /**
+     * Callback. Se llama automaticamente cuando el usuario actualiza sus datos personales, para reflejar su nuevo nombre/avatar en el NavDrawer.
+     * @param event
+     */
     @Subscribe
     public void onUserDetailsUpdated(Account.UserDetailsUpdatedEvent event)
     {

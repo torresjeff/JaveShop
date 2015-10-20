@@ -33,13 +33,13 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by Jeffrey Torres on 14/10/2015.
+ * Esta Actividad muestra los detalles de un producto seleccionado.
  */
 public class ProductDetailsActivity extends BaseAuthenticatedActivity implements View.OnClickListener
 {
     public static final String EXTRA_PRODUCT_DETAILS = "EXTRA_PRODUCT_DETAILS";
 
-    ProductDetails productDetails;
+    private ProductDetails productDetails;
 
     private TextView name;
     private TextView state;
@@ -53,6 +53,10 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
     private boolean progressBarVisible;
     private ViewPager viewPager;
 
+    /**
+     * Infla la interfaz de la Actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
     {
@@ -103,7 +107,6 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         vendor.setText("Vendedor " + productDetails.getOwnerId());
         description.setText(productDetails.getDescription());
 
-        //TODO: poner el nombre del vendedor del producto. Traer el id del vendedor cuando se selecciona un producto?
 
         //Picasso.with(this).load(productDetails.getMainImageUrl()).into(currentImage);
 
@@ -113,6 +116,10 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         }
     }
 
+    /**
+     * Muestra un Dialog que le da retroalimentacion al usuario para que sepa que se esta finalizando la transaccion.
+     * @param newVisible
+     */
     private void setProgressBarVisible(boolean newVisible)
     {
         if (newVisible)
@@ -132,6 +139,10 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         this.progressBarVisible = newVisible;
     }
 
+    /**
+     * Callback. Esta funcion se llama automaticamente luego de que el servidor responde afirmativa o negativamente al realizar la transaccion.
+     * @param response respuesta del servidor.
+     */
     @Subscribe
     public void onTransactionCompleted(Product.BuyProductResponse response)
     {
@@ -147,6 +158,11 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         finish();
     }
 
+
+    /**
+     * Callback. Esta funcion se llama luego de que el servidor ha procesado la solicitud de marcar a un producto como favorito por parte de un usuario.
+     * @param response respuesta del servidor.
+     */
     @Subscribe
     public void onMarkedAsFavorite(Product.MarkAsFavoriteResponse response)
     {
@@ -160,6 +176,10 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         Toast.makeText(this, "Agregado a tus favoritos", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Responde a eventos de clicks/touch.
+     * @param view el View que fue tocado.
+     */
     @Override
     public void onClick(View view)
     {
@@ -183,6 +203,9 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         }
     }
 
+    /**
+     * Esta funcion se encarga de empezar la transaccion, y enviar el request al servidor. El servidor determina si el usuario puede comprar o no dependiendo de su saldo.
+     */
     private void buy()
     {
         FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(null);
@@ -193,6 +216,10 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         dialog.show(transaction, null);
     }
 
+    /**
+     * Callback. Determina las unidades que va a comprar un usuario.
+     * @param quantity unidades que el usuario va a comprar.
+     */
     @Subscribe
     public void onQuantitySelected(Product.QuantityChanged quantity)
     {
@@ -201,6 +228,11 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         setProgressBarVisible(true);
     }
 
+    /**
+     * Crea el menu de opciones
+     * @param menu el menu que se va a inflar.
+     * @return true si el menu fue creado satisfactoriamente.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -208,6 +240,11 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         return true;
     }
 
+    /**
+     * Responde a eventos del menu (click/touch en las opciones del menu)
+     * @param item el item que fue clicked.
+     * @return true si se respondio al evento.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -231,6 +268,9 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Cambia la pagina del ViewPager a la pagina siguiente para poder ver una otra imagen.
+     */
     private void nextPage()
     {
         if (adapter.getCount() == 0)
@@ -250,6 +290,9 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         }
     }
 
+    /**
+     * Cambia la pagina del ViewPager a la pagina anterior para poder ver una otra imagen.
+     */
     private void previousPage()
     {
         if (adapter.getCount() == 0)

@@ -14,7 +14,7 @@ import com.javeshop.javeshop.services.Account;
 import com.squareup.otto.Subscribe;
 
 /**
- * Created by Jeffrey Torres on 12/10/2015.
+ * Muestra al usuario un dialogo que permite cambiar su contrasena.
  */
 public class ChangePasswordDialog extends BaseDialogFragment implements View.OnClickListener
 {
@@ -23,6 +23,11 @@ public class ChangePasswordDialog extends BaseDialogFragment implements View.OnC
     private EditText confirmNewPassword;
     private Dialog progressDialog;
 
+    /**
+     * Infla la itnerfaz del Dialog.
+     * @param savedInstanceState
+     * @return instancia del Dialog.
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -46,7 +51,10 @@ public class ChangePasswordDialog extends BaseDialogFragment implements View.OnC
         return dialog;
     }
 
-
+    /**
+     * Callback. Se llama automaticamente cuando el servidor responde si la contrasena fue actualizada o no.
+     * @param response respuesta del servidor.
+     */
     @Subscribe
     public void onPasswordUpdated(Account.ChangePasswordResponse response)
     {
@@ -67,8 +75,12 @@ public class ChangePasswordDialog extends BaseDialogFragment implements View.OnC
         response.showErrorToast(getActivity());
     }
 
+    /**
+     * Responde a eventos de clicks/touch.
+     * @param view el View que fue tocado.
+     */
     @Override
-    public void onClick(View v)
+    public void onClick(View view)
     {
        progressDialog = new ProgressDialog.Builder(getActivity())
                                 .setTitle("Cambiando contraseña")

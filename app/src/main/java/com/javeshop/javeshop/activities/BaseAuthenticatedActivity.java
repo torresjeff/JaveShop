@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 /**
- * Created by Jeffrey Torres on 11/10/2015.
+ * Se encarga que todas las clases que extiendan a BaseAuthenticatedActivity, obliguen a que el usuario tenga sesion iniciada.
  */
 public abstract class BaseAuthenticatedActivity extends BaseActivity
 {
+    /**
+     * Infla la interfaz de la Actividad.
+     * @param savedInstanceState
+     */
     @Override
     protected final void onCreate(Bundle savedInstanceState)
     {
@@ -20,7 +24,7 @@ public abstract class BaseAuthenticatedActivity extends BaseActivity
             if (application.getAuth().hasAuthToken())
             {
                 Intent intent = new Intent(this, AuthenticationActivity.class); //AuthenticationActivity is jut an Activity that tries to relog us in automatically
-                intent.putExtra(AuthenticationActivity.EXTRA_RETURN_TO_ACTIVITY, getClass().getName());
+                //intent.putExtra(AuthenticationActivity.EXTRA_RETURN_TO_ACTIVITY, /*getClass().getName()*/MainActivity.class);
                 startActivity(intent);
             }
             else //if we don't have a login token, then we must login again
@@ -36,5 +40,9 @@ public abstract class BaseAuthenticatedActivity extends BaseActivity
         onJaveShopCreate(savedInstanceState);
     }
 
+    /**
+     * Todas las clases que extiendan a BaseAuthenticatedActivity no van a llamar onCreate(Bundle), sino que deben llamar onJaveShopCreate(Bundle) para inflar su interfaz.
+     * @param savedInstanceState
+     */
     protected abstract void onJaveShopCreate(Bundle savedInstanceState);
 }

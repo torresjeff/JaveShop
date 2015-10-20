@@ -8,11 +8,16 @@ import android.widget.Button;
 import com.javeshop.javeshop.R;
 
 /**
- * Created by Jeffrey Torres on 17/10/2015.
+ * Esta Actividad es instanciada despues de que un usuario ha publicado un producto satisfactoriamente.
  */
 public class PostProductSuccessActivity extends BaseAuthenticatedActivity implements View.OnClickListener
 {
     private Button button;
+
+    /**
+     * Infla la interfaz de la Actividad.
+     * @param savedInstanceState
+     */
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
     {
@@ -23,6 +28,10 @@ public class PostProductSuccessActivity extends BaseAuthenticatedActivity implem
         button.setOnClickListener(this);
     }
 
+    /**
+     * Responde a eventos de clicks/touch.
+     * @param view el View que fue tocado.
+     */
     @Override
     public void onClick(View view)
     {

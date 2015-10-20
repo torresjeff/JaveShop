@@ -1,7 +1,8 @@
 package com.javeshop.javeshop.services.entities;
 
 /**
- * Created by Jeffrey Torres on 18/10/2015.
+ * Data Transfer Object (DTO) que permite intercambiar informacion con el servidor.
+ * En este DTO se lleva la informacion de un comentario de un producto en especifico.
  */
 public class ProductComment
 {

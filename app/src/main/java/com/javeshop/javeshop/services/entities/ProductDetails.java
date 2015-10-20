@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Jeffrey Torres on 14/10/2015.
+ * Data Transfer Object (DTO) que permite intercambiar informacion con el servidor.
+ * En este DTO se lleva la informacion de un producto.
  */
 public class ProductDetails implements Parcelable
 {

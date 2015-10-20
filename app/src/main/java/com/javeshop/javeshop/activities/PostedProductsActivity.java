@@ -14,7 +14,7 @@ import com.javeshop.javeshop.views.MainNavDrawer;
 import com.squareup.otto.Subscribe;
 
 /**
- * Created by Jeffrey Torres on 19/10/2015.
+ * Esta Actividad muestra al usuario todos los productos que actualmente tiene publicados.
  */
 public class PostedProductsActivity extends BaseAuthenticatedActivity implements AdapterView.OnItemClickListener
 {
@@ -22,6 +22,10 @@ public class PostedProductsActivity extends BaseAuthenticatedActivity implements
     private View progressBar;
     ListView listView;
 
+    /**
+     * Infla la interfaz de la Actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
     {
@@ -41,6 +45,10 @@ public class PostedProductsActivity extends BaseAuthenticatedActivity implements
         bus.post(new Product.GetPostedProductsRequest(application.getAuth().getUser().getId()));
     }
 
+    /**
+     * Callback. Es llamada cuando el servidor responde con la lista de productos que el usuario ha publicado.
+     * @param response
+     */
     @Subscribe
     public void onPostedProductsLoaded(Product.GetPostedProductsResponse response)
     {
@@ -62,6 +70,13 @@ public class PostedProductsActivity extends BaseAuthenticatedActivity implements
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Responde a eventos clicks/touch en la lista de productos.
+     * @param parent el contenedor de la lista.
+     * @param view el View que fue clicked.
+     * @param position la posicion en la lista del elemento que fue clicked.
+     * @param id id del elemento que fue clicked.
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {

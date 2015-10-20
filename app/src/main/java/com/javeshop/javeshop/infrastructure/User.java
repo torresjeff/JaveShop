@@ -1,7 +1,7 @@
 package com.javeshop.javeshop.infrastructure;
 
 /**
- * Created by Jeffrey Torres on 11/10/2015.
+ * Clase que representa los datos personales de un usuario.
  */
 public class User
 {

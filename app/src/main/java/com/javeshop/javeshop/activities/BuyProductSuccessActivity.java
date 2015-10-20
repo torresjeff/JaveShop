@@ -9,13 +9,17 @@ import android.widget.TextView;
 import com.javeshop.javeshop.R;
 
 /**
- * Created by Jeffrey Torres on 19/10/2015.
+ * Esta Actividad es instanciada despues de que un usuario ha comprado un producto satisfactoriamente.
  */
 public class BuyProductSuccessActivity extends BaseAuthenticatedActivity implements View.OnClickListener
 {
     private Button button;
     private TextView textView;
 
+    /**
+     * Infla la inerfaz de la Actividad.
+     * @param savedInstanceState
+     */
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
     {
@@ -30,6 +34,10 @@ public class BuyProductSuccessActivity extends BaseAuthenticatedActivity impleme
         button.setOnClickListener(this);
     }
 
+    /**
+     * Responde a eventos de clicks/touch.
+     * @param view el View que fue tocado.
+     */
     @Override
     public void onClick(View view)
     {
