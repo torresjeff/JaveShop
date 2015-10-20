@@ -26,7 +26,10 @@ public class UserDetailsActivity extends BaseAuthenticatedActivity implements Vi
     private Button reportButton;
     private View progressFrame;
 
-
+    /**
+     * Infla la interfaz de la Actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
     {
@@ -51,6 +54,10 @@ public class UserDetailsActivity extends BaseAuthenticatedActivity implements Vi
         progressFrame.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Callback. Se llama automaticamente cunado el servidor responde con la informacion del usuario.
+     * @param response respuesta del servidor.
+     */
     @Subscribe
     public void onUserDetailsLoaded(Users.GetUserDetailsResponse response)
     {
@@ -70,10 +77,14 @@ public class UserDetailsActivity extends BaseAuthenticatedActivity implements Vi
 
     }
 
+    /**
+     * Responde a eventos de clicks/touch.
+     * @param view el View que fue tocado.
+     */
     @Override
-    public void onClick(View v)
+    public void onClick(View view)
     {
-        int id = v.getId();
+        int id = view.getId();
 
         switch(id)
         {

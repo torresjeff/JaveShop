@@ -3,7 +3,7 @@ package com.javeshop.javeshop.services;
 import com.javeshop.javeshop.services.entities.UserDetails;
 
 /**
- * Created by Jeffrey Torres on 18/10/2015.
+ * Contiene clases estaticas que representan los requests/responses que tienen que ver con los usuarios y la informacion que debe contener cada uno para comunicarse con el servidor.
  */
 public class Users
 {
@@ -11,6 +11,9 @@ public class Users
     {
     }
 
+    /**
+     * Request para ver la informacion publica de un vendedor.
+     */
     public static class GetUserDetailsRequest
     {
         public int userId;
@@ -20,6 +23,9 @@ public class Users
         }
     }
 
+    /**
+     * Respuesta del servidor a GetUserDetailsRequest. Responde con la informacion publica de un usuario.
+     */
     public static class GetUserDetailsResponse extends ServiceResponse
     {
         public UserDetails userDetails;

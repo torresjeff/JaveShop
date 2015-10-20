@@ -7,13 +7,17 @@ import com.javeshop.javeshop.infrastructure.JaveShopApplication;
 import com.squareup.otto.Bus;
 
 /**
- * Created by Jeffrey Torres on 12/10/2015.
+ * Fragment que se utilizara para mostrar dialogos al usuario. Todos los dialogos que se utilicen en la aplicacion deben extender esta clase.
  */
 public class BaseDialogFragment extends DialogFragment
 {
     protected JaveShopApplication application;
     protected Bus bus;
 
+    /**
+     * Infla la interfaz del Dialog y se registra con el bus de eventos.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -24,18 +28,10 @@ public class BaseDialogFragment extends DialogFragment
         bus.register(this);
     }
 
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-    }
 
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-    }
-
+    /**
+     * Se elimina del bus de eventos.
+     */
     @Override
     public void onDestroy()
     {

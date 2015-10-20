@@ -32,6 +32,8 @@
 
         <activity android:name=".activities.ProductDetailsActivity" />
 
+        <activity android:name=".activities.BuyProductSuccessActivity" />
+
         <activity android:name=".activities.SellProductActivity" />
 
         <activity android:name=".activities.ProductImageActivity" />
@@ -43,6 +45,8 @@
         <activity android:name=".activities.FavoritesActivity" />
 
         <activity android:name=".activities.UserDetailsActivity" />
+
+        <activity android:name=".activities.PostedProductsActivity" />
 
     </application>
 

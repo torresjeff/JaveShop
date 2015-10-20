@@ -11,7 +11,7 @@ import com.javeshop.javeshop.activities.BaseActivity;
 import com.javeshop.javeshop.services.entities.ProductComment;
 
 /**
- * Created by Jeffrey Torres on 18/10/2015.
+ * Adapter que permite mostrar los comentarios de un producto en un ListView.
  */
 public class ProductCommentsAdapter extends ArrayAdapter<ProductComment>
 {
@@ -23,7 +23,14 @@ public class ProductCommentsAdapter extends ArrayAdapter<ProductComment>
         inflater = activity.getLayoutInflater();
     }
 
-    //Returns an instantiated view that will be used for each individual row in the listView
+
+    /**
+     * Se encarga de instanciar los elementos de una fila para un ListView.
+     * @param position posicion dentro de la lista.
+     * @param convertView para reciclar una fila que esta fuera del rango.
+     * @param parent el contenedor del elemento.
+     * @return instancia un view para ser usado en cada fila individual del ListView.
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
@@ -57,6 +64,9 @@ public class ProductCommentsAdapter extends ArrayAdapter<ProductComment>
         return convertView;
     }
 
+    /**
+     * Contiene los elementos graficos que componen cada fila.
+     */
     private class ViewHolder
     {
         public TextView question;

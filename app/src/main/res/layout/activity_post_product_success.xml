@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Tu producto ha sido publicado satisfactoriamente.\n Revisa dentro de poco si hay interesados.\n"/>
+        android:text="Tu producto ha sido publicado satisfactoriamente.\nRevisa dentro de poco si hay interesados.\n"
+        android:id="@+id/activity_post_product_success_description"/>
 
     <Button
         android:layout_width="match_parent"

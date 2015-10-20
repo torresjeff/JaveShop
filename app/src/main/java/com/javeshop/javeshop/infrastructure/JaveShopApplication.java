@@ -7,7 +7,8 @@ import com.javeshop.javeshop.services.Module;
 import com.squareup.otto.Bus;
 
 /**
- * Created by Jeffrey Torres on 11/10/2015.
+ * Instancia unica (Singleton) de la clase Application que requiere de manera obligatoria cada aplicacion.
+ * En esta clase guardamos todos los elementos que sabemos solo seben instanciar una vez (por ejemplo el bus de eventos), y que el resto de Actividades puedan a acceder a ellos.
  */
 public class JaveShopApplication extends Application
 {

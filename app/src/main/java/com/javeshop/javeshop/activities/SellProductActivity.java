@@ -30,10 +30,11 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
- * Created by Jeffrey Torres on 15/10/2015.
+ * Esta Actividad le presenta al usuario los campos de informacion que debe llenar para vender un producto.
  */
 public class SellProductActivity extends BaseActivity implements View.OnClickListener
 {
@@ -42,6 +43,9 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
     private static final String BUNDLE_OUTPUT_FILE_EXTRA = "BUNDLE_OUTPUT_FILE_EXTRA";
     private static final String BUNDLE_IMAGES_EXTRA = "BUNDLE_IMAGES_EXTRA";
     private static final String BUNDLE_QUANTITY_EXTRA = "BUNDLE_QUANTITY_EXTRA";
+
+    public static final String EXTRA_IS_EDITING = "EXTRA_IS_EDITING";
+    public static final String EXTRA_PRODUCT_DETAILS = "EXTRA_PRODUCT_DETAILS";
 
     private EditText name;
     private EditText price;
@@ -57,11 +61,15 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
     private Button postButton;
 
     private int quantity;
-    //private boolean isFileCreated;
+    private boolean isEditing;
+    private ProductDetails postedProductDetails;
 
 
+    /**
+     * Infla la interfaz de la Actividad
+     * @param savedInstanceState
+     */
     @Override
-    //protected void onJaveShopCreate(Bundle savedInstanceState)
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -85,7 +93,6 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
 
         progressBar = (ProgressBar) findViewById(R.id.activity_sell_product_progressBar);
         //TODO: agregar campo de categoria
-        //TODO: agregar campo de descripción, borrar SellProductPartTwoActivity, ya estamos usando scrollview.
 
         stateSpinner = (Spinner) findViewById(R.id.activity_sell_product_stateSpinner);
         stateSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"Nuevo", "Usado"}));
@@ -108,6 +115,31 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         viewPager.setAdapter(adapter);
 
 
+        Intent data = getIntent();
+
+        isEditing = data.getBooleanExtra(EXTRA_IS_EDITING, false);
+
+        if (isEditing)
+        {
+            postedProductDetails = data.getParcelableExtra(EXTRA_PRODUCT_DETAILS);
+            postButton.setText("Actualizar");
+            getSupportActionBar().setTitle("Modificar datos");
+
+            if (postedProductDetails != null)
+            {
+                name.setText(postedProductDetails.getName());
+                price.setText(Float.toString(postedProductDetails.getPrice()));
+                stateSpinner.setSelection(postedProductDetails.getState());
+                quantityButton.setText(Integer.toString(postedProductDetails.getQuantity()));
+                categorySpinner.setSelection(postedProductDetails.getCategory());
+
+                adapter.addAll(postedProductDetails.getProductImagesUrls());
+                adapter.notifyDataSetChanged();
+
+                description.setText(postedProductDetails.getDescription());
+            }
+        }
+
         quantity = 1;
 
         if (savedInstanceState != null)
@@ -126,15 +158,14 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         {
             findViewById(R.id.activity_sell_product_pagerContainer).setVisibility(View.GONE);
         }
-        /*else
-        {
-            findViewById(R.id.activity_sell_product_pagerContainer).setVisibility(View.VISIBLE);
-        }*/
-
         Log.e("SellProductActivity", "onCreate called");
 
     }
 
+    /**
+     * Callback. Se llama automaticamente cuando el servidor responde si el producto fue publicado correctamente.
+     * @param response respuesta del servidor.
+     */
     @Subscribe
     public void onProductPosted(Product.PostProductResponse response)
     {
@@ -151,6 +182,30 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         finish();
     }
 
+    /**
+     * Callback. Se llama automaticamente cuando se actualizan los datos de un producto que ya fue publicado.
+     * @param response respuestsa del servidor
+     */
+    @Subscribe
+    public void onProductUpdated(Product.UpdateProductDetailsResponse response)
+    {
+        progressBar.setVisibility(View.GONE);
+        postButton.setEnabled(true);
+
+        if (!response.succeeded())
+        {
+            response.showErrorToast(this);
+            return;
+        }
+
+        Toast.makeText(this, "Se han actualizado los datos del prodcuto", Toast.LENGTH_SHORT).show();
+    }
+
+
+    /**
+     * Cambia la cantidad de unidades disponibles del producto.
+     * @param quantity nueva cantidad de unidades.
+     */
     @Subscribe
     public void onQuantityChanged(Product.QuantityChanged quantity)
     {
@@ -159,6 +214,10 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
     }
 
 
+    /**
+     * Responde a eventos de clicks/touch.
+     * @param view el View que fue tocado.
+     */
     @Override
     public void onClick(View view)
     {
@@ -206,12 +265,20 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
                         name.getText().toString(),
                         description.getText().toString(),
                         outputFiles,
-                        Float.parseFloat(price.getText().toString()),
+                        Integer.parseInt(price.getText().toString()),
                         quantity,
-                        stateSpinner.getSelectedItemPosition());
+                        stateSpinner.getSelectedItemPosition(),
+                        categorySpinner.getSelectedItemPosition());
 
-
-                bus.post(new Product.PostProductRequest(productDetails));
+                if (isEditing)
+                {
+                    //TODO: deberia post postedProductDetails (porque ya tiene un ID asignado) con un PUT request.
+                    bus.post(new Product.UpdateProductDetailsRequest(productDetails));
+                }
+                else
+                {
+                    bus.post(new Product.PostProductRequest(productDetails));
+                }
 
                 progressBar.setVisibility(View.VISIBLE);
                 postButton.setEnabled(false);
@@ -224,6 +291,9 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * Agrega una nueva imagen al producto.
+     */
     private void addPicture()
     {
         List<Intent> otherImageCaptureIntents = new ArrayList<>();
@@ -250,6 +320,13 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         startActivityForResult(chooser, REQUEST_SELECT_IMAGE);
     }
 
+
+    /**
+     * Llamada cuando se escoge alguna imagen.
+     * @param requestCode la solicitud que se hizo (seleccionar una imagen o crop).
+     * @param resultCode si fue exitoso o no.
+     * @param data datos adicionales (por ejemplo la imagen misma).
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -303,6 +380,9 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * Cambia la pagina del ViewPager a la pagina siguiente para poder ver una otra imagen.
+     */
     private void nextPage()
     {
         if (adapter.getCount() == 0)
@@ -322,6 +402,9 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * Cambia la pagina del ViewPager a la pagina anterior para poder ver una otra imagen.
+     */
     private void previousPage()
     {
         if (adapter.getCount() == 0)
@@ -341,6 +424,10 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * Guarda la informacion que tiene la Actividad cuando se va a recrear.
+     * @param outState objeto donde se guarda la infomracion necesaria.
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {

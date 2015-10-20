@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by Jeffrey Torres on 15/10/2015.
+ * Adapter que permite mostrar de manera correcta la imagen de un producto en un ViewPager.
  */
 public class ImagePagerAdapter extends PagerAdapter
 {
@@ -41,6 +41,12 @@ public class ImagePagerAdapter extends PagerAdapter
     }
 
 
+    /**
+     * Infla un view (una imagen) para agregar al ViewPager.
+     * @param container el contenedor de la imagen
+     * @param position posicion en el ViewPager.
+     * @return View instanciado.
+     */
     @Override
     public Object instantiateItem(ViewGroup container, final int position)
     {
@@ -73,9 +79,9 @@ public class ImagePagerAdapter extends PagerAdapter
 
 
         Log.e(TAG, "Attempting to load " + stringArray[position]);
-        //TODO: picasso no sirve con local images cuando se utiliza resize. No muestra la imagen en el viewpager
+
         imageView.setImageResource(0);
-        Picasso.with(context).load(Uri.parse(stringArray[position]))/*.resize(200, 200).centerCrop()*/.into(imageView);
+        Picasso.with(context).load(Uri.parse(stringArray[position])).into(imageView);
 
         container.addView(itemView);
 
@@ -94,16 +100,30 @@ public class ImagePagerAdapter extends PagerAdapter
         return view == object;
     }
 
+    /**
+     * Agrega una nueva pagina al ViewPager.
+     * @param resource direccion (URL) de la imagen que se va a agregar.
+     */
     public void add(String resource)
     {
         imageResources.add(resource);
     }
 
+    /**
+     * Agrega varias paginas al ViewPager.
+     * @param resources direcciones (URL) de las imagenes que se van a agregar.
+     */
     public void addAll(ArrayList<String> resources)
     {
         imageResources.addAll(resources);
     }
 
+    /**
+     * Eliminar una pagina del ViewPager.
+     * @param container contenedor de la pagina.
+     * @param position posicion en el ViewPager.
+     * @param object la instancia de la pagina.
+     */
     @Override
     public void destroyItem(ViewGroup container, int position, Object object)
     {

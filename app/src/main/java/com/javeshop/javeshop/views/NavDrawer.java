@@ -16,17 +16,17 @@ import com.javeshop.javeshop.activities.BaseActivity;
 import java.util.ArrayList;
 
 /**
- * Created by Jeffrey Torres on 12/10/2015.
+ * Representa un NavDrawer (menu deslizante) que pueden utilizar algunas Actividades.
  */
 public class NavDrawer
 {
     private ArrayList<NavDrawerItem> items;
     private NavDrawerItem selectedItem;
 
-    //Passed as a context in the constructor so we can then call activity.findViewById() and other things.
+
     protected BaseActivity activity;
     protected DrawerLayout drawerLayout;
-    //Container of the NavDrawerItems (where we want to inflate our views)
+
     protected ViewGroup navDrawerView;
 
     public NavDrawer(BaseActivity activity)
@@ -35,10 +35,8 @@ public class NavDrawer
 
         items = new ArrayList<>();
 
-        //R.id.drawer_layout is the ID of the <DrawerLayout> tag that every activity has. This ID is the same across all activity layout files.
         drawerLayout = (DrawerLayout)activity.findViewById(R.id.drawer_layout);
 
-        //R.id.nav_drawer is the ID of the layout that specifies how the nav drawer will actually look (LinearLayout, ImageView at the top left, TextView, another LinearLayout for the items, etc).
         navDrawerView = (ViewGroup) activity.findViewById(R.id.nav_drawer);
 
         if (drawerLayout == null || navDrawerView == null)
@@ -62,13 +60,20 @@ public class NavDrawer
 
     }
 
+    /**
+     * Agrega un nuevo item al NavDrawer.
+     * @param item item que se desea agregar.
+     */
     public void addItem(NavDrawerItem item)
     {
         items.add(item);
-        //We're accessing NavDrawerItem's protected navDrawer, and assigning it to our NavDrawer class.
         item.navDrawer = this;
     }
 
+    /**
+     * Si el NavDrawer esta abierto o cerrado.
+     * @return true si esta abierto, false si esta cerrado.
+     */
     public boolean isOpen()
     {
         return drawerLayout.isDrawerOpen(GravityCompat.START);
@@ -86,9 +91,12 @@ public class NavDrawer
         }
     }
 
+    /**
+     * El ultimo item que escogio el usuario (la Actividad en la que esta actualmente)
+     * @param item ultimo item seleccionado.
+     */
     public void setSelectedItem(NavDrawerItem item)
     {
-        //If we had a previously selected item, than de-select it first
         if (selectedItem != null)
         {
             selectedItem.setSelected(false);
@@ -98,7 +106,9 @@ public class NavDrawer
         selectedItem.setSelected(true);
     }
 
-    //Responsible for inflating all the NavDrawerItems
+    /**
+     * Infla la interfaz del NavDrawer.
+     */
     public void create()
     {
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -109,11 +119,17 @@ public class NavDrawer
         }
     }
 
+    /**
+     * Se elimina del bus de ventos para que no siga recibiendo eventos cuando no exista.
+     */
     public void destroy()
     {
         activity.getJaveShopApplication().getBus().unregister(this);
     }
 
+    /**
+     * Representa un item del NavDrawer.
+     */
     public static abstract class NavDrawerItem
     {
         protected NavDrawer navDrawer;
@@ -122,21 +138,22 @@ public class NavDrawer
         public abstract void setSelected(boolean isSelected);
     }
 
-    //BasicNavDrawerItem is a NavDrawerItem that shows text, potentially a badge, and an icon. Does not start a new Activity.
+
+    /**
+     * Tipo de NavDrawerItem que muestra texto y un icono.
+     */
     public static class BasicNavDrawerItem extends NavDrawerItem implements View.OnClickListener
     {
         private String text;
         private int newNotifications;
         private int iconDrawable;
-        //The ViewGroup that we want to stuff this inflated item to
         private int containerId;
 
         private ImageView icon;
         private TextView textView;
         private TextView badgeTextview;
-        //Holds a reference to the inflated View.
         private View view;
-        private int defaultTextColor; //When this item is not selected it shows the default color, when it is selected it shows another color
+        private int defaultTextColor;
 
         public BasicNavDrawerItem(String text, int newNotifications, int iconDrawable, int containerId)
         {
@@ -146,6 +163,11 @@ public class NavDrawer
             this.containerId = containerId;
         }
 
+        /**
+         * Infla la interfaz del item
+         * @param inflater recurso del sistema que permite instanciar vistas.
+         * @param navDrawerView contenedor del item.
+         */
         @Override
         public void inflate(LayoutInflater inflater, ViewGroup navDrawerView)
         {
@@ -156,12 +178,12 @@ public class NavDrawer
                 throw new RuntimeException("Container not found. Couldn't inflate view.");
             }
 
-            //list_item_nav_drawer is a layout that specifies how each list item will look (image, text, badge).
+
             view = inflater.inflate(R.layout.list_item_nav_drawer, container, false);
 
             container.addView(view);
 
-            //Each element of the previously defined layout. Each part that makes up a list item.
+
             icon = (ImageView) view.findViewById(R.id.list_item_nav_drawer_icon);
             textView = (TextView) view.findViewById(R.id.list_item_nav_drawer_text);
             badgeTextview = (TextView) view.findViewById(R.id.list_item_nav_drawer_newNotifications);
@@ -171,7 +193,7 @@ public class NavDrawer
             icon.setImageResource(iconDrawable);
             textView.setText(text);
 
-            //The badge is optional, if we have it then set the text. If not, make it invisible.
+
             if (newNotifications > 0)
             {
                 badgeTextview.setText(Integer.toString(newNotifications));
@@ -189,14 +211,12 @@ public class NavDrawer
         {
             if (isSelected)
             {
-                //Sets the background of the selected item, to the one specified by R.drawable.list_item_nav_drawer_selected_item_background.
                 view.setBackgroundResource(R.drawable.list_item_nav_drawer_selected_item_background);
-                //TODO: change this color to something that matches the yellow/orange color
+
                 textView.setTextColor(navDrawer.activity.getResources().getColor(R.color.list_item_nav_drawer_selected_item_textColor));
             }
             else
             {
-                //Sets the background back to transparent when we de-select this item
                 view.setBackground(null);
                 textView.setTextColor(defaultTextColor);
             }
@@ -206,7 +226,6 @@ public class NavDrawer
         {
             this.text = text;
 
-            //If this method is invoked after we have inflated our view, apart from updating the text, we also need to update the TextView.
             if (view != null)
             {
                 textView.setText(text);
@@ -240,6 +259,10 @@ public class NavDrawer
             }
         }
 
+        /**
+         * Responde a eventos de clicks/touch.
+         * @param v el View que fue tocado.
+         */
         @Override
         public void onClick(View v)
         {
@@ -250,11 +273,10 @@ public class NavDrawer
     }
 
     /**
-     * ActivityNavDrawerItems are BasicNavDrawerItems that start new Activities.
+     * ActivityNavDrawerItems son BasicNavDrawerItems que instancian nuevas Actividades.
      */
     public static class ActivityNavDrawerItem extends BasicNavDrawerItem
     {
-        //Activity to launch when an ActivityNavDrawer is clicked
         private final Class targetActivity;
 
 
@@ -269,8 +291,6 @@ public class NavDrawer
         {
             super.inflate(inflater, navDrawerView);
 
-            //If we're already in the Activity that this item represents, then mark it as selected.
-            //For example, when we launch the app, the MainActivity is set to selected since it is the one that is launched first.
             if (this.navDrawer.activity.getClass() == targetActivity)
             {
                 this.navDrawer.setSelectedItem(this);
@@ -280,10 +300,8 @@ public class NavDrawer
         @Override
         public void onClick(View view)
         {
-            //Close the NavDrawer every time we click one of its items
             navDrawer.setOpen(false);
 
-            //If we clicked the Activity that we're already in, then don't launch it again.
             if (navDrawer.activity.getClass() == targetActivity)
             {
                 return;
@@ -291,7 +309,6 @@ public class NavDrawer
 
             super.onClick(view);
 
-            //TODO: animations
             navDrawer.activity.startActivity(new Intent(navDrawer.activity, targetActivity));
             navDrawer.activity.finish();
         }

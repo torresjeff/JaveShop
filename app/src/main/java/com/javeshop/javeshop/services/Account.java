@@ -5,7 +5,7 @@ import android.net.Uri;
 import com.javeshop.javeshop.infrastructure.User;
 
 /**
- * Created by Jeffrey Torres on 12/10/2015.
+ * Contiene clases estaticas que representan los requests/responses que tienen que ver con la cuenta del usuario y la informacion que debe contener cada uno para comunicarse con el servidor.
  */
 public class Account
 {
@@ -29,6 +29,9 @@ public class Account
         public String authToken;
     }
 
+    /**
+     * Informacion necesaria para inciar sesion con username y password.
+     */
     public static class LoginWithUsernameRequest
     {
         public String username;
@@ -41,11 +44,17 @@ public class Account
         }
     }
 
+    /**
+     * Respuesta del servidor para LoginWithUsernameRequest.
+     */
     public static class LoginWithUsernameResponse extends UserResponse
     {
     }
 
-    //El token previene que el usuario tenga que loggearse cada vez que se sale de la application.
+    /**
+     * Informacion necesaria para inciar sesion con un token.
+     * El token previene que el usuario tenga que iniciar sesion cada vez que se sale de la application.
+     */
     public static class LoginWithLocalTokenRequest
     {
         public String authToken;
@@ -56,30 +65,44 @@ public class Account
         }
     }
 
+    /**
+     * Respuesta del servidor para LoginWithLocalTokenRequest.
+     */
     public static class LoginWithLocalTokenResponse extends UserResponse
     {
     }
 
+    /**
+     * Informacion necesaria para que un usuario se pueda registrar a la aplicacion.
+     */
     public static class RegisterRequest
     {
         public String firstName;
         public String lastName;
         public String email;
         public String password;
-        public RegisterRequest(String firstName, String lastName, String email, String password)
+        public String phoneNumber;
+
+        public RegisterRequest(String firstName, String lastName, String email, String password, String phoneNumber)
         {
             this.firstName = firstName;
             this.lastName = lastName;
             this.email = email;
             this.password = password;
+            this.phoneNumber = phoneNumber;
         }
-
     }
 
+    /**
+     * Respuesta del servidor a RegisterRequest.
+     */
     public static class RegisterResponse extends ServiceResponse
     {
     }
 
+    /**
+     * Se manda el nuevo archivo para que el servidor lo guarde como el nuevo avatar del usuario.
+     */
     public static class ChangeAvatarRequest
     {
 
@@ -91,11 +114,17 @@ public class Account
 
     }
 
+    /**
+     * Respuesta del servidor a ChangeAvatarRequest. Responde con el nuevo URL de la imagen para que la interfaz se actualice adecuadamente.
+     */
     public static class ChangeAvatarResponse extends ServiceResponse
     {
         public String avatarUrl;
     }
 
+    /**
+     * Request para actualizar la informacion personal del usuario (nombre, apellido, telefono)
+     */
     public static class UpdateProfileRequest
     {
         public String firstName;
@@ -110,6 +139,9 @@ public class Account
         }
     }
 
+    /**
+     * Respuesta del servidor a UpdateProfileRequest.
+     */
     public static class UpdateProfileResponse extends  ServiceResponse
     {
         public String firstName;
@@ -117,6 +149,9 @@ public class Account
         public String phoneNumber;
     }
 
+    /**
+     * Request para cambiar la contrasena de un usuario.
+     */
     public static class ChangePasswordRequest
     {
         public String currentPassword;
@@ -131,10 +166,16 @@ public class Account
         }
     }
 
+    /**
+     * Respuesta del servidor a ChangePasswordRequest.
+     */
     public static class ChangePasswordResponse extends ServiceResponse
     {
     }
 
+    /**
+     * Request para agregar credito a la cuenta de un usuario.
+     */
     public static class AddMoneyRequest
     {
         public float amount;
@@ -145,11 +186,17 @@ public class Account
         }
     }
 
+    /**
+     * Respuesta del servidor a AddMoneyRequest. Responde con el nuevo balance del usuario.
+     */
     public static class AddMoneyResponse extends ServiceResponse
     {
         public float newBalance;
     }
 
+    /**
+     * Evento que se dispara cuando el usuario actualiza sus datos personales, para que la interfaz grafica de la aplicacion se ajuste acordemente.
+     */
     public static class UserDetailsUpdatedEvent
     {
         public User user;

@@ -25,7 +25,7 @@ import com.javeshop.javeshop.views.MainNavDrawer;
 import com.squareup.otto.Subscribe;
 
 /**
- * Created by Jeffrey Torres on 11/10/2015.
+ * Esta es la Actividad principal de la aplicacion. En ella podemos buscar algun producto por nombre.
  */
 public class MainActivity extends BaseAuthenticatedActivity implements AdapterView.OnItemClickListener
 {
@@ -34,6 +34,10 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
     private ProductDetailsAdapter adapter;
     private String lastQuery;
 
+    /**
+     * Infla la interfaz de la Actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
     {
@@ -84,6 +88,13 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
 
     }
 
+    /**
+     * Responde a eventos clicks/touch en la lista de productos.
+     * @param adapterView el contenedor de la lista.
+     * @param view el View que fue clicked.
+     * @param position la posicion en la lista del elemento que fue clicked.
+     * @param l id del elemento que fue clicked.
+     */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
     {
@@ -94,6 +105,10 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
         startActivity(intent);
     }
 
+    /**
+     * Callback. Es llamada cuando el servidor responde con la lista de productos que corresponden con la busqueda del usuario.
+     * @param response
+     */
     @Subscribe
     public void onProductSearched(Product.SearchProductResponse response)
     {

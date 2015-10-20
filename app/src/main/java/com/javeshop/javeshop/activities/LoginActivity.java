@@ -11,7 +11,7 @@ import com.javeshop.javeshop.services.Account;
 import com.squareup.otto.Subscribe;
 
 /**
- * Created by Jeffrey Torres on 11/10/2015.
+ * Esta Actividad muestra la pantalla de Login al usuario. En ella puede meter sus datos personales para iniciar sesion. Tambien puede registrarse o pedir que le reenvien su contrasena en caso de que se le haya olvidado.
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener
 {
@@ -21,6 +21,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     private View progressBar;
     private String defaultLoginButtonText;
 
+    /**
+     * Infla la interfaz de la Actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -36,6 +40,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         loginButton.setOnClickListener(this);
     }
 
+
+    /**
+     * Responde a eventos de clicks/touch.
+     * @param view el View que fue tocado.
+     */
     @Override
     public void onClick(View view)
     {
@@ -56,6 +65,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+    /**
+     * Se encarga de enviar el evento de LoginWithUsernameRequest al servidor junto con la informacion necesario (usuario, contrasena).
+     */
     private void login()
     {
         progressBar.setVisibility(View.VISIBLE);
@@ -67,6 +79,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     }
 
 
+    /**
+     * Callback. Esta funcion es llamada cuando el servidor responde, dandole acceso a la aplicacion en caso de que la informacion digitada haya sido correcta.
+     * @param response respuesta del servidor.
+     */
     @Subscribe
     public void onLoginWithUsername(Account.LoginWithUsernameResponse response)
     {

@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.dialogs.ChangePasswordDialog;
@@ -24,7 +23,6 @@ import com.javeshop.javeshop.infrastructure.User;
 import com.javeshop.javeshop.services.Account;
 import com.javeshop.javeshop.views.MainNavDrawer;
 import com.soundcloud.android.crop.Crop;
-import com.soundcloud.android.crop.CropImageActivity;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
@@ -33,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Jeffrey Torres on 12/10/2015.
+ * Muestra la informacion del usuario que tiene su sesion iniciada.
  */
 public class ProfileActivity extends BaseAuthenticatedActivity implements View.OnClickListener
 {
@@ -44,7 +42,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
     private static final String BUNDLE_STATE = "BUNDLE_STATE";
 
-    private boolean isProgressBarVisible;
 
     private int currentState;
     private EditText firstName;
@@ -53,7 +50,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
     private EditText emailText;
     private View changeAvatarButton;
     //TODO: agregar EditText para saldo, poner inputType de numbers
-    //TODO: agregar EditText para phoneNumber
 
     private ActionMode editProfileActionMode;
 
@@ -66,6 +62,10 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
     private Dialog progressDialog;
     private boolean progressBarVisible;
 
+    /**
+     * Infla la interfaz de la Actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
     {
@@ -123,6 +123,10 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         }
     }
 
+    /**
+     * Cambia de un estado a otro (editando o viendo) para poner un menu contextual dependiendo del estado.
+     * @param state nuevo estado.
+     */
     private void changeState(int state)
     {
         if (state == currentState)
@@ -161,7 +165,10 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         }
     }
 
-
+    /**
+     * Responde a eventos de clicks/touch.
+     * @param view el View que fue tocado.
+     */
     @Override
     public void onClick(View view)
     {
@@ -173,6 +180,9 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         }
     }
 
+    /**
+     * Le da al usuario la opcion de tomar una foto con la camara o escoger una ya existente en la galeria, y ponerla como foto de perfil (avatar).
+     */
     private void changeAvatar()
     {
         List<Intent> otherImageCaptureIntents = new ArrayList<>();
@@ -195,6 +205,12 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         startActivityForResult(chooser, REQUEST_SELECT_IMAGE);
     }
 
+    /**
+     * Llamada cuando se escoge alguna imagen.
+     * @param requestCode la solicitud que se hizo (seleccionar una imagen o crop).
+     * @param resultCode si fue exitoso o no.
+     * @param data datos adicionales (por ejemplo la imagen misma).
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -231,6 +247,10 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         }
     }
 
+    /**
+     * Callback. Se llama automaticamente cuando el servidor responde si el cambio fallo o fue exitoso.
+     * @param response respuesta del servidor con el nuevo link del avatar.
+     */
     @Subscribe
     public void onAvatarUpdated(Account.ChangeAvatarResponse response)
     {
@@ -247,6 +267,10 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         Picasso.with(this).load(response.avatarUrl).into(avatarView);
     }
 
+    /**
+     * Callback. Se llama cuando el servidor responde con los nuevos datos personales que el usuario ingreso.
+     * @param response respuesta del servidor.
+     */
     @Subscribe
     public void onProfileUpdated(Account.UpdateProfileResponse response)
     {
@@ -265,6 +289,10 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         setProgressBarVisible(false);
     }
 
+    /**
+     * Callback. Se llama automaticamente cuando el usuario actualiza sus datos personales para reflejar el cambio en el ActionBar.
+     * @param event
+     */
     @Subscribe
     public void onUserDetailsUpdated(Account.UserDetailsUpdatedEvent event)
     {
@@ -293,8 +321,17 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         this.progressBarVisible = newVisible;
     }
 
+    /**
+     * Esta clase se encarga de instanciar un menu contextual cuando el usuario esta editando su perfil.
+     */
     private class EditProfileActionCallback implements ActionMode.Callback
     {
+        /**
+         * Infla el menu contextual.
+         * @param mode modo.
+         * @param menu menu que se quiere inflar.
+         * @return true si fue creado satisfactoriamente.
+         */
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu)
         {
@@ -308,6 +345,12 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             return false;
         }
 
+        /**
+         * Responde a eventos de click/touch en el menu contextual.
+         * @param mode modo.
+         * @param item item del menu que fue seleccionado.
+         * @return true si se manejo el evento correctamente.
+         */
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item)
         {
@@ -326,6 +369,10 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             }
         }
 
+        /**
+         * Se encarga de volver al estado normal de la Actividad cuando se cierra el menu contextual.
+         * @param mode modo.
+         */
         @Override
         public void onDestroyActionMode(ActionMode mode)
         {
@@ -342,6 +389,11 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         }
     }
 
+    /**
+     * Crea el menu de la actividad.
+     * @param menu el menu que se va a inflar.
+     * @return true si fue creado exitosamente.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -349,6 +401,11 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         return true;
     }
 
+    /**
+     * Responde a eventos de click/touch en el menu.
+     * @param item elemento del menu que fue seleccionado.
+     * @return true si se manejo el evento correctamente.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -369,6 +426,10 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         }
     }
 
+    /**
+     * Guarda la informacion que tiene la Actividad cuando se va a recrear.
+     * @param savedInstanceState objeto donde se guarda la infomracion necesaria.
+     */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState)
     {

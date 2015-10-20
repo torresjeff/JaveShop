@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import com.javeshop.javeshop.activities.LoginActivity;
 
 /**
- * Created by Jeffrey Torres on 11/10/2015.
+ * Esta clase tiene los componentes necesario para autenticar a un usuario.
  */
 public class Auth
 {
@@ -56,6 +56,9 @@ public class Auth
         editor.commit();
     }
 
+    /**
+     * Borra el token del usuario que tenia sesion iniciada para que no siga iniciando sesion automaticamente la proxima vez que abra la aplicacion.
+     */
     public void logout()
     {
         setAuthToken(null);
