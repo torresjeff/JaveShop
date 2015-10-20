@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.dialogs.ChangePasswordDialog;
@@ -24,7 +23,6 @@ import com.javeshop.javeshop.infrastructure.User;
 import com.javeshop.javeshop.services.Account;
 import com.javeshop.javeshop.views.MainNavDrawer;
 import com.soundcloud.android.crop.Crop;
-import com.soundcloud.android.crop.CropImageActivity;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
@@ -44,7 +42,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
     private static final String BUNDLE_STATE = "BUNDLE_STATE";
 
-    private boolean isProgressBarVisible;
 
     private int currentState;
     private EditText firstName;

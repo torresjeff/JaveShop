@@ -12,6 +12,9 @@ import com.javeshop.javeshop.activities.BaseActivity;
 import com.javeshop.javeshop.services.entities.ProductDetails;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Created by Jeffrey Torres on 14/10/2015.
  */
@@ -60,7 +63,7 @@ public class ProductDetailsAdapter extends ArrayAdapter<ProductDetails>
             throw new RuntimeException("El estado del producto no esta definido (debe ser 0 o 1), estado = " + product.getState());
         }
 
-        view.price.setText("$" + Float.toString(product.getPrice()));
+        view.price.setText("$" + NumberFormat.getNumberInstance(Locale.US).format(product.getPrice()));
 
 
         Picasso.with(getContext()).load(product.getMainImageUrl()).into(view.image);

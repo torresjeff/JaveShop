@@ -40,7 +40,7 @@ public class InMemoryProductService extends BaseInMemoryService
                                     "Phasellus fermentum odio mauris, ac lacinia quam elementum quis. " +
                                     "Vestibulum feugiat arcu.",
                             "http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=600",
-                            images, 10000*(i+1), i+1, i%2));
+                            images, 10000*(i+1), i+1, i%2, (i%23)+1));
         }
 
         postDelayed(response, 1000, 2000);
@@ -108,9 +108,43 @@ public class InMemoryProductService extends BaseInMemoryService
                                     "Phasellus fermentum odio mauris, ac lacinia quam elementum quis. " +
                                     "Vestibulum feugiat arcu.",
                             "http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=600",
-                            images, 10000*(i+1), i, i%2));
+                            images, 10000*(i+1), i, i%2, (i%23)+1));
         }
 
         postDelayed(response, 1000, 2000);
+    }
+
+    @Subscribe
+    public void getPostedProducts(Product.GetPostedProductsRequest request)
+    {
+        Product.GetPostedProductsResponse response = new Product.GetPostedProductsResponse();
+        response.products = new ArrayList<>();
+
+        for (int i = 0; i < 10; ++i)
+        {
+            ArrayList<String> images = new ArrayList<>();
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=600");
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+1) + "?d=identicon&s=600");
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+2) + "?d=identicon&s=600");
+            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+3) + "?d=identicon&s=600");
+            response.products.add(
+                    new ProductDetails(
+                            i,
+                            i,
+                            "Producto publicado " + (i+1),
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+                                    "Phasellus fermentum odio mauris, ac lacinia quam elementum quis. " +
+                                    "Vestibulum feugiat arcu.",
+                            "http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=600",
+                            images, 10000*(i+1), i, i%2, (i%23)+1));
+        }
+
+        postDelayed(response, 1000, 2000);
+    }
+
+    @Subscribe
+    public void updateProductDetails(Product.UpdateProductDetailsRequest request)
+    {
+        postDelayed(new Product.UpdateProductDetailsResponse(), 1000, 2000);
     }
 }

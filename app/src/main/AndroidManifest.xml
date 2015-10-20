@@ -46,6 +46,8 @@
 
         <activity android:name=".activities.UserDetailsActivity" />
 
+        <activity android:name=".activities.PostedProductsActivity" />
+
     </application>
 
 </manifest>

@@ -28,7 +28,9 @@ import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Jeffrey Torres on 14/10/2015.
@@ -97,7 +99,7 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
             throw new RuntimeException("El estado del producto no esta definido (debe ser 0 o 1), estado = " + productDetails.getState());
         }
 
-        price.setText("$" + productDetails.getPrice());
+        price.setText("$" + NumberFormat.getNumberInstance(Locale.US).format(productDetails.getPrice()));
         vendor.setText("Vendedor " + productDetails.getOwnerId());
         description.setText(productDetails.getDescription());
 

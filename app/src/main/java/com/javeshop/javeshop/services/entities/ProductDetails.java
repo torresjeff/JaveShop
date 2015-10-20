@@ -21,6 +21,8 @@ public class ProductDetails implements Parcelable
     private float price;
     private int quantity;
     private int state;
+    private int category;
+
 
     //TODO: verificar que el constructor vacio no altere los responses del servidor
     public ProductDetails()
@@ -28,7 +30,7 @@ public class ProductDetails implements Parcelable
         productImagesUrls = new ArrayList<>();
     }
 
-    public ProductDetails(int ownerId, String name, String description, ArrayList<String> productImagesUrls, float price, int quantity, int state)
+    public ProductDetails(int ownerId, String name, String description, ArrayList<String> productImagesUrls, float price, int quantity, int state, int category)
     {
         this.ownerId = ownerId;
         this.name = name;
@@ -37,9 +39,10 @@ public class ProductDetails implements Parcelable
         this.price = price;
         this.quantity = quantity;
         this.state = state;
+        this.category = category;
     }
 
-    public ProductDetails(int id, int ownerId, String name, String description, String mainImageUrl, ArrayList<String> productImagesUrls, float price, int quantity, int state)
+    public ProductDetails(int id, int ownerId, String name, String description, String mainImageUrl, ArrayList<String> productImagesUrls, float price, int quantity, int state, int category)
     {
         this.id = id;
         this.ownerId = ownerId;
@@ -50,6 +53,7 @@ public class ProductDetails implements Parcelable
         this.price = price;
         this.quantity = quantity;
         this.state = state;
+        this.category = category;
     }
 
     protected ProductDetails(Parcel in)
@@ -63,6 +67,7 @@ public class ProductDetails implements Parcelable
         price = in.readFloat();
         quantity = in.readInt();
         state = in.readInt();
+        category = in.readInt();
     }
 
     public static final Creator<ProductDetails> CREATOR = new Creator<ProductDetails>()
@@ -125,6 +130,11 @@ public class ProductDetails implements Parcelable
         return ownerId;
     }
 
+    public int getCategory()
+    {
+        return category;
+    }
+
     @Override
     public int describeContents()
     {
@@ -143,5 +153,6 @@ public class ProductDetails implements Parcelable
         parcel.writeFloat(price);
         parcel.writeInt(quantity);
         parcel.writeInt(state);
+        parcel.writeInt(category);
     }
 }

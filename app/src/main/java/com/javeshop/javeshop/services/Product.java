@@ -130,4 +130,33 @@ public class Product
     {
         public List<ProductDetails> products;
     }
+
+    public static class GetPostedProductsRequest
+    {
+        public int userId;
+
+        public GetPostedProductsRequest(int userId)
+        {
+            this.userId = userId;
+        }
+    }
+
+    public static class GetPostedProductsResponse extends ServiceResponse
+    {
+        public List<ProductDetails> products;
+    }
+
+    public static class UpdateProductDetailsRequest
+    {
+        public ProductDetails productDetails;
+
+        public UpdateProductDetailsRequest(ProductDetails productDetails)
+        {
+            this.productDetails = productDetails;
+        }
+    }
+
+    public static class UpdateProductDetailsResponse extends ServiceResponse
+    {
+    }
 }

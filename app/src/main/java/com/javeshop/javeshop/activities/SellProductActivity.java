@@ -43,6 +43,9 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
     private static final String BUNDLE_IMAGES_EXTRA = "BUNDLE_IMAGES_EXTRA";
     private static final String BUNDLE_QUANTITY_EXTRA = "BUNDLE_QUANTITY_EXTRA";
 
+    public static final String EXTRA_IS_EDITING = "EXTRA_IS_EDITING";
+    public static final String EXTRA_PRODUCT_DETAILS = "EXTRA_PRODUCT_DETAILS";
+
     private EditText name;
     private EditText price;
     private Spinner stateSpinner;
@@ -57,7 +60,8 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
     private Button postButton;
 
     private int quantity;
-    //private boolean isFileCreated;
+    private boolean isEditing;
+    private ProductDetails postedProductDetails;
 
 
     @Override
@@ -85,7 +89,6 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
 
         progressBar = (ProgressBar) findViewById(R.id.activity_sell_product_progressBar);
         //TODO: agregar campo de categoria
-        //TODO: agregar campo de descripción, borrar SellProductPartTwoActivity, ya estamos usando scrollview.
 
         stateSpinner = (Spinner) findViewById(R.id.activity_sell_product_stateSpinner);
         stateSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"Nuevo", "Usado"}));
@@ -108,6 +111,31 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         viewPager.setAdapter(adapter);
 
 
+        Intent data = getIntent();
+
+        isEditing = data.getBooleanExtra(EXTRA_IS_EDITING, false);
+
+        if (isEditing)
+        {
+            postedProductDetails = data.getParcelableExtra(EXTRA_PRODUCT_DETAILS);
+            postButton.setText("Actualizar");
+            getSupportActionBar().setTitle("Modificar datos");
+
+            if (postedProductDetails != null)
+            {
+                name.setText(postedProductDetails.getName());
+                price.setText(Float.toString(postedProductDetails.getPrice()));
+                stateSpinner.setSelection(postedProductDetails.getState());
+                quantityButton.setText(Integer.toString(postedProductDetails.getQuantity()));
+                categorySpinner.setSelection(postedProductDetails.getCategory());
+
+                adapter.addAll(postedProductDetails.getProductImagesUrls());
+                adapter.notifyDataSetChanged();
+
+                description.setText(postedProductDetails.getDescription());
+            }
+        }
+
         quantity = 1;
 
         if (savedInstanceState != null)
@@ -126,13 +154,16 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         {
             findViewById(R.id.activity_sell_product_pagerContainer).setVisibility(View.GONE);
         }
-        /*else
-        {
-            findViewById(R.id.activity_sell_product_pagerContainer).setVisibility(View.VISIBLE);
-        }*/
-
         Log.e("SellProductActivity", "onCreate called");
 
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        invalidateOptionsMenu();
     }
 
     @Subscribe
@@ -150,6 +181,23 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         startActivity(new Intent(this, PostProductSuccessActivity.class));
         finish();
     }
+
+    @Subscribe
+    public void onProductUpdated(Product.UpdateProductDetailsResponse response)
+    {
+        progressBar.setVisibility(View.GONE);
+        postButton.setEnabled(true);
+
+        if (!response.succeeded())
+        {
+            response.showErrorToast(this);
+            return;
+        }
+
+        Toast.makeText(this, "Se han actualizado los datos del prodcuto", Toast.LENGTH_SHORT).show();
+    }
+
+
 
     @Subscribe
     public void onQuantityChanged(Product.QuantityChanged quantity)
@@ -206,12 +254,19 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
                         name.getText().toString(),
                         description.getText().toString(),
                         outputFiles,
-                        Float.parseFloat(price.getText().toString()),
+                        Integer.parseInt(price.getText().toString()),
                         quantity,
-                        stateSpinner.getSelectedItemPosition());
+                        stateSpinner.getSelectedItemPosition(),
+                        categorySpinner.getSelectedItemPosition());
 
-
-                bus.post(new Product.PostProductRequest(productDetails));
+                if (isEditing)
+                {
+                    bus.post(new Product.UpdateProductDetailsRequest(productDetails));
+                }
+                else
+                {
+                    bus.post(new Product.PostProductRequest(productDetails));
+                }
 
                 progressBar.setVisibility(View.VISIBLE);
                 postButton.setEnabled(false);
