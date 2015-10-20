@@ -140,6 +140,9 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
             response.showErrorToast(this);
             return;
         }
+
+        startActivity(new Intent(this, BuyProductSuccessActivity.class));
+        finish();
     }
 
     @Subscribe
