@@ -15,9 +15,20 @@ public class ServiceResponse
 {
     private static final String TAG = "ServiceResponse";
 
-    private String operationError; //Error que ocurre a escals de operacion. Por ejemplo, una imagen no se puede subir al servidor, no hay internet, etc.
-    private HashMap<String, String> propertyErrors;  //Errores de validacion. Por ejemplo, el nombre es muy largo, el email no tenia un formato correcto
-    private boolean isCritical; //El error es critico. Por ejemplo, no hay internet.
+    /**
+     * Error que ocurre a escals de operacion. Por ejemplo, una imagen no se puede subir al servidor, no hay internet, etc.
+     */
+    private String operationError;
+
+    /**
+     * Errores de validacion. Por ejemplo, el nombre es muy largo, el email no tenia un formato correcto.
+     */
+    private HashMap<String, String> propertyErrors;
+
+    /**
+     * El error es critico. Por ejemplo, no hay internet.
+     */
+    private boolean isCritical;
 
     public ServiceResponse()
     {

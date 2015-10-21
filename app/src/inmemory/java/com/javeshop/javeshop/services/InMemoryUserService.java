@@ -7,7 +7,7 @@ import com.squareup.otto.Subscribe;
 import java.util.Random;
 
 /**
- * Created by Jeffrey Torres on 18/10/2015.
+ * Emula las respuestas del servidor que tienen que ver con la informacion publica de los otros usuarios (diferente del que tiene la sesion iniciada) de la aplicacion.
  */
 public class InMemoryUserService extends BaseInMemoryService
 {
@@ -16,6 +16,11 @@ public class InMemoryUserService extends BaseInMemoryService
         super(application);
     }
 
+    /**
+     * Envia un request para cargar los datos publicos del vendedor de un producto.
+     * Se envia un evento que emula la respuesta del servidor.
+     * @param request request del usuario. Evento que dispara la llamada a esta funcion.
+     */
     @Subscribe
     public void getUserDetails(Users.GetUserDetailsRequest request)
     {

@@ -8,7 +8,7 @@ import com.javeshop.javeshop.infrastructure.User;
 import com.squareup.otto.Subscribe;
 
 /**
- * Created by Jeffrey Torres on 12/10/2015.
+ * Emula las respuestas del servidor que tienen que ver con la informacion del usuario.
  */
 public class InMemoryAccountService extends BaseInMemoryService
 {
@@ -17,7 +17,11 @@ public class InMemoryAccountService extends BaseInMemoryService
         super(application);
     }
 
-
+    /**
+     * Envia un request para marcar iniciar sesion con un token. Este token se utiliza para evitar que el usuario tenga que iniciar sesion cada vez que cierra la aplicacion.
+     * Se envia un evento que emula la respuesta del servidor.
+     * @param request request del usuario. Evento que dispara la llamada a esta funcion.
+     */
     @Subscribe
     public void loginWithLocalToken(Account.LoginWithLocalTokenRequest request)
     {
@@ -33,6 +37,11 @@ public class InMemoryAccountService extends BaseInMemoryService
         }, 1000, 2000);
     }
 
+    /**
+     * Envia un request para iniciar sesion con los datos personales del usuario (usuario y contrasena).
+     * Se envia un evento que emula la respuesta del servidor.
+     * @param request request del usuario. Evento que dispara la llamada a esta funcion.
+     */
     @Subscribe
     public void loginWithUsername(Account.LoginWithUsernameRequest request)
     {
@@ -48,6 +57,10 @@ public class InMemoryAccountService extends BaseInMemoryService
         }, 1000, 2000);
     }
 
+    /**
+     * Inicia la sesion de un usuario. Lo lleva al {@link com.javeshop.javeshop.activities.MainActivity}.
+     * @param response respuesta del servidor con los datos personales del usuario que inicio sesion.
+     */
     private void loginUser(Account.UserResponse response)
     {
         Auth auth = application.getAuth();
@@ -59,7 +72,7 @@ public class InMemoryAccountService extends BaseInMemoryService
         user.setBalance(100000);
         user.setReputation(5);
         user.setEmail("torres.jeffrey@javeriana.edu.co");
-        user.setAvatarUrl("http://www.gravatar.com/avatar/1?d=identicon");
+        user.setAvatarUrl("http://www.gravatar.com/avatar/1?d=identicon&s=600");
         user.setId(123);
         user.setLoggedIn(true);
 
@@ -78,6 +91,22 @@ public class InMemoryAccountService extends BaseInMemoryService
         response.authToken = auth.getAuthToken();
     }
 
+    /**
+     * Envia un request para iniciar sesion con los datos personales del usuario (usuario y contrasena).
+     * Se envia un evento que emula la respuesta del servidor.
+     * @param request request del usuario. Evento que dispara la llamada a esta funcion.
+     */
+    @Subscribe
+    public void register(Account.RegisterRequest request)
+    {
+        postDelayed(new Account.RegisterResponse());
+    }
+
+    /**
+     * Envia un request para actualizar el avatar del usuario que tiene la sesion iniciada.
+     * Se envia un evento que emula la respuesta del servidor.
+     * @param request request del usuario. Evento que dispara la llamada a esta funcion.
+     */
     @Subscribe
     public void updateAvatar(final Account.ChangeAvatarRequest request)
     {
@@ -99,6 +128,11 @@ public class InMemoryAccountService extends BaseInMemoryService
         }, 3000, 4000);
     }
 
+    /**
+     * Envia un request para actualizar los datos personales del usuario que tiene la sesion iniciada.
+     * Se envia un evento que emula la respuesta del servidor.
+     * @param request request del usuario. Evento que dispara la llamada a esta funcion.
+     */
     @Subscribe
     public void updateProfile(final Account.UpdateProfileRequest request)
     {
@@ -122,6 +156,11 @@ public class InMemoryAccountService extends BaseInMemoryService
         }, 2000, 3000);
     }
 
+    /**
+     * Envia un request para cambiar la contrasena del usuario que tiene la sesion iniciada.
+     * Se envia un evento que emula la respuesta del servidor.
+     * @param request request del usuario. Evento que dispara la llamada a esta funcion.
+     */
     @Subscribe
     public void changePassword(Account.ChangePasswordRequest request)
     {

@@ -13,7 +13,7 @@ import com.squareup.otto.Bus;
 
 /**
  * La Actividad Base para toda la aplicación. Todas las Actividades que componen JaveShop extienden de BaseActivity de manera directa o indirecta.
- * Esta Actividad se encarga de que todas las demas Actividades tengan la unica instancia de la aplicacion {@link com.javeshop.javeshop.infrastructure.JaveShopApplication}, que tengan acceso al bus de eventos, y que tengan la opcion de agregar un Toolbar.
+ * Esta Actividad se encarga de que todas las demas Actividades tengan la unica instancia de la aplicacion {@link com.javeshop.javeshop.infrastructure.JaveShopApplication}, que tengan acceso al bus de eventos, y que tengan la opcion de agregar un Toolbar y un NavDrawer.
  * Las Actividades que extienden a BaseActivity de manera directa no requieren que el usuario tenga una sesion inciada o que este registrado para poder interactuar con ellas.
  */
 public abstract class BaseActivity extends AppCompatActivity

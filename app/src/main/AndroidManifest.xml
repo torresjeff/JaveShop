@@ -48,6 +48,8 @@
 
         <activity android:name=".activities.PostedProductsActivity" />
 
+        <activity android:name=".activities.RegisterSuccessActivity" />
+
     </application>
 
 </manifest>

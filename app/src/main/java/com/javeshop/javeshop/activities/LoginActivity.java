@@ -38,6 +38,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
         loginButton = (Button) findViewById(R.id.activity_login_loginButton);
         defaultLoginButtonText = loginButton.getText().toString();
         loginButton.setOnClickListener(this);
+        findViewById(R.id.activity_login_registerButton).setOnClickListener(this);
+        findViewById(R.id.activity_login_forgotPasswordButton).setOnClickListener(this);
     }
 
 
@@ -57,7 +59,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 return;
             case R.id.activity_login_registerButton:
                 startActivity(new Intent(this, RegisterActivity.class));
-                //TODO: implementar register button
                 return;
             case R.id.activity_login_forgotPasswordButton:
                 //TODO: implementar forgot password button

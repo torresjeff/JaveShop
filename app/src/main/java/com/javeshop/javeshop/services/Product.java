@@ -218,4 +218,24 @@ public class Product
     public static class UpdateProductDetailsResponse extends ServiceResponse
     {
     }
+
+    /**
+     * Request para eliminar un producto ya publicado.
+     */
+    public static class DeleteProductRequest
+    {
+        public int productId;
+
+        public DeleteProductRequest(int productId)
+        {
+            this.productId = productId;
+        }
+    }
+
+    /**
+     * Respuesta del servidor a UpdateProductDetailsRequest.
+     */
+    public static class DeleteProductResponse extends ServiceResponse
+    {
+    }
 }

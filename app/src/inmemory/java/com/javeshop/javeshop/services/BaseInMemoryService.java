@@ -8,7 +8,7 @@ import com.squareup.otto.Bus;
 import java.util.Random;
 
 /**
- * Created by Jeffrey Torres on 12/10/2015.
+ * Clase que contiene las funciones basicas para que se puedan emular las respuestas del servidor.
  */
 public class BaseInMemoryService
 {
@@ -26,17 +26,29 @@ public class BaseInMemoryService
         bus.register(this);
     }
 
+    /**
+     * Llama una funcion luego de un retardo aleatorio entre millisecondMin y millisecondMax.
+     * @param runnable funcion que se va a llamar.
+     * @param millisecondMin tiempo minimo de espera.
+     * @param millisecondMax tiempo maximo de espera.
+     */
     protected void invokeDelayed(Runnable runnable, long millisecondMin, long millisecondMax)
     {
         if (millisecondMin > millisecondMax)
         {
-            throw new IllegalArgumentException("Min must be smaller than max");
+            throw new IllegalArgumentException("Min debe ser mas pequeno que max");
         }
 
         long delay = (long)(random.nextDouble() * (millisecondMax - millisecondMin)) + millisecondMin;
         handler.postDelayed(runnable, delay);
     }
 
+    /**
+     * Publica un evento al bus de eventos luego de un retardo aleatorio entre millisecondMin y millisecondMax.
+     * @param event evento que se va a publicar.
+     * @param millisecondMin tiempo minimo de espera.
+     * @param millisecondMax tiempo maximo de espera.
+     */
     protected void postDelayed(final Object event, long millisecondMin, long millisecondMax)
     {
         invokeDelayed(new Runnable()
@@ -49,11 +61,20 @@ public class BaseInMemoryService
         }, millisecondMin, millisecondMax);
     }
 
+    /**
+     * Publica un evento al bus de eventos luego de un retardo especificado por milliseconds.
+     * @param event evento que se va a publicar.
+     * @param milliseconds tiempo de espera.
+     */
     protected void postDelayed(Object event, long milliseconds)
     {
         postDelayed(event, milliseconds, milliseconds);
     }
 
+    /**
+     * Publica un evento en un tiempo de espera entre 600 y 1200 milisegundos.
+     * @param event evento que se va a publicar.
+     */
     protected void postDelayed(Object event)
     {
         postDelayed(event, 600, 1200);
