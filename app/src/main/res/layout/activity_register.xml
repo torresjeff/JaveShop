@@ -5,4 +5,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/include_javeshop_header" />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Nombre"
+        android:singleLine="true"
+        android:inputType="textCapWords"
+        android:id="@+id/activity_register_firstName"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Apellidos"
+        android:singleLine="true"
+        android:inputType="textCapWords"
+        android:id="@+id/activity_register_lastName"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Correo javeriano"
+        android:singleLine="true"
+        android:id="@+id/activity_register_email"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Teléfono"
+        android:singleLine="true"
+        android:inputType="number"
+        android:id="@+id/activity_register_phoneNumber"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Contraseña"
+        android:singleLine="true"
+        android:inputType="textPassword"
+        android:id="@+id/activity_register_password"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Confirmar contraseña"
+        android:singleLine="true"
+        android:inputType="textPassword"
+        android:id="@+id/activity_register_confirmPassword"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="#0D47A1"
+            android:textColor="#fff"
+            android:text="Registrarse"
+            android:id="@+id/activity_register_registerButton"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateOnly="true"
+            android:id="@+id/activity_register_progressBar"/>
+
+    </FrameLayout>
+
 </LinearLayout>

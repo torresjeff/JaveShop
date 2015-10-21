@@ -1,6 +1,10 @@
 package com.javeshop.javeshop.activities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
@@ -9,6 +13,8 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -63,6 +69,8 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
     private int quantity;
     private boolean isEditing;
     private ProductDetails postedProductDetails;
+    private Dialog progressDialog;
+    private boolean progressBarVisible;
 
 
     /**
@@ -158,8 +166,19 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         {
             findViewById(R.id.activity_sell_product_pagerContainer).setVisibility(View.GONE);
         }
-        Log.e("SellProductActivity", "onCreate called");
 
+        if (progressBarVisible)
+        {
+            setProgressBarVisible(true);
+        }
+
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        invalidateOptionsMenu();
     }
 
     /**
@@ -265,7 +284,7 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
                         name.getText().toString(),
                         description.getText().toString(),
                         outputFiles,
-                        Integer.parseInt(price.getText().toString()),
+                        Float.parseFloat(price.getText().toString()),
                         quantity,
                         stateSpinner.getSelectedItemPosition(),
                         categorySpinner.getSelectedItemPosition());
@@ -378,6 +397,94 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
 
             viewPager.setCurrentItem(adapter.getCount() - 1);
         }
+    }
+
+    /**
+     * Infla el menu de opciones de la Actividad.
+     * @param menu el menu que se va a inflar.
+     * @return verdadero si fue creado satisfactoriamente.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        if (isEditing)
+        {
+            getMenuInflater().inflate(R.menu.activity_sell_product, menu);
+            return true;
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * Responde a eventos de click/touch en el menu.
+     * @param item elemento del menu que fue seleccionado.
+     * @return true si se manejo el evento correctamente.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        switch (id)
+        {
+            case R.id.activity_sell_product_menu_delete:
+                AlertDialog dialog = new AlertDialog.Builder(this)
+                        .setTitle("¿Estás seguro que deseas eliminar este producto?")
+                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                bus.post(new Product.DeleteProductRequest(postedProductDetails.getId()));
+                                setProgressBarVisible(true);
+                            }
+                        })
+                        .setNegativeButton("Cancelar", null)
+                        .create();
+
+                dialog.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void setProgressBarVisible(boolean newVisible)
+    {
+        if (newVisible)
+        {
+            progressDialog = new ProgressDialog.Builder(SellProductActivity.this)
+                    .setTitle("Eliminando producto")
+                    .setCancelable(false)
+                    .show();
+        }
+        else if (progressDialog != null)
+        {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
+
+
+        this.progressBarVisible = newVisible;
+    }
+
+    /**
+     * Callback. Llamado cuando el servidor responde al request de eliminar un producto.
+     * @param response respuesta del servidor.
+     */
+    @Subscribe
+    public void onProductDeleted(Product.DeleteProductResponse response)
+    {
+        setProgressBarVisible(false);
+
+        if (!response.succeeded())
+        {
+            response.showErrorToast(this);
+            return;
+        }
+
+        finish();
     }
 
     /**

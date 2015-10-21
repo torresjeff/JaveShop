@@ -41,6 +41,9 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
     private static final int STATE_EDITING = 2;
 
     private static final String BUNDLE_STATE = "BUNDLE_STATE";
+    private static final String BUNDLE_FIRST_NAME = "BUNDLE_FIRST_NAME";
+    private static final String BUNDLE_LAST_NAME = "BUNDLE_LAST_NAME";
+    private static final String BUNDLE_PHONE_NUMBER = "BUNDLE_PHONE_NUMBER";
 
 
     private int currentState;
@@ -108,14 +111,18 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             firstName.setText(user.getFirstName());
             lastName.setText(user.getLastName());
             phoneNumber.setText(user.getPhoneNumber());
-            emailText.setText(user.getEmail());
 
             changeState(STATE_VIEWING); //default state
         }
         else
         {
             changeState(savedInstanceState.getInt(BUNDLE_STATE));
+            firstName.setText(savedInstanceState.getString(BUNDLE_FIRST_NAME));
+            lastName.setText(savedInstanceState.getString(BUNDLE_LAST_NAME));
+            phoneNumber.setText(savedInstanceState.getString(BUNDLE_PHONE_NUMBER));
         }
+
+        emailText.setText(user.getEmail());
 
         if (progressBarVisible)
         {
@@ -260,9 +267,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             response.showErrorToast(this);
         }
 
-        //TODO: eliminar esta parte cuando estemos conectados al servidor
-        /*avatarView.setImageResource(0);
-        avatarView.setImageURI(Uri.parse(response.avatarUrl));*/
         //TODO: cargar la imagen con el url de la imagen en el servidor
         Picasso.with(this).load(response.avatarUrl).into(avatarView);
     }
@@ -434,5 +438,8 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
     public void onSaveInstanceState(Bundle savedInstanceState)
     {
         savedInstanceState.putInt(BUNDLE_STATE, currentState);
+        savedInstanceState.putString(BUNDLE_FIRST_NAME, firstName.getText().toString());
+        savedInstanceState.putString(BUNDLE_LAST_NAME, lastName.getText().toString());
+        savedInstanceState.putString(BUNDLE_PHONE_NUMBER, phoneNumber.getText().toString());
     }
 }
