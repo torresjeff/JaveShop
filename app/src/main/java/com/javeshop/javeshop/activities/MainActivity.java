@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.opengl.Visibility;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -24,15 +25,20 @@ import com.javeshop.javeshop.services.entities.ProductDetails;
 import com.javeshop.javeshop.views.MainNavDrawer;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
+
 /**
  * Esta es la Actividad principal de la aplicacion. En ella podemos buscar algun producto por nombre.
  */
 public class MainActivity extends BaseAuthenticatedActivity implements AdapterView.OnItemClickListener
 {
+    private static final String BUNDLE_PRODUCT_LIST = "BUNDLE_PRODUCT_LIST";
+
     private View progressFrame;
     private SearchView searchView;
     private ProductDetailsAdapter adapter;
     private String lastQuery;
+    private ArrayList<ProductDetails> productDetails;
 
     /**
      * Infla la interfaz de la Actividad
@@ -77,6 +83,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
             }
         });
 
+        productDetails = new ArrayList<>();
         adapter = new ProductDetailsAdapter(this);
 
         ListView listView = (ListView) findViewById(R.id.activity_main_productsListView);
@@ -85,7 +92,12 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
 
         listView.setOnItemClickListener(this);
 
-
+        if (savedInstanceState != null)
+        {
+            productDetails = savedInstanceState.getParcelableArrayList(BUNDLE_PRODUCT_LIST);
+            adapter.addAll(productDetails);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     /**
@@ -125,10 +137,16 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
             return;
         }
 
+        productDetails.clear();
+        productDetails.addAll(response.products);
         adapter.clear();
-        adapter.addAll(response.products);
+        adapter.addAll(productDetails);
         adapter.notifyDataSetChanged();
     }
 
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        outState.putParcelableArrayList(BUNDLE_PRODUCT_LIST, productDetails);
+    }
 }
