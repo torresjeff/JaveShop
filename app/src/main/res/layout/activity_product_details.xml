@@ -92,7 +92,7 @@
                         android:layout_below="@id/activity_product_details_price"
                         android:layout_alignStart="@id/activity_product_details_price"
                         android:text="Vendedor"
-                        android:textColor="#0D47A1"
+                        android:textColor="#03A9F4"
                         android:textSize="16sp"
                         android:clickable="true"
                         android:id="@+id/activity_product_details_vendor"/>

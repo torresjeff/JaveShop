@@ -46,7 +46,6 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
 
         ListView listView = (ListView) findViewById(R.id.activity_product_comments_listView);
         listView.setAdapter(adapter);
-        listView.setEnabled(false);
 
         bus.post(new Product.GetProductCommentsRequest(productDetails.getId()));
         productId = productDetails.getId();
@@ -94,10 +93,15 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
         adapter.notifyDataSetChanged();
     }
 
+
+    /**
+     * Responde a eventos de clicks/touch.
+     * @param view el View que fue tocado.
+     */
     @Override
-    public void onClick(View v)
+    public void onClick(View view)
     {
-        int id = v.getId();
+        int id = view.getId();
 
         switch (id)
         {

@@ -208,34 +208,4 @@ public class InMemoryProductService extends BaseInMemoryService
         postDelayed(new Product.UpdateProductDetailsResponse(), 1000, 2000);
     }
 
-    /**
-     * Crea productos falsos para permitir ver lo que seria la version final de la aplicacion.
-     * @param size el numero de productos que se van a crear
-     * @return
-     */
-    private ArrayList<ProductDetails> createFakeProducts(int size)
-    {
-        ArrayList<ProductDetails> products = new ArrayList<>();
-
-        for (int i = 0; i < size; ++i)
-        {
-            ArrayList<String> images = new ArrayList<>();
-            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=600");
-            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+1) + "?d=identicon&s=600");
-            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+2) + "?d=identicon&s=600");
-            images.add("http://www.gravatar.com/avatar/" + Integer.toString(i+3) + "?d=identicon&s=600");
-            products.add(
-                    new ProductDetails(
-                            i,
-                            i,
-                            "Producto " + (i+1),
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                                    "Phasellus fermentum odio mauris, ac lacinia quam elementum quis. " +
-                                    "Vestibulum feugiat arcu.",
-                            "http://www.gravatar.com/avatar/" + Integer.toString(i) + "?d=identicon&s=600",
-                            images, 10000*(i+1), i, i%2, (i%23)+1));
-        }
-
-        return products;
-    }
 }
