@@ -2,6 +2,7 @@ package com.javeshop.javeshop.infrastructure;
 
 
 import android.app.Application;
+import android.net.Uri;
 
 import com.javeshop.javeshop.services.Module;
 import com.squareup.otto.Bus;
@@ -14,6 +15,10 @@ public class JaveShopApplication extends Application
 {
     private Auth auth;
     private Bus bus;
+
+    //TODO: cambiar al servidor de verdad
+    //public static final Uri API_ENDPOINT = Uri.parse("http://javeshop.me");
+    public static final Uri API_ENDPOINT = Uri.parse("http://10.0.3.2/JaveShop");
 
     public JaveShopApplication()
     {

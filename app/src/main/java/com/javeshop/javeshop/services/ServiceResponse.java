@@ -105,4 +105,14 @@ public class ServiceResponse
             Log.e(TAG, "Can't create error toast", e);
         }
     }
+
+    @Override
+    public String toString()
+    {
+        return "ServiceResponse{" +
+                "operationError='" + operationError + '\'' +
+                ", propertyErrors=" + propertyErrors +
+                ", isCritical=" + isCritical +
+                '}';
+    }
 }

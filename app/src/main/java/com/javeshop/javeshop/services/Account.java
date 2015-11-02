@@ -27,6 +27,22 @@ public class Account
         public float reputation;
         public String email;
         public String authToken;
+
+        @Override
+        public String toString()
+        {
+            return "UserResponse{" +
+                    "id=" + id +
+                    ", avatarUrl='" + avatarUrl + '\'' +
+                    ", firstName='" + firstName + '\'' +
+                    ", lastName='" + lastName + '\'' +
+                    ", phoneNumber='" + phoneNumber + '\'' +
+                    ", balance=" + balance +
+                    ", reputation=" + reputation +
+                    ", email='" + email + '\'' +
+                    ", authToken='" + authToken + '\'' +
+                    '}';
+        }
     }
 
     /**
@@ -98,6 +114,10 @@ public class Account
      */
     public static class RegisterResponse extends ServiceResponse
     {
+        public String toString()
+        {
+            return super.toString();
+        }
     }
 
     /**
