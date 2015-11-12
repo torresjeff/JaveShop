@@ -125,13 +125,11 @@ public class Account
      */
     public static class ChangeAvatarRequest
     {
-
         public Uri newAvatarUri;
         public ChangeAvatarRequest(Uri newAvatarUri)
         {
             this.newAvatarUri = newAvatarUri;
         }
-
     }
 
     /**
@@ -177,6 +175,7 @@ public class Account
         public String currentPassword;
         public String newPassword;
         public String confirmNewPassword;
+
 
         public ChangePasswordRequest(String currentPassword, String newPassword, String confirmNewPassword)
         {

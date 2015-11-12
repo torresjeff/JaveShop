@@ -15,6 +15,8 @@ public class ProductDetails implements Parcelable
 {
     private int id;
     private int ownerId;
+    private String ownerFirstName;
+    private String ownerLastName;
     private String name;
     private String description;
     private String mainImageUrl;
@@ -61,6 +63,8 @@ public class ProductDetails implements Parcelable
     {
         id = in.readInt();
         ownerId = in.readInt();
+        ownerFirstName = in.readString();
+        ownerLastName = in.readString();
         name = in.readString();
         description = in.readString();
         mainImageUrl = in.readString();
@@ -136,6 +140,16 @@ public class ProductDetails implements Parcelable
         return category;
     }
 
+    public String getOwnerFirstName()
+    {
+        return ownerFirstName;
+    }
+
+    public String getOwnerLastName()
+    {
+        return ownerLastName;
+    }
+
     @Override
     public int describeContents()
     {
@@ -147,6 +161,8 @@ public class ProductDetails implements Parcelable
     {
         parcel.writeInt(id);
         parcel.writeInt(ownerId);
+        parcel.writeString(ownerFirstName);
+        parcel.writeString(ownerLastName);
         parcel.writeString(name);
         parcel.writeString(description);
         parcel.writeString(mainImageUrl);

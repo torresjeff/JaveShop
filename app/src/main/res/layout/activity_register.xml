@@ -16,7 +16,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="Nombre"
-        android:text="ojfdsaf"
         android:singleLine="true"
         android:inputType="textCapWords"
         android:id="@+id/activity_register_firstName"/>
@@ -28,7 +27,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="Apellidos"
-        android:text="oiajdfa"
         android:singleLine="true"
         android:inputType="textCapWords"
         android:id="@+id/activity_register_lastName"/>
@@ -41,7 +39,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="Correo javeriano"
-        android:text="oidfjsaod@javeriana.edu.co"
         android:singleLine="true"
         android:id="@+id/activity_register_email"/>
 
@@ -52,7 +49,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="Teléfono"
-        android:text="8431938"
         android:singleLine="true"
         android:inputType="number"
         android:id="@+id/activity_register_phoneNumber"/>
@@ -64,7 +60,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="Contraseña"
-        android:text="abcd"
         android:singleLine="true"
         android:inputType="textPassword"
         android:id="@+id/activity_register_password"/>
@@ -76,7 +71,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="Confirmar contraseña"
-        android:text="abcd"
         android:singleLine="true"
         android:inputType="textPassword"
         android:id="@+id/activity_register_confirmPassword"/>

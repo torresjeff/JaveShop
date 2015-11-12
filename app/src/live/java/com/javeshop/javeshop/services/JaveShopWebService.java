@@ -24,51 +24,35 @@ public interface JaveShopWebService
 {
     //----------------------------------------------------------------------------------------------------
     //Accounts
-
+    //----------------------------------------------------------------------------------------------------
     /**
      * Genera un token de acceso a la aplicación.
-     * @param email
-     * @param password
+     * @param request request del usuario
      * @param callback
      */
-    @POST("/token.php") //POST = when you send/submit a form, CREATE
-    @FormUrlEncoded
-    //Specific type of encoding that most browsers understand
-    void login(
-            @Field("email") String email,
-            @Field("password") String password,
-            Callback<LoginResponse> callback);
+    @POST("/token.php")
+    void login(@Body Account.LoginWithUsernameRequest request, Callback<Account.LoginWithUsernameResponse> callback);
 
     @POST("/api/v1/account.php")
     void register(@Body Account.RegisterRequest request, Callback<Account.RegisterResponse> callback);
 
-    @GET("/api/v1/account")
-        //Retrieves account information
-    void getAccount(Callback<Account.LoginWithLocalTokenResponse> callback);
+    @POST("/login.php")
+    void getAccount(@Body Account.LoginWithLocalTokenRequest request, Callback<Account.LoginWithLocalTokenResponse> callback);
 
-    @PUT("/api/v1/account")
+    @PUT("/api/v1/account.php")
     void updateProfile(@Body Account.UpdateProfileRequest request, Callback<Account.UpdateProfileResponse> callback);
 
     @Multipart //Used to send chunks of files (file uploads)
-    @PUT("/api/v1/account/avatar")
+    @POST("/api/v1/account/avatar.php")
     void updateAvatar(@Part("avatar")TypedFile avatar, Callback<Account.ChangeAvatarResponse> callback);
 
-    @PUT("/api/v1/account/password")
+    @PUT("/api/v1/account/password.php")
     void updatePassword(@Body Account.ChangePasswordRequest request, Callback<Account.ChangePasswordResponse> callback);
 
     //----------------------------------------------------------------------------------------------------
-    //DTOs
+    //Products
+    //----------------------------------------------------------------------------------------------------
+    @GET("/api/v1/products.php")
+    void searchProduct(@Query("q") String query, Callback<Product.SearchProductResponse> callback);
 
-    class LoginResponse extends ServiceResponse
-    {
-        @SerializedName("token")
-        public String token;
-
-        //TODO: enable errors
-        /*@SerializedName("error")
-        public String error;
-
-        @SerializedName("error_description")
-        public String errorDescription;*/
-    }
 }

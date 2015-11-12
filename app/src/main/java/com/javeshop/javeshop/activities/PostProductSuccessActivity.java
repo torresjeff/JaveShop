@@ -10,7 +10,8 @@ import com.javeshop.javeshop.R;
 /**
  * Esta Actividad es instanciada despues de que un usuario ha publicado un producto satisfactoriamente.
  */
-public class PostProductSuccessActivity extends BaseAuthenticatedActivity implements View.OnClickListener
+//public class PostProductSuccessActivity extends BaseAuthenticatedActivity implements View.OnClickListener
+public class PostProductSuccessActivity extends BaseActivity implements View.OnClickListener
 {
     private Button button;
 
@@ -19,8 +20,10 @@ public class PostProductSuccessActivity extends BaseAuthenticatedActivity implem
      * @param savedInstanceState
      */
     @Override
-    protected void onJaveShopCreate(Bundle savedInstanceState)
+    //protected void onJaveShopCreate(Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_product_success);
 
         button = (Button) findViewById(R.id.activity_post_product_succes_continue);

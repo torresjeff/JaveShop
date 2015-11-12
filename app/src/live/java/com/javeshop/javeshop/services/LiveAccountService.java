@@ -2,6 +2,7 @@ package com.javeshop.javeshop.services;
 
 import android.widget.Toast;
 
+import com.javeshop.javeshop.activities.LoginActivity;
 import com.javeshop.javeshop.infrastructure.Auth;
 import com.javeshop.javeshop.infrastructure.RetrofitCallback;
 import com.javeshop.javeshop.infrastructure.RetrofitCallbackPost;
@@ -38,7 +39,7 @@ public class LiveAccountService extends BaseLiveService
                 bus.post(registerResponse);
 
                 //TODO: quitar el progressBar
-                Toast.makeText(application, registerResponse.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(application, registerResponse.toString(), Toast.LENGTH_SHORT).show();
                 if (registerResponse.succeeded())
                 {
                     //TODO.
@@ -48,40 +49,15 @@ public class LiveAccountService extends BaseLiveService
     }
 
     @Subscribe
-    public void loginWithUsername(final Account.LoginWithUsernameRequest request)
+    public void loginWithUsername(Account.LoginWithUsernameRequest request)
     {
-        api.login(request.username, request.password, new RetrofitCallback<JaveShopWebService.LoginResponse>(JaveShopWebService.LoginResponse.class)
+        api.login(request, new RetrofitCallback<Account.LoginWithUsernameResponse>(Account.LoginWithUsernameResponse.class)
         {
             @Override
-            protected void onResponse(JaveShopWebService.LoginResponse loginResponse)
+            protected void onResponse(/*JaveShopWebService.LoginResponse loginResponse*/ Account.LoginWithUsernameResponse loginResponse)
             {
-                if (!loginResponse.succeeded())
-                {
-                    Account.LoginWithUsernameResponse response = new Account.LoginWithUsernameResponse();
-                    //TODO: volver a enable
-                    //response.setPropertyError("userName", loginResponse.errorDescription);
-                    bus.post(response);
-                    return;
-                }
-
-                auth.setAuthToken(loginResponse.token);
-                api.getAccount(new RetrofitCallback<Account.LoginWithLocalTokenResponse>(Account.LoginWithLocalTokenResponse.class)
-                {
-                    @Override
-                    protected void onResponse(Account.LoginWithLocalTokenResponse loginWithLocalTokenResponse)
-                    {
-                        if (!loginWithLocalTokenResponse.succeeded())
-                        {
-                            Account.LoginWithUsernameResponse response = new Account.LoginWithUsernameResponse();
-                            response.setOperationError(loginWithLocalTokenResponse.getOperationError());
-                            bus.post(response);
-                            return;
-                        }
-
-                        loginUser(loginWithLocalTokenResponse);
-                        bus.post(new Account.LoginWithUsernameResponse());
-                    }
-                });
+                //Toast.makeText(application, loginResponse.toString(), Toast.LENGTH_LONG).show();
+                bus.post(loginResponse);
             }
         });
     }
@@ -89,13 +65,16 @@ public class LiveAccountService extends BaseLiveService
     @Subscribe
     public void loginWithLocalToken(final Account.LoginWithLocalTokenRequest request)
     {
-        api.getAccount(new RetrofitCallbackPost<Account.LoginWithLocalTokenResponse>(Account.LoginWithLocalTokenResponse.class, bus)
+        //Toast.makeText(application, "Quiere login con local token: " + request.authToken, Toast.LENGTH_LONG).show();
+        api.getAccount(request, new RetrofitCallbackPost<Account.LoginWithLocalTokenResponse>(Account.LoginWithLocalTokenResponse.class, bus)
         {
             @Override
             protected void onResponse(Account.LoginWithLocalTokenResponse loginWithLocalTokenResponse)
             {
+                //Toast.makeText(application, /*loginWithLocalTokenResponse.toString()*/"Respondio el token", Toast.LENGTH_LONG).show();
                 loginUser(loginWithLocalTokenResponse);
-                super.onResponse(loginWithLocalTokenResponse);
+                //super.onResponse(loginWithLocalTokenResponse);
+                bus.post(loginWithLocalTokenResponse);
             }
         });
     }
@@ -126,10 +105,11 @@ public class LiveAccountService extends BaseLiveService
             @Override
             protected void onResponse(Account.ChangeAvatarResponse response)
             {
-                User user = auth.getUser();
-                user.setAvatarUrl(response.avatarUrl);
-                super.onResponse(response);
-                bus.post(new Account.UserDetailsUpdatedEvent(user));
+                //User user = auth.getUser();
+                //user.setAvatarUrl(response.avatarUrl);
+                //super.onResponse(response);
+                //bus.post(new Account.UserDetailsUpdatedEvent(user));
+                bus.post(response);
             }
         });
     }
@@ -142,12 +122,8 @@ public class LiveAccountService extends BaseLiveService
             @Override
             protected void onResponse(Account.ChangePasswordResponse response)
             {
-                if (response.succeeded())
-                {
-                    bus.post(response);
-                }
-
-                super.onResponse(response);
+                bus.post(response);
+                //super.onResponse(response);
             }
         });
     }

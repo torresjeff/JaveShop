@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,8 @@ import com.javeshop.javeshop.services.Account;
 import com.javeshop.javeshop.views.MainNavDrawer;
 import com.soundcloud.android.crop.Crop;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -262,13 +265,24 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
     public void onAvatarUpdated(Account.ChangeAvatarResponse response)
     {
         avatarProgressFrame.setVisibility(View.GONE);
+        User user = application.getAuth().getUser();
         if (!response.succeeded())
         {
+            Log.e("ProfileActivity", "Didn't succeed, avatar url = " + user.getAvatarUrl());
+            /*Picasso.with(this).setLoggingEnabled(true);*/
+            avatarView.invalidate();
+            avatarView.setImageResource(0);
+            Picasso.with(this).setLoggingEnabled(true);
+            //Picasso.with(this).cache.clear();
+            //Picasso.with(this).invalidate(user.getAvatarUrl());
+            Picasso.with(this).load(user.getAvatarUrl()).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(avatarView);
             response.showErrorToast(this);
         }
 
         //TODO: cargar la imagen con el url de la imagen en el servidor
         Picasso.with(this).load(response.avatarUrl).into(avatarView);
+        user.setAvatarUrl(response.avatarUrl);
+        bus.post(new Account.UserDetailsUpdatedEvent(user));
     }
 
     /**

@@ -101,6 +101,7 @@ public class Product
     public static class MarkAsFavoriteResponse extends ServiceResponse
     {
         //TODO: este response debe responder con un id diciendo si fue agregado o eliminado
+        public boolean added;
     }
 
 

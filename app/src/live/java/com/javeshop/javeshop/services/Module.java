@@ -1,5 +1,7 @@
 package com.javeshop.javeshop.services;
 
+import android.util.Log;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,9 +25,12 @@ import retrofit.converter.GsonConverter;
  */
 public class Module
 {
+    //public static JaveShopWebService api;
+    //public static JaveShopApplication app;
     public static void register (JaveShopApplication application)
     {
         JaveShopWebService api = createWebService(application);
+        //app = application;
 
         new LiveAccountService(api, application);
         new LiveProductService(api, application);
@@ -39,12 +44,19 @@ public class Module
 
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(JaveShopApplication.API_ENDPOINT.toString())
-                //.setConverter(new GsonConverter(gson))
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setClient(new OkClient(client))
                 .build();
 
         return adapter.create(JaveShopWebService.class);
     }
+
+    /*public static void updateApi()
+    {
+        Log.e("MODULE", "updateApi called");
+        api = createWebService(app);
+
+    }*/
 
     /**
      * Part of the OkHttp request pipeline, and it's gonna give the opportunity to modify any OkHttp requests that happens, adding the auth token header
@@ -66,7 +78,8 @@ public class Module
             //Then modify the request and give it our AuthToken
             if (auth.hasAuthToken())
             {
-                request = request.newBuilder().addHeader("Authorization", "Bearer " + auth.getAuthToken()).build(); //Recreate the request with a new header if we have an auth token
+                Log.e("Module", "We set the auth interceptor");
+                request = request.newBuilder().addHeader("Authorization", /*"Bearer " + */auth.getAuthToken()).build(); //Recreate the request with a new header if we have an auth token
             }
 
             Response response = chain.proceed(request);

@@ -31,7 +31,7 @@ public class RetrofitCallbackPost<T extends ServiceResponse> extends RetrofitCal
             }
             catch (Exception e)
             {
-                Log.e(TAG, "Could not create blank result object", e);
+                Log.e(TAG, "No se puedo crear objeto vacio", e);
             }
         }
 
