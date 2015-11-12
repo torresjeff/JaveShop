@@ -32,6 +32,11 @@ public class Auth
         authToken = preferences.getString(AUTH_PREFERENCES_TOKEN, null); //null = default value
     }
 
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
+
     public User getUser()
     {
         return user;

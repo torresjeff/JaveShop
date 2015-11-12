@@ -89,6 +89,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
     {
         if (response.succeeded())
         {
+            application.getAuth().setAuthToken(response.authToken);
             startActivity(new Intent(this, MainActivity.class));
             finish();
             return;

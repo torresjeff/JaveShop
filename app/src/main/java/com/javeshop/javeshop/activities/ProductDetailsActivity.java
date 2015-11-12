@@ -104,7 +104,8 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         }
 
         price.setText("$" + NumberFormat.getNumberInstance(Locale.US).format(productDetails.getPrice()));
-        vendor.setText("Vendedor " + productDetails.getOwnerId());
+        vendor.setText("Vendedor: " + productDetails.getOwnerFirstName() + " " + productDetails.getOwnerLastName());
+        //Log.e("LiveProductService", "Response: firstName=" + productDetails.getOwnerFirstName() + ",lastName=" + productDetails.getOwnerLastName());
         description.setText(productDetails.getDescription());
 
 

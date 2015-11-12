@@ -107,7 +107,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Subscribe
     public void onRegistered(Account.RegisterResponse response)
     {
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
         registerButton.setEnabled(true);
 
         if (!response.succeeded())

@@ -6,7 +6,9 @@ import android.widget.Toast;
 
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.infrastructure.Auth;
+import com.javeshop.javeshop.infrastructure.User;
 import com.javeshop.javeshop.services.Account;
+import com.javeshop.javeshop.services.Module;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -31,7 +33,7 @@ public class AuthenticationActivity extends BaseActivity
         setContentView(R.layout.activity_authentication);
 
         //Si no tenemos un token tenemos que iniciar sesión otra vez
-        if (!application.getAuth().hasAuthToken())
+        if (!application.getAuth().hasAuthToken() || application.getAuth().getAuthToken() == null)
         {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -54,7 +56,9 @@ public class AuthenticationActivity extends BaseActivity
         //We did not successfully authenticated with our local token. We must log in again
         if (!response.succeeded())
         {
-            Toast.makeText(this, "Por favor intente nuevamente", Toast.LENGTH_SHORT).show();
+
+            //Toast.makeText(this, "Por favor intente nuevamente", Toast.LENGTH_SHORT).show();
+            response.showErrorToast(this);
             auth.setAuthToken(null);
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -79,7 +83,20 @@ public class AuthenticationActivity extends BaseActivity
         {
             intent = new Intent(this, MainActivity.class);
         }*/
-        auth.getUser().setLoggedIn(true);
+
+        User user = auth.getUser();
+        user.setLoggedIn(true);
+        user.setAvatarUrl(response.avatarUrl);
+        user.setReputation(response.reputation);
+        user.setBalance(response.balance);
+        user.setPhoneNumber(response.phoneNumber);
+        user.setLastName(response.lastName);
+        user.setFirstName(response.firstName);
+        user.setEmail(response.email);
+        user.setId(response.id);
+
+        auth.setUser(user);
+        //Module.updateApi();
         Intent intent = new Intent(this, MainActivity.class);
 
         startActivity(intent);
