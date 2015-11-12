@@ -5,6 +5,7 @@ import android.util.Log;
 import com.javeshop.javeshop.infrastructure.Auth;
 import com.javeshop.javeshop.infrastructure.JaveShopApplication;
 import com.javeshop.javeshop.infrastructure.RetrofitCallbackPost;
+import com.javeshop.javeshop.services.entities.ProductComment;
 import com.squareup.otto.Subscribe;
 
 /**
@@ -20,6 +21,7 @@ public class LiveProductService extends BaseLiveService
         auth = application.getAuth();
     }
 
+
     @Subscribe
     public void searchProduct(Product.SearchProductRequest request)
     {
@@ -28,9 +30,73 @@ public class LiveProductService extends BaseLiveService
             @Override
             protected void onResponse(Product.SearchProductResponse response)
             {
+                //TODO: el toast de cuando no encuentra ningun producto se mustra dos veces
                 bus.post(response);
-                //Log.e("LiveProductService", "Response: firstName=" + response.products.get(0).getOwnerFirstName() + ",lastName=" + response.products.get(0).getOwnerLastName());
-                //super.onResponse(response);
+            }
+        });
+    }
+
+    @Subscribe
+    public void getComments(Product.GetProductCommentsRequest request)
+    {
+        api.getComments(request.productId, new RetrofitCallbackPost<Product.GetProductCommentsResponse>(Product.GetProductCommentsResponse.class, bus)
+        {
+            @Override
+            protected void onResponse(Product.GetProductCommentsResponse response)
+            {
+                bus.post(response);
+            }
+        });
+    }
+
+    @Subscribe
+    public void getFavorites(Product.GetFavoritesRequest request)
+    {
+        api.getFavorites(new RetrofitCallbackPost<Product.GetFavoritesResponse>(Product.GetFavoritesResponse.class, bus)
+        {
+            @Override
+            protected void onResponse(Product.GetFavoritesResponse response)
+            {
+                bus.post(response);
+            }
+        });
+    }
+
+    @Subscribe
+    public void markAsFavorite(Product.MarkAsFavoriteRequest request)
+    {
+        api.markAsFavorite(request, new RetrofitCallbackPost<Product.MarkAsFavoriteResponse>(Product.MarkAsFavoriteResponse.class, bus)
+        {
+            @Override
+            protected void onResponse(Product.MarkAsFavoriteResponse response)
+            {
+                bus.post(response);
+            }
+        });
+    }
+
+    @Subscribe
+    public void postComment(Product.SendCommentRequest request)
+    {
+        api.postComment(request.comment, new RetrofitCallbackPost<Product.SendCommentResponse>(Product.SendCommentResponse.class, bus)
+        {
+            @Override
+            protected void onResponse(Product.SendCommentResponse response)
+            {
+                bus.post(response);
+            }
+        });
+    }
+
+    @Subscribe
+    public void buyProduct(Product.BuyProductRequest request)
+    {
+        api.buyProduct(request, new RetrofitCallbackPost<Product.BuyProductResponse>(Product.BuyProductResponse.class, bus)
+        {
+            @Override
+            protected void onResponse(Product.BuyProductResponse response)
+            {
+                bus.post(response);
             }
         });
     }

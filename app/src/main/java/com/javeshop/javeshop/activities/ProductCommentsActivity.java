@@ -24,6 +24,7 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
     private Button postButton;
 
     private ProductCommentsAdapter adapter;
+    private ListView listView;
 
     /**
      * Infla la interfaz de la Actividad
@@ -44,7 +45,7 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
 
         adapter = new ProductCommentsAdapter(this);
 
-        ListView listView = (ListView) findViewById(R.id.activity_product_comments_listView);
+        listView = (ListView) findViewById(R.id.activity_product_comments_listView);
         listView.setAdapter(adapter);
 
         bus.post(new Product.GetProductCommentsRequest(productDetails.getId()));
@@ -69,6 +70,11 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
 
         adapter.addAll(response.comments);
         adapter.notifyDataSetChanged();
+
+        if (adapter.getCount() == 0)
+        {
+            listView.setEmptyView(findViewById(R.id.activity_product_comments_emptyList));
+        }
     }
 
     /**

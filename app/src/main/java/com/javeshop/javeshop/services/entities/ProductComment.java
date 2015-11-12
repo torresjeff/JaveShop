@@ -18,7 +18,7 @@ public class ProductComment
         this.productId = productId;
         this.commenterId = commenterId;
         this.question = question;
-        replierId = -1;
+        //replierId = -1;
     }
 
     public ProductComment(int productId, int commentId, int commenterId, String question, int replierId, String reply)

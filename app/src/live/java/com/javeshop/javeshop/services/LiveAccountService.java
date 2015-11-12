@@ -72,7 +72,15 @@ public class LiveAccountService extends BaseLiveService
             protected void onResponse(Account.LoginWithLocalTokenResponse loginWithLocalTokenResponse)
             {
                 //Toast.makeText(application, /*loginWithLocalTokenResponse.toString()*/"Respondio el token", Toast.LENGTH_LONG).show();
-                loginUser(loginWithLocalTokenResponse);
+                if (loginWithLocalTokenResponse.succeeded())
+                {
+                    loginUser(loginWithLocalTokenResponse);
+                }
+                else
+                {
+                    loginWithLocalTokenResponse.showErrorToast(application);
+                }
+
                 //super.onResponse(loginWithLocalTokenResponse);
                 bus.post(loginWithLocalTokenResponse);
             }
@@ -109,6 +117,7 @@ public class LiveAccountService extends BaseLiveService
                 //user.setAvatarUrl(response.avatarUrl);
                 //super.onResponse(response);
                 //bus.post(new Account.UserDetailsUpdatedEvent(user));
+
                 bus.post(response);
             }
         });

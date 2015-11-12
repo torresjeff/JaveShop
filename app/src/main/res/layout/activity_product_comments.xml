@@ -20,6 +20,18 @@
         android:layout_marginBottom="8dp"
         android:id="@+id/activity_product_comments_listView"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:background="#FF8A80"
+        android:text="Todavía no han hecho comentarios de este producto. Sé el primero en comentar."
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:visibility="gone"
+        android:id="@+id/activity_product_comments_emptyList"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

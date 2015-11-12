@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,7 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
     private TextView price;
     private TextView vendor;
     private TextView description;
+    private Button buyButton;
 
     private ImagePagerAdapter adapter;
 
@@ -67,7 +69,12 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
 
         productDetails = getIntent().getParcelableExtra(EXTRA_PRODUCT_DETAILS);
 
-        findViewById(R.id.activity_product_details_buy).setOnClickListener(this);
+        buyButton = (Button) findViewById(R.id.activity_product_details_buy);
+        buyButton.setOnClickListener(this);
+        if (productDetails.getQuantity() <= 0)
+        {
+            buyButton.setEnabled(false);
+        }
         findViewById(R.id.activity_product_details_previousButton).setOnClickListener(this);
         findViewById(R.id.activity_product_details_nextButton).setOnClickListener(this);
 
@@ -174,7 +181,15 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         }
 
         //TODO: cuando este marcado como favorito y se vuelva a press el boton, se debe eliminar de los favoritos.
-        Toast.makeText(this, "Agregado a tus favoritos", Toast.LENGTH_SHORT).show();
+        if (response.added)
+        {
+            Toast.makeText(this, "Agregado a tus favoritos", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "Eliminado de tus favoritos", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     /**

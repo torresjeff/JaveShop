@@ -105,4 +105,20 @@ public class User
     {
         this.reputation = reputation;
     }
+
+    @Override
+    public String toString()
+    {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", isLoggedIn=" + isLoggedIn +
+                ", balance=" + balance +
+                ", reputation=" + reputation +
+                '}';
+    }
 }

@@ -1,6 +1,8 @@
 package com.javeshop.javeshop.services;
 
 import com.google.gson.annotations.SerializedName;
+import com.javeshop.javeshop.infrastructure.RetrofitCallbackPost;
+import com.javeshop.javeshop.services.entities.ProductComment;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -55,4 +57,26 @@ public interface JaveShopWebService
     @GET("/api/v1/products.php")
     void searchProduct(@Query("q") String query, Callback<Product.SearchProductResponse> callback);
 
+    @GET("/api/v1/products/comments.php")
+    void getComments(@Query("id") int id, Callback<Product.GetProductCommentsResponse> callback);
+
+    @POST("/api/v1/products/comments.php")
+    void postComment(@Body ProductComment comment, Callback<Product.SendCommentResponse> callback);
+
+    @GET("/api/v1/products/favorites.php")
+    void getFavorites(Callback<Product.GetFavoritesResponse> callback);
+
+    @PUT("/api/v1/products/favorites.php")
+    void markAsFavorite(@Body Product.MarkAsFavoriteRequest request, Callback<Product.MarkAsFavoriteResponse> callback);
+
+    @POST("/api/v1/products/buy.php")
+    void buyProduct(@Body Product.BuyProductRequest request, Callback<Product.BuyProductResponse> callback);
+
+
+
+    //----------------------------------------------------------------------------------------------------
+    //Users
+    //----------------------------------------------------------------------------------------------------
+    @GET("/api/v1/users.php")
+    void searchUser(@Query("id") int userId, RetrofitCallbackPost<Users.GetUserDetailsResponse> callback);
 }

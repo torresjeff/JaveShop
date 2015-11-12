@@ -17,8 +17,8 @@ public class JaveShopApplication extends Application
     private Bus bus;
 
     //TODO: cambiar al servidor de verdad
-    //public static final Uri API_ENDPOINT = Uri.parse("http://javeshop.me");
-    public static final Uri API_ENDPOINT = Uri.parse("http://10.0.3.2/JaveShop");
+    public static final Uri API_ENDPOINT = Uri.parse("http://javeshop.me");
+    //public static final Uri API_ENDPOINT = Uri.parse("http://10.0.3.2/JaveShop");
 
     public JaveShopApplication()
     {
