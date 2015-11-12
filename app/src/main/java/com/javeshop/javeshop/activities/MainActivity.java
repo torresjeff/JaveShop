@@ -49,6 +49,8 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
     {
         setContentView(R.layout.activity_main);
 
+        Log.e("MAINACTIVITY", application.getAuth().getUser().toString());
+
         setNavDrawer(new MainNavDrawer(this));
 
         progressFrame = findViewById(R.id.activity_main_progresFrame);
@@ -133,6 +135,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
 
         if (!response.succeeded())
         {
+            //TODO: el toast de cuando no encuentra ningun producto se muestra dos veces
             response.showErrorToast(this);
             return;
         }

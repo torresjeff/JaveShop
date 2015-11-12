@@ -52,7 +52,7 @@ public class ProductCommentsAdapter extends ArrayAdapter<ProductComment>
         view.question.setText(comment.getQuestion());
 
 
-        if (comment.getReply() == null || comment.getReply().isEmpty())
+        if (comment.getReply() == null || comment.getReply().isEmpty() || comment.getReply().equalsIgnoreCase("NULL"))
         {
             view.reply.setText("Aún no han respondido esta pregunta.");
         }
