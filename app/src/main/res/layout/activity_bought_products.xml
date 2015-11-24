@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/include_toolbar"
+        android:id="@+id/include_toolbar"/>
+
+    <android.support.v4.widget.DrawerLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/drawer_layout"
+        android:layout_below="@id/include_toolbar">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/activity_bought_products_listView"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#e0f7fa"
+            android:text="No has comprado ningún producto"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:visibility="gone"
+            android:id="@+id/activity_bought_products_emptyList"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/activity_bought_products_progresFrame"
+            android:clickable="true">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateOnly="true"/>
+
+        </FrameLayout>
+
+        <include layout="@layout/include_main_nav_drawer" />
+
+    </android.support.v4.widget.DrawerLayout>
+
+</RelativeLayout>

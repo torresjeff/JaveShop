@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.activities.BaseActivity;
 import com.javeshop.javeshop.activities.ProductImageActivity;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -81,7 +82,8 @@ public class ImagePagerAdapter extends PagerAdapter
         Log.e(TAG, "Attempting to load " + stringArray[position]);
 
         imageView.setImageResource(0);
-        Picasso.with(context).load(Uri.parse(stringArray[position])).into(imageView);
+        //Para que no guarde las fotos en el cache y tenga que reload them (cuando nos salimos de SellProductActivity sin terminar de publicar el producto)
+        Picasso.with(context).load(Uri.parse(stringArray[position])).memoryPolicy(MemoryPolicy.NO_CACHE).into(imageView);
 
         container.addView(itemView);
 

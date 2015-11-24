@@ -14,43 +14,35 @@ import com.javeshop.javeshop.views.MainNavDrawer;
 import com.squareup.otto.Subscribe;
 
 /**
- * Esta Actividad se encarga de mostrarle a un usuario todos los productos que ha marcado como favoritos.
+ * Created by Jeffrey Torres on 12/11/2015.
  */
-public class FavoritesActivity extends BaseAuthenticatedActivity implements AdapterView.OnItemClickListener
+public class BoughtProductsActivity extends BaseAuthenticatedActivity implements AdapterView.OnItemClickListener
 {
     private ProductDetailsAdapter adapter;
     private View progressBar;
     private ListView listView;
 
-    /**
-     * Infla la interfaz de la Actividad.
-     * @param savedInstanceState
-     */
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
     {
-        setContentView(R.layout.activity_favorites);
+        setContentView(R.layout.activity_bought_products);
         setNavDrawer(new MainNavDrawer(this));
-        getSupportActionBar().setTitle("Mis favoritos");
+        getSupportActionBar().setTitle("Mis compras");
 
-        progressBar = findViewById(R.id.activity_favorites_progresFrame);
+        progressBar = findViewById(R.id.activity_bought_products_progresFrame);
         progressBar.setVisibility(View.VISIBLE);
 
         adapter = new ProductDetailsAdapter(this);
 
-        listView = (ListView) findViewById(R.id.activity_favorites_listView);
+        listView = (ListView) findViewById(R.id.activity_bought_products_listView);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
-        bus.post(new Product.GetFavoritesRequest(application.getAuth().getUser().getId()));
+        bus.post(new Product.GetBoughtProductsRequest());
     }
 
-    /**
-     * Callback. Esta funcion es llamada automaticamente cuando el servidor ha respondido con los favoritos del usuario.
-     * @param response
-     */
     @Subscribe
-    public void onFavoritesLoaded(Product.GetFavoritesResponse response)
+    public void onBoughtProductsLoaded(Product.GetBoughtProductsResponse response)
     {
         progressBar.setVisibility(View.GONE);
 
@@ -62,7 +54,7 @@ public class FavoritesActivity extends BaseAuthenticatedActivity implements Adap
 
         if (response.products.size() == 0)
         {
-            listView.setEmptyView(findViewById(R.id.activity_favorites_emptyList));
+            listView.setEmptyView(findViewById(R.id.activity_bought_products_emptyList));
             return;
         }
 
@@ -71,13 +63,6 @@ public class FavoritesActivity extends BaseAuthenticatedActivity implements Adap
         adapter.notifyDataSetChanged();
     }
 
-    /**
-     * Responde a eventos clicks/touch en la lista de productos.
-     * @param parent el contenedor de la lista.
-     * @param view el View que fue clicked.
-     * @param position la posicion en la lista del elemento que fue clicked.
-     * @param id id del elemento que fue clicked.
-     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {

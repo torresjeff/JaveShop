@@ -31,7 +31,7 @@ public class PostedProductsActivity extends BaseAuthenticatedActivity implements
     {
         setContentView(R.layout.activity_posted_products);
         setNavDrawer(new MainNavDrawer(this));
-        getSupportActionBar().setTitle("Mis productos");
+        getSupportActionBar().setTitle("Mis ventas");
 
         progressBar = findViewById(R.id.activity_posted_products_progresFrame);
         progressBar.setVisibility(View.VISIBLE);
@@ -66,6 +66,7 @@ public class PostedProductsActivity extends BaseAuthenticatedActivity implements
             return;
         }
 
+        adapter.clear();
         adapter.addAll(response.products);
         adapter.notifyDataSetChanged();
     }

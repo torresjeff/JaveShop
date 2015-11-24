@@ -89,12 +89,51 @@ public class LiveProductService extends BaseLiveService
     }
 
     @Subscribe
+    public void replyComment(Product.ReplyCommentRequest request)
+    {
+        api.replyComment(request, new RetrofitCallbackPost<Product.ReplyCommentResponse>(Product.ReplyCommentResponse.class, bus)
+        {
+            @Override
+            protected void onResponse(Product.ReplyCommentResponse response)
+            {
+                bus.post(response);
+            }
+        });
+    }
+
+    @Subscribe
     public void buyProduct(Product.BuyProductRequest request)
     {
         api.buyProduct(request, new RetrofitCallbackPost<Product.BuyProductResponse>(Product.BuyProductResponse.class, bus)
         {
             @Override
             protected void onResponse(Product.BuyProductResponse response)
+            {
+                bus.post(response);
+            }
+        });
+    }
+
+    @Subscribe
+    public void getBoughtProducts(Product.GetBoughtProductsRequest request)
+    {
+        api.getBoughtProducts(new RetrofitCallbackPost<Product.GetBoughtProductsResponse>(Product.GetBoughtProductsResponse.class, bus)
+        {
+            @Override
+            protected void onResponse(Product.GetBoughtProductsResponse response)
+            {
+                bus.post(response);
+            }
+        });
+    }
+
+    @Subscribe
+    public void getSoldProducts(Product.GetPostedProductsRequest request)
+    {
+        api.getSoldProducts(new RetrofitCallbackPost<Product.GetPostedProductsResponse>(Product.GetPostedProductsResponse.class, bus)
+        {
+            @Override
+            protected void onResponse(Product.GetPostedProductsResponse response)
             {
                 bus.post(response);
             }
