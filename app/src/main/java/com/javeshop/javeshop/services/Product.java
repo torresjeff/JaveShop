@@ -158,6 +158,32 @@ public class Product
         public ProductComment comment;
     }
 
+    public static class ReplyCommentRequest
+    {
+        public int commentId;
+        public int replierId;
+        public String reply;
+
+        public ReplyCommentRequest(int commentId, int replierId, String reply)
+        {
+            this.commentId = commentId;
+            this.replierId = replierId;
+            this.reply = reply;
+        }
+    }
+
+    public static class ReplyCommentResponse extends ServiceResponse
+    {
+        //TODO: ver que responder
+    }
+
+    public static class ReplyPostedEvent
+    {
+        public ReplyPostedEvent()
+        {
+        }
+    }
+
     /**
      * Request para ver todos los favoritos de un usuario.
      */
@@ -238,5 +264,14 @@ public class Product
      */
     public static class DeleteProductResponse extends ServiceResponse
     {
+    }
+
+    public static class GetBoughtProductsRequest
+    {
+    }
+
+    public static class GetBoughtProductsResponse extends ServiceResponse
+    {
+        public List<ProductDetails> products;
     }
 }

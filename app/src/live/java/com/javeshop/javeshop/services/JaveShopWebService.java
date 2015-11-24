@@ -63,6 +63,9 @@ public interface JaveShopWebService
     @POST("/api/v1/products/comments.php")
     void postComment(@Body ProductComment comment, Callback<Product.SendCommentResponse> callback);
 
+    @PUT("/api/v1/products/comments.php")
+    void replyComment(@Body Product.ReplyCommentRequest request, Callback<Product.ReplyCommentResponse> callback);
+
     @GET("/api/v1/products/favorites.php")
     void getFavorites(Callback<Product.GetFavoritesResponse> callback);
 
@@ -72,6 +75,11 @@ public interface JaveShopWebService
     @POST("/api/v1/products/buy.php")
     void buyProduct(@Body Product.BuyProductRequest request, Callback<Product.BuyProductResponse> callback);
 
+    @GET("/api/v1/products/buy.php")
+    void getBoughtProducts(RetrofitCallbackPost<Product.GetBoughtProductsResponse> callback);
+
+    @GET("/api/v1/products/sold.php")
+    void getSoldProducts(RetrofitCallbackPost<Product.GetPostedProductsResponse> callback);
 
 
     //----------------------------------------------------------------------------------------------------
@@ -79,4 +87,6 @@ public interface JaveShopWebService
     //----------------------------------------------------------------------------------------------------
     @GET("/api/v1/users.php")
     void searchUser(@Query("id") int userId, RetrofitCallbackPost<Users.GetUserDetailsResponse> callback);
+
+
 }

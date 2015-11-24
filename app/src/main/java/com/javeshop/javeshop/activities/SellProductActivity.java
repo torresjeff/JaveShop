@@ -31,6 +31,7 @@ import com.javeshop.javeshop.services.entities.ProductDetails;
 import com.javeshop.javeshop.views.MainNavDrawer;
 import com.soundcloud.android.crop.Crop;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.Serializable;
@@ -391,7 +392,9 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
             Log.e("SellProductActivity", "Added new image to adapter: " + outputFiles.get(outputFiles.size() - 1));
             adapter.add(outputFiles.get(outputFiles.size() - 1));
             adapter.notifyDataSetChanged();
-
+            //Para forzar que vuelva a cargar la imagen y que no utilice el cache. Porque la imagen se llama igual pero el contenido cambio.
+            Picasso.with(this).invalidate(Uri.fromFile(tempOutputFiles.get(tempOutputFiles.size() - 1)).toString());
+            //Picasso.with(this).cache.clear();
             findViewById(R.id.activity_sell_product_pagerContainer).setVisibility(View.VISIBLE);
 
 
@@ -444,6 +447,11 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
                         .create();
 
                 dialog.show();
+                return true;
+            case R.id.activity_sell_product_menu_comments:
+                Intent intent = new Intent(this, ProductCommentsActivity.class);
+                intent.putExtra(ProductDetailsActivity.EXTRA_PRODUCT_DETAILS, postedProductDetails);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

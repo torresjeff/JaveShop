@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.adapters.ProductDetailsAdapter;
@@ -136,8 +137,19 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
         if (!response.succeeded())
         {
             //TODO: el toast de cuando no encuentra ningun producto se muestra dos veces
+            //TODO: cambiar el empty list view
+
             response.showErrorToast(this);
             return;
+        }
+
+        if (response.products.size() == 0)
+        {
+            ((TextView)findViewById(R.id.activity_main_emptyList)).setText("No se encontró ningún producto");
+            productDetails.clear();
+            adapter.clear();
+            adapter.notifyDataSetChanged();
+            return ;
         }
 
         productDetails.clear();

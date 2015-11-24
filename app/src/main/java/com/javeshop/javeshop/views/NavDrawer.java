@@ -278,6 +278,7 @@ public class NavDrawer
     public static class ActivityNavDrawerItem extends BasicNavDrawerItem
     {
         private final Class targetActivity;
+        private Intent intent;
 
 
         public ActivityNavDrawerItem(Class targetActivity, String text, int badge, int iconDrawable, int containerId)
@@ -309,7 +310,9 @@ public class NavDrawer
 
             super.onClick(view);
 
-            navDrawer.activity.startActivity(new Intent(navDrawer.activity, targetActivity));
+            intent = new Intent(navDrawer.activity, targetActivity);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            navDrawer.activity.startActivity(intent);
             navDrawer.activity.finish();
         }
     }

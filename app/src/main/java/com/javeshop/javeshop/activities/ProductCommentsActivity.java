@@ -1,13 +1,18 @@
 package com.javeshop.javeshop.activities;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.adapters.ProductCommentsAdapter;
+import com.javeshop.javeshop.adapters.ProductDetailsAdapter;
+import com.javeshop.javeshop.dialogs.QuantityDialog;
+import com.javeshop.javeshop.dialogs.ReplyCommentDialog;
 import com.javeshop.javeshop.services.Product;
 import com.javeshop.javeshop.services.entities.ProductComment;
 import com.javeshop.javeshop.services.entities.ProductDetails;
@@ -16,7 +21,7 @@ import com.squareup.otto.Subscribe;
 /**
  * Esta Actividad muestra los comentarios de un producto en especifico.
  */
-public class ProductCommentsActivity extends BaseAuthenticatedActivity implements View.OnClickListener
+public class ProductCommentsActivity extends BaseAuthenticatedActivity implements View.OnClickListener, AdapterView.OnItemClickListener
 {
     private int productId;
     private View progressBar;
@@ -25,6 +30,7 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
 
     private ProductCommentsAdapter adapter;
     private ListView listView;
+    private ProductDetails productDetails;
 
     /**
      * Infla la interfaz de la Actividad
@@ -35,7 +41,7 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
     {
         setContentView(R.layout.activity_product_comments);
 
-        ProductDetails productDetails = getIntent().getParcelableExtra(ProductDetailsActivity.EXTRA_PRODUCT_DETAILS);
+        productDetails = getIntent().getParcelableExtra(ProductDetailsActivity.EXTRA_PRODUCT_DETAILS);
 
         progressBar = findViewById(R.id.activity_product_comments_progressBar);
         commentText = (EditText) findViewById(R.id.activity_product_commentText);
@@ -46,6 +52,7 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
         adapter = new ProductCommentsAdapter(this);
 
         listView = (ListView) findViewById(R.id.activity_product_comments_listView);
+        listView.setOnItemClickListener(this);
         listView.setAdapter(adapter);
 
         bus.post(new Product.GetProductCommentsRequest(productDetails.getId()));
@@ -68,6 +75,7 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
             return;
         }
 
+        adapter.clear();
         adapter.addAll(response.comments);
         adapter.notifyDataSetChanged();
 
@@ -99,6 +107,14 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
         adapter.notifyDataSetChanged();
     }
 
+    @Subscribe
+    public void onReplyPosted(Product.ReplyPostedEvent event)
+    {
+        bus.post(new Product.GetProductCommentsRequest(productDetails.getId()));
+
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
 
     /**
      * Responde a eventos de clicks/touch.
@@ -123,6 +139,22 @@ public class ProductCommentsActivity extends BaseAuthenticatedActivity implement
                 ProductComment productComment = new ProductComment(productId, application.getAuth().getUser().getId(), commentText.getText().toString());
                 bus.post(new Product.SendCommentRequest(productComment));
                 return;
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        if (productDetails.getOwnerId() == application.getAuth().getUser().getId() && (adapter.getItem(position).getReply() == null || adapter.getItem(position).getReply().equalsIgnoreCase("NULL")))
+        {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(null);
+            ReplyCommentDialog dialog = new ReplyCommentDialog();
+            Bundle bundle = new Bundle();
+            //bundle.putInt(ReplyCommentDialog.PRODUCT_ID, productDetails.getId());
+            bundle.putInt(ReplyCommentDialog.PRODUCT_ID, /*((ProductDetailsAdapter)view)*/adapter.getItem(position).getCommentId());
+            bundle.putInt(ReplyCommentDialog.REPLIER_ID, application.getAuth().getUser().getId());
+            dialog.setArguments(bundle);
+            dialog.show(transaction, null);
         }
     }
 }

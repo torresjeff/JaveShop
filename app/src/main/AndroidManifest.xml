@@ -50,6 +50,8 @@
 
         <activity android:name=".activities.RegisterSuccessActivity" />
 
+        <activity android:name=".activities.BoughtProductsActivity" />
+
     </application>
 
 </manifest>

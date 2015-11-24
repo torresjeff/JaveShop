@@ -8,4 +8,10 @@
         android:title="Eliminar"
         app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/activity_sell_product_menu_comments"
+        android:icon="@drawable/ic_comment_white_24dp"
+        android:title="Comentarios"
+        app:showAsAction="always"/>
+
 </menu>
