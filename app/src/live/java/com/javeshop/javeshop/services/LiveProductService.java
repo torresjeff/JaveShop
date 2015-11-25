@@ -1,12 +1,21 @@
 package com.javeshop.javeshop.services;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.javeshop.javeshop.infrastructure.Auth;
 import com.javeshop.javeshop.infrastructure.JaveShopApplication;
 import com.javeshop.javeshop.infrastructure.RetrofitCallbackPost;
 import com.javeshop.javeshop.services.entities.ProductComment;
+import com.javeshop.javeshop.services.entities.ProductDetails;
 import com.squareup.otto.Subscribe;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import retrofit.mime.MultipartTypedOutput;
+import retrofit.mime.TypedFile;
+import retrofit.mime.TypedString;
 
 /**
  * Created by Jeffrey Torres on 1/11/2015.
@@ -134,6 +143,38 @@ public class LiveProductService extends BaseLiveService
         {
             @Override
             protected void onResponse(Product.GetPostedProductsResponse response)
+            {
+                bus.post(response);
+            }
+        });
+    }
+
+    @Subscribe
+    public void publishProduct(Product.PostProductRequest request)
+    {
+        ProductDetails details = request.productDetails;
+        MultipartTypedOutput multipartRequest = new MultipartTypedOutput();
+        multipartRequest.addPart("name", new TypedString(details.getName()));
+        multipartRequest.addPart("description", new TypedString(details.getDescription()));
+        multipartRequest.addPart("price", new TypedString(Float.toString(details.getPrice())));
+        multipartRequest.addPart("quantity", new TypedString(Integer.toString(details.getQuantity())));
+        multipartRequest.addPart("state", new TypedString(Integer.toString(details.getState())));
+        multipartRequest.addPart("category", new TypedString(Integer.toString(details.getCategory())));
+
+        ArrayList<String> productImagesUrls = details.getProductImagesUrls();
+        for (int i = 0; i < productImagesUrls.size(); ++i)
+        {
+            File file = new File(application.getExternalCacheDir(), "javeshop_product_image_" + i + ".jpg");
+
+            multipartRequest.addPart("images[]", new TypedFile("image/jpeg", file));
+        }
+
+        //new TypedFile("image/jpeg", new File(request.newAvatarUri.getPath()))
+
+        api.publishProduct(multipartRequest, new RetrofitCallbackPost<Product.PostProductResponse>(Product.PostProductResponse.class, bus)
+        {
+            @Override
+            protected void onResponse(Product.PostProductResponse response)
             {
                 bus.post(response);
             }
