@@ -19,7 +19,6 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -58,30 +57,6 @@
                         android:id="@+id/activity_sell_product_stateSpinner"/>
                 </LinearLayout>
 
-                <!--
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Cantidad"
-                        android:singleLine="true"
-                        android:inputType="number"/>
-
-                    <Spinner
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:layout_gravity="end"
-                        android:id="@+id/activity_sell_product_categorySpinner"/>
-
-                </LinearLayout>
-                -->
-
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -94,7 +69,6 @@
                         android:layout_marginEnd="8dp"
                         android:text="Unidades:"
                         android:textSize="16sp"/>
-
 
                     <Button
                         android:layout_width="wrap_content"

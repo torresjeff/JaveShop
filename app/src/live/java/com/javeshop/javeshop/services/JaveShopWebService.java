@@ -16,6 +16,7 @@ import retrofit.http.PUT;
 import retrofit.http.Part;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import retrofit.mime.MultipartTypedOutput;
 import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
 
@@ -80,6 +81,9 @@ public interface JaveShopWebService
 
     @GET("/api/v1/products/sold.php")
     void getSoldProducts(RetrofitCallbackPost<Product.GetPostedProductsResponse> callback);
+
+    @POST("/api/v1/products/publish.php")
+    void publishProduct(@Body MultipartTypedOutput request, RetrofitCallbackPost<Product.PostProductResponse> callback);
 
 
     //----------------------------------------------------------------------------------------------------

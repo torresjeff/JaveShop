@@ -113,11 +113,6 @@ public class LiveAccountService extends BaseLiveService
             @Override
             protected void onResponse(Account.ChangeAvatarResponse response)
             {
-                //User user = auth.getUser();
-                //user.setAvatarUrl(response.avatarUrl);
-                //super.onResponse(response);
-                //bus.post(new Account.UserDetailsUpdatedEvent(user));
-
                 bus.post(response);
             }
         });
