@@ -24,7 +24,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sigue comprando"
+        android:text="Sigue vendiendo"
         android:textColor="#fff"
         android:background="#0D47A1"
         android:id="@+id/activity_post_product_succes_continue"/>
