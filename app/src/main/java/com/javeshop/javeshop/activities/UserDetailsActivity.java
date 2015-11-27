@@ -1,6 +1,7 @@
 package com.javeshop.javeshop.activities;
 
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.javeshop.javeshop.R;
+import com.javeshop.javeshop.dialogs.QuantityDialog;
 import com.javeshop.javeshop.services.Users;
 import com.javeshop.javeshop.services.entities.UserDetails;
 import com.squareup.otto.Subscribe;
@@ -24,6 +26,7 @@ public class UserDetailsActivity extends BaseAuthenticatedActivity implements Vi
     private TextView completeName;
     private TextView reputation;
     private Button reportButton;
+    private Button rateButton;
     private View progressFrame;
 
     /**
@@ -48,6 +51,8 @@ public class UserDetailsActivity extends BaseAuthenticatedActivity implements Vi
         reputation = (TextView) findViewById(R.id.activity_user_details_reputation);
         reportButton = (Button) findViewById(R.id.activity_user_details_report);
         reportButton.setOnClickListener(this);
+        rateButton = (Button) findViewById(R.id.activity_user_details_rate);
+        rateButton.setOnClickListener(this);
 
         bus.post(new Users.GetUserDetailsRequest(userId));
         findViewById(R.id.activity_user_details_layout).setVisibility(View.GONE);
@@ -95,6 +100,14 @@ public class UserDetailsActivity extends BaseAuthenticatedActivity implements Vi
                         .create();
 
                 dialog.show();
+                return;
+            case R.id.activity_user_details_rate:
+                FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(null);
+                QuantityDialog dialogRating = new QuantityDialog();
+                Bundle args = new Bundle();
+                args.putInt(QuantityDialog.MAX_QUANTITY, 5);
+                dialogRating.setArguments(args);
+                dialogRating.show(transaction, null);
                 return;
         }
     }

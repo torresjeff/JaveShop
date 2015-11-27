@@ -27,9 +27,10 @@ public class BuyProductSuccessActivity extends BaseAuthenticatedActivity impleme
 
         textView = (TextView) findViewById(R.id.activity_post_product_success_description);
 
-        textView.setText("Se te ha enviado un correo electrónico con los datos del vendedor para que se puedan poner en contacto.\n¡Gracias por confiar en JaveShop para hacer tus compras!");
+        textView.setText("Te hemos enviado un correo electrónico con los datos del vendedor para que se puedan poner en contacto.\n¡Gracias por confiar en JaveShop para hacer tus compras!");
 
         button = (Button) findViewById(R.id.activity_post_product_succes_continue);
+        button.setText("Sigue comprando");
 
         button.setOnClickListener(this);
     }

@@ -1,5 +1,7 @@
 package com.javeshop.javeshop.services;
 
+import android.util.Log;
+
 import com.javeshop.javeshop.infrastructure.Auth;
 import com.javeshop.javeshop.infrastructure.JaveShopApplication;
 import com.javeshop.javeshop.infrastructure.RetrofitCallbackPost;
@@ -27,7 +29,20 @@ public class LiveUserService extends BaseLiveService
             protected void onResponse(Users.GetUserDetailsResponse response)
             {
                 bus.post(response);
-                //super.onResponse(response);
+            }
+        });
+    }
+
+    @Subscribe
+    public void rateUser(Users.RateUserRequest request)
+    {
+        Log.e("LiveUserService", "Recibio RateUserRequest");
+        api.rateUser(request, new RetrofitCallbackPost<Users.RateUserResponse>(Users.RateUserResponse.class, bus)
+        {
+            @Override
+            protected void onResponse(Users.RateUserResponse response)
+            {
+                bus.post(response);
             }
         });
     }

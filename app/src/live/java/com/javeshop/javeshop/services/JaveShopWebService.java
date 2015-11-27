@@ -92,5 +92,8 @@ public interface JaveShopWebService
     @GET("/api/v1/users.php")
     void searchUser(@Query("id") int userId, RetrofitCallbackPost<Users.GetUserDetailsResponse> callback);
 
+    //TODO: falta por implementar
+    @POST("/api/v1/users.php")
+    void rateUser(@Body Users.RateUserRequest request, RetrofitCallbackPost<Users.RateUserResponse> callback);
 
 }
