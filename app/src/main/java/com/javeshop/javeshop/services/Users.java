@@ -34,9 +34,12 @@ public class Users
     public static class RateUserRequest
     {
         public int rating;
-        public RateUserRequest(int value)
+        public int userId;
+
+        public RateUserRequest(int rating, int userId)
         {
-            this.rating = value;
+            this.rating = rating;
+            this.userId = userId;
         }
     }
 

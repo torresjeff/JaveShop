@@ -23,9 +23,11 @@ import com.javeshop.javeshop.services.Users;
 public class QuantityDialog extends BaseDialogFragment
 {
     public static final String MAX_QUANTITY = "MAX_QUANTITY";
+    public static final String USER_ID = "USER_ID";
     private NumberPicker numberPicker;
     private TextView text;
     private int maxQuantity;
+    private int userId;
 
     /**
      * Infla la itnerfaz del Dialog.
@@ -48,6 +50,7 @@ public class QuantityDialog extends BaseDialogFragment
         if (args != null)
         {
             numberPicker.setMaxValue(args.getInt(MAX_QUANTITY, 1));
+            userId = args.getInt(USER_ID, -1);
         }
 
         String title = "Unidades";
@@ -129,7 +132,7 @@ public class QuantityDialog extends BaseDialogFragment
                         }
                         else
                         {
-                            bus.post(new Users.RateUserRequest(numberPicker.getValue()));
+                            bus.post(new Users.RateUserRequest(numberPicker.getValue(), userId));
                         }
 
                     }

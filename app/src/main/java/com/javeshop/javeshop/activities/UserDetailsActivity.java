@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.javeshop.javeshop.R;
 import com.javeshop.javeshop.dialogs.QuantityDialog;
@@ -28,6 +29,7 @@ public class UserDetailsActivity extends BaseAuthenticatedActivity implements Vi
     private Button reportButton;
     private Button rateButton;
     private View progressFrame;
+    private int userId;
 
     /**
      * Infla la interfaz de la Actividad
@@ -38,7 +40,7 @@ public class UserDetailsActivity extends BaseAuthenticatedActivity implements Vi
     {
         setContentView(R.layout.activity_user_details);
 
-        int userId = getIntent().getIntExtra(EXTRA_USER_ID, -1);
+        userId = getIntent().getIntExtra(EXTRA_USER_ID, -1);
 
         if (userId == -1)
         {
@@ -78,8 +80,20 @@ public class UserDetailsActivity extends BaseAuthenticatedActivity implements Vi
 
         Picasso.with(this).load(userDetails.getAvatarUrl()).into(avatar);
         completeName.setText(userDetails.getFirstName() + " " + userDetails.getLastName());
-        reputation.setText(Float.toString(userDetails.getReputation()));
+        reputation.setText(/*Float.toString(userDetails.getReputation())*/String.format("%.1f", userDetails.getReputation()));
 
+    }
+
+    @Subscribe
+    public void onUserRated(Users.RateUserResponse response)
+    {
+        if (!response.succeeded())
+        {
+            response.showErrorToast(this);
+            return;
+        }
+
+        Toast.makeText(this, "Hemos registrado tu calificación", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -106,6 +120,7 @@ public class UserDetailsActivity extends BaseAuthenticatedActivity implements Vi
                 QuantityDialog dialogRating = new QuantityDialog();
                 Bundle args = new Bundle();
                 args.putInt(QuantityDialog.MAX_QUANTITY, 5);
+                args.putInt(QuantityDialog.USER_ID, userId);
                 dialogRating.setArguments(args);
                 dialogRating.show(transaction, null);
                 return;
