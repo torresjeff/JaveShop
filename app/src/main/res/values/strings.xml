@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">JaveShop</string>
+    <string-array name="card_type">
+        <item>Visa</item>
+        <item>MasterCard</item>
+        <item>American Express</item>
+    </string-array>
 </resources>

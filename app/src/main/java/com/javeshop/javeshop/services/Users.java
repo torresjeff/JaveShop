@@ -30,4 +30,16 @@ public class Users
     {
         public UserDetails userDetails;
     }
+
+    public static class RateUserRequest
+    {
+        public int rating;
+        public RateUserRequest(int value)
+        {
+            this.rating = value;
+        }
+    }
+
+    public static class RateUserResponse extends ServiceResponse
+    {}
 }

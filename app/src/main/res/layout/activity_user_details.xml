@@ -78,4 +78,14 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/activity_user_details_report"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0D47A1"
+        android:layout_marginBottom="8dp"
+        android:layout_above="@id/activity_user_details_report"
+        android:text="Calificar"
+        android:textColor="#fff"
+        android:id="@+id/activity_user_details_rate"/>
+
 </RelativeLayout>
