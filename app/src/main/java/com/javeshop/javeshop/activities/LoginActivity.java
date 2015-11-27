@@ -61,6 +61,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 startActivity(new Intent(this, RegisterActivity.class));
                 return;
             case R.id.activity_login_forgotPasswordButton:
+                startActivity(new Intent(this, ForgotPasswordActivity.class));
                 //TODO: implementar forgot password button
                 return;
         }
