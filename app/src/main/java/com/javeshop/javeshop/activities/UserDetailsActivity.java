@@ -2,6 +2,7 @@ package com.javeshop.javeshop.activities;
 
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -55,6 +56,13 @@ public class UserDetailsActivity extends BaseAuthenticatedActivity implements Vi
         reportButton.setOnClickListener(this);
         rateButton = (Button) findViewById(R.id.activity_user_details_rate);
         rateButton.setOnClickListener(this);
+
+        if (application.getAuth().getUser().getId() == userId)
+        {
+            rateButton.setEnabled(false);
+            reportButton.setEnabled(false);
+            //rateButton.setBackgroundColor(Color.parseColor("#F44336"));
+        }
 
         bus.post(new Users.GetUserDetailsRequest(userId));
         findViewById(R.id.activity_user_details_layout).setVisibility(View.GONE);

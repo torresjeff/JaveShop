@@ -15,7 +15,7 @@
         android:paddingEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:hint="Usuario"
+        android:hint="Correo javeriano"
         android:singleLine="true"
         android:inputType="textEmailAddress"
         android:id="@+id/activity_login_email"/>

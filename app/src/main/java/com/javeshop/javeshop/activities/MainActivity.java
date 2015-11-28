@@ -72,7 +72,6 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
             @Override
             public boolean onQueryTextSubmit(String query)
             {
-                //TODO: mandar SearchProductRequest al server
                 progressFrame.setVisibility(View.VISIBLE);
                 lastQuery = query;
                 bus.post(new Product.SearchProductRequest(query));
@@ -137,8 +136,6 @@ public class MainActivity extends BaseAuthenticatedActivity implements AdapterVi
         if (!response.succeeded())
         {
             //TODO: el toast de cuando no encuentra ningun producto se muestra dos veces
-            //TODO: cambiar el empty list view
-
             response.showErrorToast(this);
             return;
         }

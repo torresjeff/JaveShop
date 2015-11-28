@@ -79,6 +79,13 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
             buyButton.setBackgroundColor(Color.parseColor("#F44336"));
             buyButton.setEnabled(false);
         }
+
+        if (productDetails.getOwnerId() == application.getAuth().getUser().getId())
+        {
+            buyButton.setBackgroundColor(Color.parseColor("#F44336"));
+            buyButton.setEnabled(false);
+        }
+
         findViewById(R.id.activity_product_details_previousButton).setOnClickListener(this);
         findViewById(R.id.activity_product_details_nextButton).setOnClickListener(this);
 
@@ -184,7 +191,6 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
             return;
         }
 
-        //TODO: cuando este marcado como favorito y se vuelva a press el boton, se debe eliminar de los favoritos.
         if (response.added)
         {
             Toast.makeText(this, "Agregado a tus favoritos", Toast.LENGTH_SHORT).show();
@@ -273,12 +279,9 @@ public class ProductDetailsActivity extends BaseAuthenticatedActivity implements
         switch (id)
         {
             case R.id.activity_product_details_menu_favorite:
-                //TODO: post MarkAsFavoriteRequest
-                //Toast.makeText(this, "Marcado como favorito", Toast.LENGTH_SHORT).show();
                 bus.post(new Product.MarkAsFavoriteRequest(application.getAuth().getUser().getId(), productDetails.getId()));
                 return true;
             case R.id.activity_product_details_menu_comments:
-                //TODO: start ProductCommentsActivity, post GetProductCommentsRequest desde esa Activity
                 Intent intent = new Intent(this, ProductCommentsActivity.class);
                 intent.putExtra(EXTRA_PRODUCT_DETAILS, productDetails);
                 startActivity(intent);
