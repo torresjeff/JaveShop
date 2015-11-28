@@ -37,13 +37,6 @@ public class LiveAccountService extends BaseLiveService
             protected void onResponse(Account.RegisterResponse registerResponse)
             {
                 bus.post(registerResponse);
-
-                //TODO: quitar el progressBar
-                //Toast.makeText(application, registerResponse.toString(), Toast.LENGTH_SHORT).show();
-                if (registerResponse.succeeded())
-                {
-                    //TODO.
-                }
             }
         });
     }

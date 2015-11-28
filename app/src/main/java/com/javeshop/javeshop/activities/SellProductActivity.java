@@ -101,7 +101,6 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
         description = (EditText) findViewById(R.id.activity_sell_product_description);
 
         progressBar = (ProgressBar) findViewById(R.id.activity_sell_product_progressBar);
-        //TODO: agregar campo de categoria
 
         stateSpinner = (Spinner) findViewById(R.id.activity_sell_product_stateSpinner);
         stateSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"Nuevo", "Usado"}));

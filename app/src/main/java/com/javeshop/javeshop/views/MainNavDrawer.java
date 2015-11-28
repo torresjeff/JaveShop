@@ -70,7 +70,6 @@ public class MainNavDrawer extends NavDrawer
     @Subscribe
     public void onUserDetailsUpdated(Account.UserDetailsUpdatedEvent event)
     {
-        //TODO: cargar la imagen con el url de la imagen en el servidor
         Picasso.with(activity).load(event.user.getAvatarUrl()).into(avatar);
         displayName.setText(event.user.getFirstName() + " " + event.user.getLastName());
     }

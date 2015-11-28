@@ -27,7 +27,7 @@ public class ProductDetails implements Parcelable
     private int category;
 
 
-    //TODO: verificar que el constructor vacio no altere los responses del servidor
+
     public ProductDetails()
     {
         productImagesUrls = new ArrayList<>();

@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Te hemos enviado un link de confirmación. Revisa tu correo electrónico y accede al link para activar tu cuenta.\n"
+        android:text="Te hemos enviado un link de confirmación. Revisa tu correo electrónico y accede al link para activar tu cuenta.\nSi no ves el correo revisa tu carpeta de spam.\n"
         android:id="@+id/activity_post_product_success_description"/>
 
     <Button

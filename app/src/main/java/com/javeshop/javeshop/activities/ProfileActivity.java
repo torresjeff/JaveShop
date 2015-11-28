@@ -55,7 +55,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
     private EditText phoneNumber;
     private EditText emailText;
     private View changeAvatarButton;
-    //TODO: agregar EditText para saldo, poner inputType de numbers
 
     private ActionMode editProfileActionMode;
 
@@ -106,7 +105,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         User user = application.getAuth().getUser();
         getSupportActionBar().setTitle(user.getFirstName() + " " + user.getLastName());
 
-        //TODO: load el avatar
         Picasso.with(this).load(user.getAvatarUrl()).into(avatarView);
 
         if (savedInstanceState == null)
@@ -250,7 +248,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
         else if (requestCode == Crop.REQUEST_CROP)
         {
-            //TODO: mandar tempFileUri al servidor como el nuevo avatar
             avatarProgressFrame.setVisibility(View.VISIBLE);
 
             bus.post(new Account.ChangeAvatarRequest(Uri.fromFile(tempOutputFile)));
@@ -279,7 +276,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             response.showErrorToast(this);
         }
 
-        //TODO: cargar la imagen con el url de la imagen en el servidor
+
         Picasso.with(this).load(response.avatarUrl).into(avatarView);
         user.setAvatarUrl(response.avatarUrl);
         bus.post(new Account.UserDetailsUpdatedEvent(user));
@@ -298,8 +295,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
             changeState(STATE_EDITING);
         }
-
-        //TODO: que pasa si el response no es successful? se deben reset los campos a lo valores iniciales del usuario
 
         firstName.setError(response.getPropertyError("firstName"));
         lastName.setError(response.getPropertyError("lastName"));
