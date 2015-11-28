@@ -14,7 +14,7 @@ import com.javeshop.javeshop.views.MainNavDrawer;
 import com.squareup.otto.Subscribe;
 
 /**
- * Created by Jeffrey Torres on 12/11/2015.
+ * Actividad que permite ver los productos que un usuario ha comprado.
  */
 public class BoughtProductsActivity extends BaseAuthenticatedActivity implements AdapterView.OnItemClickListener
 {
@@ -22,6 +22,10 @@ public class BoughtProductsActivity extends BaseAuthenticatedActivity implements
     private View progressBar;
     private ListView listView;
 
+    /**
+     * Infla la interfaz de la Actividad.
+     * @param savedInstanceState contiene datos guardados cuando la Actividad se recrea.
+     */
     @Override
     protected void onJaveShopCreate(Bundle savedInstanceState)
     {
@@ -41,6 +45,10 @@ public class BoughtProductsActivity extends BaseAuthenticatedActivity implements
         bus.post(new Product.GetBoughtProductsRequest());
     }
 
+    /**
+     * Callback. Esta funcion es llamada automaticamente cuando el servidor ha respondido con los productos que el usuario ha comprado.
+     * @param response respuesta del servidor con los datos relevantes.
+     */
     @Subscribe
     public void onBoughtProductsLoaded(Product.GetBoughtProductsResponse response)
     {
@@ -63,6 +71,9 @@ public class BoughtProductsActivity extends BaseAuthenticatedActivity implements
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Maneja clicks en un producto.
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {

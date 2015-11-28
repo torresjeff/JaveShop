@@ -20,11 +20,17 @@ public class JaveShopApplication extends Application
     public static final Uri API_ENDPOINT = Uri.parse("http://javeshop.me");
     //public static final Uri API_ENDPOINT = Uri.parse("http://10.0.3.2/JaveShop");
 
+    /**
+     * Constructor.
+     */
     public JaveShopApplication()
     {
         bus = new Bus();
     }
 
+    /**
+     * Crea una nueva instancia de Auth y se registra con Module para instanciar la interfaz que manejar las solicitudes.
+     */
     @Override
     public void onCreate()
     {
@@ -35,11 +41,19 @@ public class JaveShopApplication extends Application
         Module.register(this);
     }
 
+    /**
+     * Get de Auth.
+     * @return Auth
+     */
     public Auth getAuth()
     {
         return auth;
     }
 
+    /**
+     * Get de Bus.
+     * @return Bus.
+     */
     public Bus getBus()
     {
         return bus;

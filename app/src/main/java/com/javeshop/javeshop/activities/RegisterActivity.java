@@ -85,7 +85,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        if (!email.getText().toString().matches("^[_a-zA-Z\\+]+(\\.[_a-zA-Z]+)*@javeriana+(\\.edu+)*(\\.co)$"))
+        //if (!email.getText().toString().matches("^[_a-zA-Z\\+]+(\\.[_a-zA-Z]+)*@javeriana+(\\.edu+)*(\\.co)$"))
+        if (!email.getText().toString().toUpperCase().contains("@JAVERIANA.EDU.CO"))
         {
             email.setError("Intenta de nuevo. Debes tener un correo electrónico de la Javeriana.");
             return;

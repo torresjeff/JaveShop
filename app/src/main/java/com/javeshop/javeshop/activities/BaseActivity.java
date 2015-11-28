@@ -26,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
     /**
      * Al momento que se crea esta Actividad, se encarga de guardar una referencia a JaveShopApplication, instanciar el bus de eventos y registrarse al mismo.
-     * @param savedInstanceState
+     * @param savedInstanceState contiene datos guardados cuando la Actividad se recrea.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -96,17 +96,29 @@ public abstract class BaseActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Set de NavDrawer
+     * @param navDrawer nueva instancia del NavDrawer.
+     */
     protected void setNavDrawer(NavDrawer navDrawer)
     {
         this.navDrawer = navDrawer;
         this.navDrawer.create();
     }
 
+    /**
+     * Get de Toolbar.
+     * @return Toolbar
+     */
     public Toolbar getToolbar()
     {
         return toolbar;
     }
 
+    /**
+     * Get de JaveShopApplication.
+     * @return JaveShopApplication
+     */
     public JaveShopApplication getJaveShopApplication()
     {
         return application;

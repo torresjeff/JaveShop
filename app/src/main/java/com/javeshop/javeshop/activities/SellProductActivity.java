@@ -305,6 +305,9 @@ public class SellProductActivity extends BaseActivity implements View.OnClickLis
             case R.id.activity_sell_product_quantityButton:
                 FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(null);
                 QuantityDialog dialog = new QuantityDialog();
+                Bundle args = new Bundle();
+                args.putBoolean(QuantityDialog.IS_SELLING, true);
+                dialog.setArguments(args);
                 dialog.show(transaction, null);
                 return;
         }

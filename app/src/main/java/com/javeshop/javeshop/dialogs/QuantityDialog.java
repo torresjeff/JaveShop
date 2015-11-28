@@ -24,10 +24,12 @@ public class QuantityDialog extends BaseDialogFragment
 {
     public static final String MAX_QUANTITY = "MAX_QUANTITY";
     public static final String USER_ID = "USER_ID";
+    public static final String IS_SELLING = "IS_SELLING";
     private NumberPicker numberPicker;
     private TextView text;
     private int maxQuantity;
     private int userId;
+    private boolean isSelling;
 
     /**
      * Infla la itnerfaz del Dialog.
@@ -49,8 +51,16 @@ public class QuantityDialog extends BaseDialogFragment
 
         if (args != null)
         {
-            numberPicker.setMaxValue(args.getInt(MAX_QUANTITY, 1));
-            userId = args.getInt(USER_ID, -1);
+            isSelling = args.getBoolean(IS_SELLING, false);
+            if (isSelling)
+            {
+                numberPicker.setMaxValue(30);
+            }
+            else
+            {
+                numberPicker.setMaxValue(args.getInt(MAX_QUANTITY, 1));
+                userId = args.getInt(USER_ID, -1);
+            }
         }
 
         String title = "Unidades";
@@ -77,7 +87,11 @@ public class QuantityDialog extends BaseDialogFragment
                         if (finalUnidades)
                         {
                             //bus.post(new Product.QuantityChanged(numberPicker.getValue()));
-
+                            if (isSelling)
+                            {
+                                bus.post(new Product.QuantityChanged(numberPicker.getValue()));
+                                return;
+                            }
 
                             final Activity activity = getActivity();
                             AlertDialog dialog = new AlertDialog.Builder(activity)

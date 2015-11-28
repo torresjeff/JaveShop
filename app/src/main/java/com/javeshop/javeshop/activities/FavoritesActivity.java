@@ -47,7 +47,7 @@ public class FavoritesActivity extends BaseAuthenticatedActivity implements Adap
 
     /**
      * Callback. Esta funcion es llamada automaticamente cuando el servidor ha respondido con los favoritos del usuario.
-     * @param response
+     * @param response respuesta del servidor con los datos relevantes.
      */
     @Subscribe
     public void onFavoritesLoaded(Product.GetFavoritesResponse response)

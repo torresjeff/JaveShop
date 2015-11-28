@@ -8,18 +8,27 @@ import com.javeshop.javeshop.infrastructure.RetrofitCallbackPost;
 import com.squareup.otto.Subscribe;
 
 /**
- * Created by Jeffrey Torres on 1/11/2015.
+ * Se encarga de manejar las solicitudes que tienen que ver con los usuarios.
  */
 public class LiveUserService extends BaseLiveService
 {
     private final Auth auth;
 
+    /**
+     * Constructor
+     * @param api interfaz por medio de la cual vamos a enviar los mensajes al servidor.
+     * @param application instancia unica (Singleton) de nuestra aplicacion.
+     */
     public LiveUserService(JaveShopWebService api, JaveShopApplication application)
     {
         super(api, application);
         auth = application.getAuth();
     }
 
+    /**
+     * Escucha el evento para cuando un usuario quiere ver los datos publics de un vendedor (nombre, reputacion, avatar) y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void searchUser(Users.GetUserDetailsRequest request)
     {
@@ -33,6 +42,10 @@ public class LiveUserService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario quiere calificar a un vendedor y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void rateUser(Users.RateUserRequest request)
     {

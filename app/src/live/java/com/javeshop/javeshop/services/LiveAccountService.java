@@ -16,18 +16,27 @@ import java.io.File;
 import retrofit.mime.TypedFile;
 
 /**
- * Created by Jeffrey Torres on 12/10/2015.
+ * Se encarga de manejar las solicitudes que tienen que ver con la cuenta del usuario.
  */
 public class LiveAccountService extends BaseLiveService
 {
     private final Auth auth;
 
+    /**
+     * Constructor
+     * @param api interfaz por medio de la cual vamos a enviar los mensajes al servidor.
+     * @param application instancia unica (Singleton) de nuestra aplicacion.
+     */
     public LiveAccountService(JaveShopWebService api, JaveShopApplication application)
     {
         super(api, application);
         auth = application.getAuth();
     }
 
+    /**
+     * Escucha el evento para cuando un usuario se quiere registrar y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void register(Account.RegisterRequest request)
     {
@@ -41,6 +50,10 @@ public class LiveAccountService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario inicia sesion con correo y contraseña y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void loginWithUsername(Account.LoginWithUsernameRequest request)
     {
@@ -55,6 +68,10 @@ public class LiveAccountService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario inicia sesion con un token y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void loginWithLocalToken(final Account.LoginWithLocalTokenRequest request)
     {
@@ -80,6 +97,10 @@ public class LiveAccountService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario quiere editar sus datos personales y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void updateProfile(final Account.UpdateProfileRequest request)
     {
@@ -98,6 +119,10 @@ public class LiveAccountService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario quiere cambiar su avatar y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void updateAvatar(final Account.ChangeAvatarRequest request)
     {
@@ -111,6 +136,10 @@ public class LiveAccountService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario quiere cambiar su contraseña y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void changePassword(Account.ChangePasswordRequest request)
     {
@@ -125,6 +154,10 @@ public class LiveAccountService extends BaseLiveService
         });
     }
 
+    /**
+     * Esta funcion se llamaa cuando el usuario inicia sesion con token o con correo y contraseña, y sus datos han sido validados
+     * @param response datos del usuario.
+     */
     private void loginUser(Account.UserResponse response)
     {
         if (response.authToken != null && !response.authToken.isEmpty())

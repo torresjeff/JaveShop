@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.javeshop.javeshop.R;
 
 /**
- * Created by Jeffrey Torres on 26/11/2015.
+ * Actividad a la que se remite un usuario cuando ha olvidado su contraseña.
  */
 public class ForgotPasswordActivity extends BaseActivity
 {

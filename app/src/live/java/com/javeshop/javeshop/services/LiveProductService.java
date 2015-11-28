@@ -18,19 +18,28 @@ import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
 
 /**
- * Created by Jeffrey Torres on 1/11/2015.
+ * Se encarga de manejar las solicitudes que tienen que ver con los productos.
  */
 public class LiveProductService extends BaseLiveService
 {
     private final Auth auth;
 
+
+    /**
+     * Constructor
+     * @param api interfaz por medio de la cual vamos a enviar los mensajes al servidor.
+     * @param application instancia unica (Singleton) de nuestra aplicacion.
+     */
     public LiveProductService(JaveShopWebService api, JaveShopApplication application)
     {
         super(api, application);
         auth = application.getAuth();
     }
 
-
+    /**
+     * Escucha el evento para cuando un usuario buscar un producto y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void searchProduct(Product.SearchProductRequest request)
     {
@@ -45,6 +54,11 @@ public class LiveProductService extends BaseLiveService
         });
     }
 
+
+    /**
+     * Escucha el evento para cuando un usuario quiere ver los comentarios de un producto y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void getComments(Product.GetProductCommentsRequest request)
     {
@@ -58,6 +72,10 @@ public class LiveProductService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario quiere ver sus favoritos y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void getFavorites(Product.GetFavoritesRequest request)
     {
@@ -71,6 +89,10 @@ public class LiveProductService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario agrega o elimina un producto de sus favoritos y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void markAsFavorite(Product.MarkAsFavoriteRequest request)
     {
@@ -84,6 +106,10 @@ public class LiveProductService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario publica un comentario en un producto y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void postComment(Product.SendCommentRequest request)
     {
@@ -97,6 +123,10 @@ public class LiveProductService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario responde a un comentario hecho en su producto y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void replyComment(Product.ReplyCommentRequest request)
     {
@@ -110,6 +140,10 @@ public class LiveProductService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario compra un producto y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void buyProduct(Product.BuyProductRequest request)
     {
@@ -123,6 +157,10 @@ public class LiveProductService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario quiere ver los productos que ha comprado y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void getBoughtProducts(Product.GetBoughtProductsRequest request)
     {
@@ -136,6 +174,10 @@ public class LiveProductService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario quiere ver los productos que ha publicado y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void getSoldProducts(Product.GetPostedProductsRequest request)
     {
@@ -149,6 +191,10 @@ public class LiveProductService extends BaseLiveService
         });
     }
 
+    /**
+     * Escucha el evento para cuando un usuario quiere publicar un producto y lo envia a la interfaz del web service para que el servidor procese la solicitud.
+     * @param request solicitud del usuario con los datos relevantes.
+     */
     @Subscribe
     public void publishProduct(Product.PostProductRequest request)
     {

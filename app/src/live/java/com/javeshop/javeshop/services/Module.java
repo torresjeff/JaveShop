@@ -21,12 +21,17 @@ import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
 /**
- * Created by Jeffrey Torres on 1/11/2015.
+ * Encargado de instanciar las clases que van a manejar las solicitudes del usuario.
  */
 public class Module
 {
     //public static JaveShopWebService api;
     //public static JaveShopApplication app;
+
+    /**
+     * Instanciamos todas las clases que manejan las solicitudes del usuario
+     * @param application instancia unica (Singleton) de nuestra aplicacion.
+     */
     public static void register (JaveShopApplication application)
     {
         JaveShopWebService api = createWebService(application);
@@ -37,6 +42,11 @@ public class Module
         new LiveUserService(api, application);
     }
 
+    /**
+     * Instancia el RestAdapter para manejar las solicitudes.
+     * @param application instancia unica (Singleton) de nuestra aplicacion.
+     * @return instancia del RestAdapter.
+     */
     private static JaveShopWebService createWebService(JaveShopApplication application)
     {
         OkHttpClient client = new OkHttpClient();
@@ -51,15 +61,8 @@ public class Module
         return adapter.create(JaveShopWebService.class);
     }
 
-    /*public static void updateApi()
-    {
-        Log.e("MODULE", "updateApi called");
-        api = createWebService(app);
-
-    }*/
-
     /**
-     * Part of the OkHttp request pipeline, and it's gonna give the opportunity to modify any OkHttp requests that happens, adding the auth token header
+     * Parte del pipeline de solicitudes OkHttp, nos da la oportunidad de mokdificar cualquier solicitud OkHttp que ocurra, en este caso para agregar la cabecera de Authroization (contiene el token del usuario).
      */
     private static class AuthInterceptor implements Interceptor
     {
@@ -73,13 +76,13 @@ public class Module
         @Override
         public Response intercept(Chain chain) throws IOException
         {
-            Request request = chain.request(); //Continue its own way to create the request for us
+            Request request = chain.request(); //Que cree la solicitud
 
-            //Then modify the request and give it our AuthToken
+            //Luego modificar la solicitud y darle nuestro token
             if (auth.hasAuthToken())
             {
                 Log.e("Module", "We set the auth interceptor");
-                request = request.newBuilder().addHeader("Authorization", /*"Bearer " + */auth.getAuthToken()).build(); //Recreate the request with a new header if we have an auth token
+                request = request.newBuilder().addHeader("Authorization", auth.getAuthToken()).build(); //Recrear la solicitud con una nueva cabecera si tenemos un token.
             }
 
             Response response = chain.proceed(request);

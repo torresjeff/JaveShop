@@ -9,6 +9,11 @@ public abstract class BaseLiveService
     protected final JaveShopWebService api;
     protected final JaveShopApplication application;
 
+    /**
+     * Constructor
+     * @param api interfaz por medio de la cual vamos a enviar los mensajes al servidor.
+     * @param application instancia unica (Singleton) de nuestra aplicacion.
+     */
     protected BaseLiveService(JaveShopWebService api, JaveShopApplication application)
     {
         this.bus = application.getBus();

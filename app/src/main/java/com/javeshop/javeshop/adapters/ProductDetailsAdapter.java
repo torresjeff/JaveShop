@@ -72,7 +72,10 @@ public class ProductDetailsAdapter extends ArrayAdapter<ProductDetails>
         view.price.setText("$" + NumberFormat.getNumberInstance(Locale.US).format(product.getPrice()));
 
 
-        Picasso.with(getContext()).load(product.getMainImageUrl()).into(view.image);
+        if (product.getProductImagesUrls().size() > 0)
+        {
+            Picasso.with(getContext()).load(product.getMainImageUrl()).into(view.image);
+        }
 
         return convertView;
     }

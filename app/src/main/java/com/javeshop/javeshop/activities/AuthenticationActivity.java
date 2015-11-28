@@ -24,7 +24,7 @@ public class AuthenticationActivity extends BaseActivity
 
     /**
      * Infla la interfaz de la Actividad.
-     * @param savedInstanceState
+     * @param savedInstanceState contiene datos guardados cuando la Actividad se recrea.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState)
